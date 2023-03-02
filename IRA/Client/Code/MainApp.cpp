@@ -18,6 +18,8 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(SetUp_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
 	return S_OK;
+
+	// ¹Î°æ
 }
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
