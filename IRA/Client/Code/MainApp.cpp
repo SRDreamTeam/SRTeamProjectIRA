@@ -21,6 +21,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 	// πŒ∞Ê
 	// ¡ÿºÆ
+	// ¡æ«ı
 }
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
