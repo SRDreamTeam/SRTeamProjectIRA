@@ -94,7 +94,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Header;../../Reference/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Include;../Header;../../Reference/Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,6 +167,8 @@
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h" />
+    <ClInclude Include="..\Header\Ghost.h" />
+    <ClInclude Include="..\Header\GhostChild.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
@@ -190,6 +192,8 @@
     <ClCompile Include="..\Code\Doewole_RightClaw.cpp" />
     <ClCompile Include="..\Code\Doewole_Shadow.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Ghost.cpp" />
+    <ClCompile Include="..\Code\GhostChild.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />

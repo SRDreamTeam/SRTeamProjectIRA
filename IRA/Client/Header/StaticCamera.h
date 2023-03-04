@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Camera.h"
+#include "Player.h"
 
 class CStaticCamera : public CCamera
 {
@@ -23,6 +24,7 @@ public:
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Target_Renewal(void);
+	void		Mouse_Move(void);
 
 private:
 	_float			m_fDistance = 10.f;

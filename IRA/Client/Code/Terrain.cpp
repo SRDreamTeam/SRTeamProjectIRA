@@ -33,6 +33,9 @@ _int CTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
+
+	//Key_Input(fTimeDelta);
+
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
@@ -42,6 +45,18 @@ void CTerrain::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 }
+
+void CTerrain::Key_Input(const _float& fTimeDelta)
+{
+	_vec3	vDir;
+
+	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
+
+
+}
+
+
+
 
 void CTerrain::Render_GameObject()
 {
