@@ -61,6 +61,12 @@
     <Filter Include="02. GameObject\Stage\03. SkyBox">
       <UniqueIdentifier>{32b87619-5c66-438a-a7ca-a27699e5dda9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\00.Ghost">
+      <UniqueIdentifier>{be1bd0ad-ef2d-47b5-9590-ab0590e6ecdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild">
+      <UniqueIdentifier>{4fb0c3ec-0201-4658-8aae-9fb7b443bfc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -111,6 +117,12 @@
     <ClInclude Include="..\Header\SkyBox.h">
       <Filter>02. GameObject\Stage\03. SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Ghost.h">
+      <Filter>02. GameObject\Stage\00. Player\00.Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GhostChild.h">
+      <Filter>02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -151,6 +163,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. GameObject\Stage\03. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ghost.cpp">
+      <Filter>02. GameObject\Stage\00. Player\00.Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GhostChild.cpp">
+      <Filter>02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
