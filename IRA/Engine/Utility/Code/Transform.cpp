@@ -24,22 +24,87 @@ CTransform::~CTransform()
 {
 }
 
-void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, const _float & fTimeDelta)
+void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, const _float & fTimeDelta, MONSTER_NAME m_eName)
 {
 	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];
-	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
 
+	switch (m_eName)
+	{
+	case NAME_SLIME:
+		if (!(((vDir.x > -1.0f) && (vDir.x < 1.0f)) && ((vDir.z > -1.0f) && (vDir.z < 1.0f))))
+			m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
+		break;
+
+	case NAME_SOUL:
+		if (!(((vDir.x > -3.0f) && (vDir.x < 3.0f)) && ((vDir.z > -3.0f) && (vDir.z < 3.0f))))
+			m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
+		break;
+
+	default:
+		break;
+	}
 	_matrix		matScale, matRot, matTrans;
 
-	matRot = *Compute_LookAtTarget(pTargetPos);
-
-	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+	//준석 수정 (23.03.02) : 타겟 추적간 임의의 축 회전 필요없기에 주석처리함
+	//matRot = *Compute_LookAtTarget(pTargetPos);
+	D3DXMatrixScaling(&matScale, 5.f, 5.f, 1.f);
 	D3DXMatrixTranslation(&matTrans,
 		m_vInfo[INFO_POS].x,
-		m_vInfo[INFO_POS].y,
+		m_vInfo[INFO_POS].y + 4.f,
 		m_vInfo[INFO_POS].z);
 
-	m_matWorld = matScale * matRot * matTrans;
+	//준석 수정 (23.03.02) : 회전행렬 필요 없기에 회전 제외하고, 이동행렬만 적용함
+	//m_matWorld = matScale * matRot * matTrans;
+	m_matWorld = matScale * matTrans;
+
+}
+
+_vec3 CTransform::Patrol_Map(const _float& fSpeed, const _float& fTimeDelta)
+{	
+	_vec3	vTemp;
+	_vec3	vNull(0, 0, 0);
+
+	if (vNull == m_vPatrolTarget)
+	{	
+		vTemp.x = (rand() % 50);
+		vTemp.y = m_vInfo[INFO_POS].y;
+		vTemp.z = (rand() % 50);
+
+		_vec3		vDir_Temp = vTemp - m_vInfo[INFO_POS];
+
+		if (((3 <= vDir_Temp.x) || (-3 >= vDir_Temp.x)) || ((3 <= vDir_Temp.z) || (-3 >= vDir_Temp.z)))
+		{
+			m_vPatrolTarget = vTemp;
+		}
+	}
+
+	if (vNull != m_vPatrolTarget)
+	{
+		_vec3		vDir = m_vPatrolTarget - m_vInfo[INFO_POS];
+
+		if (((0.5f >= vDir.x) && (-0.5f <= vDir.x)) && ((0.5f >= vDir.z) && (-0.5f <= vDir.z)))
+		{
+			m_vPatrolTarget = vNull;
+		}
+		else
+		{
+			m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
+
+			_matrix		matScale, matRot, matTrans;
+
+			D3DXMatrixScaling(&matScale, 5.f, 5.f, 1.f);
+			D3DXMatrixTranslation(&matTrans,
+				m_vInfo[INFO_POS].x,
+				m_vInfo[INFO_POS].y + 4.f,
+				m_vInfo[INFO_POS].z);
+
+			m_matWorld = matScale * matTrans;
+
+			return vDir;
+		}
+	}
+	
+	return vNull;
 }
 
 const _matrix * CTransform::Compute_LookAtTarget(const _vec3 * pTargetPos)
@@ -67,6 +132,25 @@ const _matrix * CTransform::Compute_LookAtTarget(const _vec3 * pTargetPos)
 								D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vDir),
 								acosf(D3DXVec3Dot(D3DXVec3Normalize(&vDir, &vDir), 
 												   D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
+}
+
+void CTransform::Reverse_Scale_x(void)
+{
+	_matrix		matScale, matRot, matTrans;
+
+	D3DXMatrixScaling(&matScale, -5.f, 5.f, 1.f);
+	D3DXMatrixTranslation(&matTrans,
+		m_vInfo[INFO_POS].x,
+		m_vInfo[INFO_POS].y + 4.f,
+		m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matTrans;
+}
+
+void CTransform::UpdatePos_OnWorld(void)
+{
+	D3DXMatrixIdentity(&m_matWorld);
+	memcpy(&m_matWorld.m[INFO_POS][0], &m_vInfo[INFO_POS], sizeof(_vec3));
 }
 
 HRESULT CTransform::Ready_Transform(void)

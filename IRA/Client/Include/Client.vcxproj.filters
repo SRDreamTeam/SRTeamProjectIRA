@@ -88,6 +88,21 @@
     <Filter Include="02. GameObject\Stage\05. Effect\Doewole_Vanish">
       <UniqueIdentifier>{f5f187b6-5535-44df-9a28-78264420821b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster\Normal">
+      <UniqueIdentifier>{30b8516d-e1be-4034-bfab-9daafefb3e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster\Normal\01. GreenEvilSlime">
+      <UniqueIdentifier>{ada8c2d0-e007-4c6f-8eb2-208acf9bc111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster\Normal\02. EvilSoul">
+      <UniqueIdentifier>{1ff17b45-7bd4-411c-9a67-8d97e4bf6e64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster\Normal\03. MutationEvilSoul">
+      <UniqueIdentifier>{559a6513-8043-422e-b8b7-16fd337233fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet">
+      <UniqueIdentifier>{c973a802-feaa-463f-acb4-04848cd12e95}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\Stage\00. Player\00.Ghost">
       <UniqueIdentifier>{be1bd0ad-ef2d-47b5-9590-ab0590e6ecdf}</UniqueIdentifier>
     </Filter>
@@ -174,6 +189,18 @@
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h">
       <Filter>02. GameObject\Stage\05. Effect\Doewole_Vanish</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\GreenEvilSlime.h">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\01. GreenEvilSlime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EvilSoul.h">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\02. EvilSoul</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MutationEvilSoul.h">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\03. MutationEvilSoul</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bullet.h">
+      <Filter>02. GameObject\Stage\04. Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -238,6 +265,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Doewole_Vanish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GreenEvilSlime.cpp">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\01. GreenEvilSlime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EvilSoul.cpp">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\02. EvilSoul</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MutationEvilSoul.cpp">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\03. MutationEvilSoul</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bullet.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Ghost.cpp">
       <Filter>02. GameObject\Stage\00. Player\00.Ghost</Filter>
