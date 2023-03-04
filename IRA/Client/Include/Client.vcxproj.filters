@@ -61,6 +61,33 @@
     <Filter Include="02. GameObject\Stage\03. SkyBox">
       <UniqueIdentifier>{32b87619-5c66-438a-a7ca-a27699e5dda9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss">
+      <UniqueIdentifier>{b34ae7ac-6565-446d-9250-93072dadc6e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Docheol%28도철%29">
+      <UniqueIdentifier>{cff878e1-735b-4958-ab82-96db3b9edff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29">
+      <UniqueIdentifier>{5b2c8789-60a6-45fe-b31f-acfa35e2e283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Body">
+      <UniqueIdentifier>{17fcc34f-c011-46b5-bc78-0600119e1857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_LeftClaw">
+      <UniqueIdentifier>{80a76e5c-2c6f-4ab2-99bd-5612d101fc29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw">
+      <UniqueIdentifier>{17466def-7b60-49c5-b7da-c2f69eaf13f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Shadow">
+      <UniqueIdentifier>{807adef6-901a-454e-943a-f5b035993262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect">
+      <UniqueIdentifier>{f01d1408-2754-4e55-95a8-41304389107a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole_Vanish">
+      <UniqueIdentifier>{f5f187b6-5535-44df-9a28-78264420821b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -111,6 +138,30 @@
     <ClInclude Include="..\Header\SkyBox.h">
       <Filter>02. GameObject\Stage\03. SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Boss.h">
+      <Filter>02. GameObject\Stage\04. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_Body.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Body</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_Shadow.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_LeftClaw.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_LeftClaw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_RightClaw.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect.h">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_Vanish.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole_Vanish</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -151,6 +202,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. GameObject\Stage\03. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Boss.cpp">
+      <Filter>02. GameObject\Stage\04. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole_Body.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Body</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole_Shadow.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole_LeftClaw.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_LeftClaw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole_RightClaw.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect.cpp">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole_Vanish</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

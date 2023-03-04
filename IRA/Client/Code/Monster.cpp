@@ -31,7 +31,9 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_Environment", L"Player", L"Proto_Transform", ID_DYNAMIC));
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+
+	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
 
 	_vec3	vPlayerPos;
@@ -68,8 +70,13 @@ HRESULT CMonster::Add_Component(void)
  	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
  	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
  	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
+
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_Radius(1.f);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
  
-	
 	return S_OK;
 }
 

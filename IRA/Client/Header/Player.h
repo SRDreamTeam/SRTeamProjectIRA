@@ -8,13 +8,13 @@ class CRcTex;
 class CTransform;
 class CTexture;
 class CCalculator;
+class CCollider;
+class CSphereTex;
 
 END
 
 class CPlayer : public Engine::CGameObject
 {
-	enum {PLAYER_HEAD,PLAYER_FACE,PLAYER_END};
-
 private:
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CPlayer(const CPlayer& rhs);
@@ -37,6 +37,8 @@ private:
 	CTransform*		m_pTransformCom;
 	CTexture*		m_pTextureCom;
 	CCalculator*	m_pCalculatorCom;
+	CCollider*		m_pColliderCom;
+	CSphereTex*		m_pSphereBufferCom;
 	
 	_float			m_fSpeed = 10.f;
 

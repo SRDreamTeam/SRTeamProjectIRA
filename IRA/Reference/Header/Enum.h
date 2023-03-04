@@ -3,6 +3,9 @@
 enum LOADINGID { LOADING_STAGE, LOADING_BOSS, LOADING_END };
 enum WINMODE { MODE_FULL, MODE_WIN };
 
+enum OBJ_TYPE{ OBJ_PLAYER , OBJ_MONSTER, OBJ_NONE,  OBJ_END};
+
+
 namespace Engine
 {
 	// ID_DYNAMIC : 매 프레임마다 갱신을 해야하는 컴포넌트 집단

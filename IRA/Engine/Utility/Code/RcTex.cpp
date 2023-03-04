@@ -35,7 +35,6 @@ HRESULT CRcTex::Ready_Buffer(void)
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 	// Lock : 버텍스 버퍼 메모리 공간의 접근을 막음, 버텍스 버퍼에 저장되어 있는 첫 번째 버텍스의 주소를 추출
 
-
 	pVertex[0].vPos = { -1.f, 1.f, 0.f };
 	pVertex[0].vTexUV = { 0.f, 0.f };
 

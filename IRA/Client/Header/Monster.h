@@ -6,6 +6,7 @@ BEGIN(Engine)
 
 class CTriCol;
 class CTransform;
+class CCollider;
 
 END
 
@@ -27,7 +28,8 @@ private:
 
 private:
 	CTriCol*		m_pBufferCom;
-	CTransform*	m_pTransformCom;
+	CTransform*		m_pTransformCom;
+	CCollider*		m_pColliderCom;
 	
 	_float			m_fSpeed = 5.f;
 

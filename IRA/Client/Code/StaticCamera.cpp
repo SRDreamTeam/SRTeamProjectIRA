@@ -41,6 +41,7 @@ HRESULT CStaticCamera::Ready_GameObject(const _vec3* pEye,
 _int CStaticCamera::Update_GameObject(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
+
 	Target_Renewal();
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
@@ -77,7 +78,7 @@ void CStaticCamera::Target_Renewal(void)
 	m_vEye = vLook * -1.f;
 	D3DXVec3Normalize(&m_vEye, &m_vEye);
 
-	m_vEye.y += 1.f;
+	m_vEye.y += 5.f;
 	m_vEye *= m_fDistance;
 
 	_vec3	vRight;
@@ -89,6 +90,7 @@ void CStaticCamera::Target_Renewal(void)
 
 	m_vEye += pPlayerTransform->m_vInfo[INFO_POS];
 	m_vAt = pPlayerTransform->m_vInfo[INFO_POS];
+	//m_vEye.y += 20.f;
 }
 
 CStaticCamera* CStaticCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3* pEye, const _vec3* pAt, const _vec3* pUp, const _float& fFov, const _float& fAspect, const _float& fNear, const _float& fFar)

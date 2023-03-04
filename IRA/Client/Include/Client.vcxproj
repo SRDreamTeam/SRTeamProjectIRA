@@ -158,7 +158,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\BackGround.h" />
+    <ClInclude Include="..\Header\Boss.h" />
+    <ClInclude Include="..\Header\Doewole.h" />
+    <ClInclude Include="..\Header\Doewole_Body.h" />
+    <ClInclude Include="..\Header\Doewole_LeftClaw.h" />
+    <ClInclude Include="..\Header\Doewole_RightClaw.h" />
+    <ClInclude Include="..\Header\Doewole_Shadow.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\Effect.h" />
+    <ClInclude Include="..\Header\Effect_Doewole_Vanish.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
@@ -175,7 +183,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\BackGround.cpp" />
+    <ClCompile Include="..\Code\Boss.cpp" />
+    <ClCompile Include="..\Code\Doewole.cpp" />
+    <ClCompile Include="..\Code\Doewole_Body.cpp" />
+    <ClCompile Include="..\Code\Doewole_LeftClaw.cpp" />
+    <ClCompile Include="..\Code\Doewole_RightClaw.cpp" />
+    <ClCompile Include="..\Code\Doewole_Shadow.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Effect.cpp" />
+    <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />

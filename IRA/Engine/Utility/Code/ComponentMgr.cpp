@@ -21,6 +21,7 @@ HRESULT CComponentMgr::Ready_ProtoComponent(const _tchar * pProtoTag, CComponent
 
 	m_uMapProto.insert({ pProtoTag, pComponent });
 
+
 	return S_OK;
 }
 
@@ -47,3 +48,4 @@ void CComponentMgr::Free(void)
 	for_each(m_uMapProto.begin(), m_uMapProto.end(), CDeleteMap());
 	m_uMapProto.clear();
 }
+

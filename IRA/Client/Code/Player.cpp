@@ -7,6 +7,8 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pBufferCom(nullptr)
 	, m_pTextureCom(nullptr)
 	, m_pTransformCom(nullptr)
+	, m_pColliderCom(nullptr)
+	, m_pSphereBufferCom(nullptr)
 {
 }
 
@@ -15,6 +17,8 @@ CPlayer::CPlayer(const CPlayer & rhs)
 	, m_pBufferCom(rhs.m_pBufferCom)
 	, m_pTextureCom(rhs.m_pTextureCom)
 	, m_pTransformCom(rhs.m_pTransformCom)
+	, m_pColliderCom(rhs.m_pColliderCom)
+	, m_pSphereBufferCom(rhs.m_pSphereBufferCom)
 {
 }
 
@@ -37,7 +41,9 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+
+	_vec3 v = m_pColliderCom->Get_SpherePos();
 
 	return 0;
 }
@@ -53,9 +59,10 @@ void CPlayer::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pTextureCom->Set_Texture(0);
+	//m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
+	m_pSphereBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
@@ -73,13 +80,23 @@ HRESULT CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Player"));
+	/*pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Player"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player", pComponent });
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player", pComponent });*/
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_ProtoComponent(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_Radius(1.f);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
+
+	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Engine::Clone_ProtoComponent(L"Proto_SphereTex"));
+	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_SphereTex", pComponent });
 
 	return S_OK;
 }
