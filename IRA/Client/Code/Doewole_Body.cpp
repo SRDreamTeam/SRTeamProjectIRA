@@ -15,15 +15,16 @@ CDoewole_Body::CDoewole_Body(const CDoewole_Body & rhs)
 
 CDoewole_Body::~CDoewole_Body()
 {
+	Free();
 }
 
 HRESULT CDoewole_Body::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 0.472f * 10.f , 0.665f * 10.f , 1.f };
+	m_pTransformCom->m_vScale = { 0.472f * 50.f , 0.665f * 50.f , 1.f };
 
-	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(45.f));
+	//m_pTransformCom->Rotation(ROT_X, D3DXToRadian(45.f));
 
 	return S_OK;
 }
@@ -53,9 +54,15 @@ void CDoewole_Body::Render_GameObject()
 {
 	if (!m_bRender)
 		return;
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+	/*m_fAlpha -= 0.01f;
+
+	if (m_fAlpha < 0.f)
+		m_fAlpha = 0.f;*/
 
 	m_pTextureCom->Set_Texture((_uint)m_fFrame);
 	m_pBufferCom->Render_Buffer();
@@ -123,7 +130,7 @@ void CDoewole_Body::Idle(const _float& fTimeDelta)
 	NULL_CHECK(pDoewoleTransformCom);
 
 	m_pTransformCom->m_vInfo[INFO_POS] = {  pDoewoleTransformCom->m_vInfo[INFO_POS].x,
-											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 4.f,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 10.f,
 											pDoewoleTransformCom->m_vInfo[INFO_POS].z };
 	
 	// =====================================================

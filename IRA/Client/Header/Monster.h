@@ -4,15 +4,18 @@
 
 BEGIN(Engine)
 
-class CTriCol;
+class CRcTex;
 class CTransform;
+class CTexture;
+class CCalculator;
+class CCollider;
 class CCollider;
 
 END
 
 class CMonster : public Engine::CGameObject
 {
-private:
+protected:
 	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CMonster(const CMonster& rhs);
 	virtual ~CMonster();
@@ -23,20 +26,30 @@ public:
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
 
-private:
-	HRESULT			Add_Component(void);
+protected:
+	// 준석 수정 (23.03.02)
+	virtual HRESULT	Add_Component(void)PURE;				
+	virtual void SetUp_OnTerrain(void)PURE;					
+	virtual void Change_State(void)PURE;					
+	virtual void Frame_Check(const _float& fTimeDelta)PURE;
 
-private:
-	CTriCol*		m_pBufferCom;
+protected:
+	CRcTex*			m_pBufferCom;
 	CTransform*		m_pTransformCom;
+	CTexture*		m_pTextureCom;
+	CTexture*		m_pTextureCom_2;
+
 	CCollider*		m_pColliderCom;
+	CCalculator*	m_pCalculatorCom;
 	
-	_float			m_fSpeed = 5.f;
+	_float			m_fSpeed;
+	_float			m_fFrame;
+	_bool			m_bCheck;
 
-public:
-	static CMonster*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	MONSTER_STATE	m_eState;
+	MONSTER_NAME	m_eName;
 
-private:
+protected:
 	virtual void Free(void) override;
 
 };

@@ -26,6 +26,7 @@ CBoss::CBoss(const CBoss & rhs)
 
 CBoss::~CBoss()
 {
+	Free();
 }
 
 _int CBoss::Update_GameObject(const _float& fTimeDelta)

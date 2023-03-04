@@ -15,7 +15,7 @@ CDoewole::CDoewole(const CDoewole & rhs)
 
 CDoewole::~CDoewole()
 {
-
+	
 }
 
 HRESULT CDoewole::Ready_GameObject(void)
@@ -54,7 +54,8 @@ void CDoewole::Idle(const _float& fTimeDelta)
 		CGameObject* pEffect = CEffect_Doewole_Vanish::Create(m_pGraphicDev);
 		NULL_CHECK(pEffect);
 		CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
-		pLayer->Add_GameObject(L"Effect_Doewole_Vanish", pEffect, OBJ_NONE);
+		//pLayer->Add_GameObject(L"Effect_Doewole_Vanish", pEffect, OBJ_NONE);
+		pLayer->Add_BulletObject(OBJ_NONE, pEffect);
 	}
 }
 
