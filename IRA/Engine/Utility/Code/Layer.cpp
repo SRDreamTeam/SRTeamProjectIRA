@@ -91,10 +91,7 @@ void CLayer::LateUpdate_Layer(void)
 			iter->second->LateUpdate_GameObject();
 	}
 
-	//Engine::CCollisionMgr::Collision_Sphere(m_uMapObject[OBJ_PLAYER], m_uMapObject[OBJ_MONSTER]);
-
-
-
+	//Engine::CCollisionMgr::Collision_Sphere(m_uMapObject[OBJ_PLAYER], m_uMapObject[OBJ_MONSTER])
 }
 
 
