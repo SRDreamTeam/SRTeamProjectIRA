@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\GhostChild.h"
 #include "Export_Function.h"
+#include "Player.h"
 
 
 CGhostChild::CGhostChild(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -20,6 +21,15 @@ CGhostChild::~CGhostChild()
 HRESULT CGhostChild::Ready_GameObject(void)
 {
 
+	CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
+
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Player"));
+
+	m_Sprite = pPlayer->Get_Run_Frame();
+
+	
+
+
 	__super::Ready_GameObject();
 
 	return S_OK;
@@ -28,8 +38,11 @@ HRESULT CGhostChild::Ready_GameObject(void)
 _int CGhostChild::Update_GameObject(const _float& fTimeDelta)
 {
 
+	m_Alive_Time += 4.f * fTimeDelta;
 
+	if (m_Alive_Time > 4.f) {
 
+	}
 
 
 	__super::Update_GameObject(fTimeDelta);

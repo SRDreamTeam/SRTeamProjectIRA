@@ -39,6 +39,13 @@ public:
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
 
+
+public:
+	_float Get_Run_Frame(void) {
+		return m_fDashFrame;
+	}
+
+
 private:
 	HRESULT			Add_Component(void);
 	void			Key_Input(const _float& fTimeDelta);
