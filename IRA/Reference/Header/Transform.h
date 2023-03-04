@@ -36,8 +36,28 @@ public:
 		m_vInfo[INFO_POS].y = fY;
 		m_vInfo[INFO_POS].z = fZ;
 	}
-	
-	
+
+	void				Set_Right_Reverse()
+	{
+		m_vInfo[INFO_RIGHT] *= -1;
+		
+	}
+
+	void                Set_Scale(_vec3 scale) 
+	{
+		m_vScale.x /= fabs(m_vScale.x);
+		m_vScale.x *= scale.x;
+
+		m_vScale.y /= fabs(m_vScale.y);
+		m_vScale.y *= scale.y;
+	}
+
+	void                Set_Scale_X(_float x)
+	{
+		m_vScale.x *= x;
+	}
+
+
 
 	void					Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta, const MONSTER_NAME m_eName);
 	_vec3					Patrol_Map(const _float& fSpeed, const _float& fTimeDelta);
@@ -58,6 +78,7 @@ public:
 	_vec3			m_vAngle;
 	_matrix			m_matWorld;
 
+	
 	
 public:
 	static CTransform*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

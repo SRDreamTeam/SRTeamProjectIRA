@@ -3,8 +3,8 @@
 #define		WINCX		800
 #define		WINCY		600
 
-#define		VTXCNTX		129
-#define		VTXCNTZ		129
+#define		VTXCNTX		257
+#define		VTXCNTZ		257
 #define		VTXITV		1
 
 #define		OBJ_NOEVENT	 0

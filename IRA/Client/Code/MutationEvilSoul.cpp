@@ -21,9 +21,8 @@ HRESULT CMutationEvilSoul::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eName = NAME_MUTATION;
-	m_fSpeed = 2.f;
 
-	m_pTransformCom->Set_Pos(rand() % 10, 1.f, rand() % 10);
+	m_pTransformCom->Set_Pos(rand() % 50, 1.f, rand() % 50);
 	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;

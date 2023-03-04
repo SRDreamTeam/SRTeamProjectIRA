@@ -47,10 +47,10 @@ void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, c
 
 	//준석 수정 (23.03.02) : 타겟 추적간 임의의 축 회전 필요없기에 주석처리함
 	//matRot = *Compute_LookAtTarget(pTargetPos);
-	D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+	D3DXMatrixScaling(&matScale, 5.f, 5.f, 1.f);
 	D3DXMatrixTranslation(&matTrans,
 		m_vInfo[INFO_POS].x,
-		m_vInfo[INFO_POS].y,
+		m_vInfo[INFO_POS].y + 4.f,
 		m_vInfo[INFO_POS].z);
 
 	//준석 수정 (23.03.02) : 회전행렬 필요 없기에 회전 제외하고, 이동행렬만 적용함
@@ -66,9 +66,9 @@ _vec3 CTransform::Patrol_Map(const _float& fSpeed, const _float& fTimeDelta)
 
 	if (vNull == m_vPatrolTarget)
 	{	
-		vTemp.x = (rand() % 15);
+		vTemp.x = (rand() % 50);
 		vTemp.y = m_vInfo[INFO_POS].y;
-		vTemp.z = (rand() % 15);
+		vTemp.z = (rand() % 50);
 
 		_vec3		vDir_Temp = vTemp - m_vInfo[INFO_POS];
 
@@ -92,10 +92,10 @@ _vec3 CTransform::Patrol_Map(const _float& fSpeed, const _float& fTimeDelta)
 
 			_matrix		matScale, matRot, matTrans;
 
-			D3DXMatrixScaling(&matScale, 1.f, 1.f, 1.f);
+			D3DXMatrixScaling(&matScale, 5.f, 5.f, 1.f);
 			D3DXMatrixTranslation(&matTrans,
 				m_vInfo[INFO_POS].x,
-				m_vInfo[INFO_POS].y,
+				m_vInfo[INFO_POS].y + 4.f,
 				m_vInfo[INFO_POS].z);
 
 			m_matWorld = matScale * matTrans;
@@ -138,10 +138,10 @@ void CTransform::Reverse_Scale_x(void)
 {
 	_matrix		matScale, matRot, matTrans;
 
-	D3DXMatrixScaling(&matScale, -1.f, 1.f, 1.f);
+	D3DXMatrixScaling(&matScale, -5.f, 5.f, 1.f);
 	D3DXMatrixTranslation(&matTrans,
 		m_vInfo[INFO_POS].x,
-		m_vInfo[INFO_POS].y,
+		m_vInfo[INFO_POS].y + 4.f,
 		m_vInfo[INFO_POS].z);
 
 	m_matWorld = matScale * matTrans;

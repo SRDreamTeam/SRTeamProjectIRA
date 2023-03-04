@@ -27,7 +27,6 @@ _float CCalculator::Compute_HeightOnTerrain(_vec3 * pPos, const _vec3 * pTerrain
 
 	D3DXPLANE		Plane;
 
-
 	// 오른쪽 위 삼각형
 	if (fRatioX > fRatioZ)
 	{
@@ -50,6 +49,7 @@ _float CCalculator::Compute_HeightOnTerrain(_vec3 * pPos, const _vec3 * pTerrain
 	//by = -ax - cz - d
 	//	y = (-ax - cz - d) / b
 
+	
 	pPos->y = (-Plane.a * pPos->x - Plane.c * pPos->z - Plane.d) / Plane.b;
 
 	return pPos->y;
