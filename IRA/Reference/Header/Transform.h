@@ -34,13 +34,17 @@ public:
 	{
 		m_vInfo[INFO_POS].x = fX;
 		m_vInfo[INFO_POS].y = fY;
-		m_vInfo[INFO_POS].z = fZ;	
+		m_vInfo[INFO_POS].z = fZ;
 	}
 	
 	
 
-	void					Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
+	void					Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta, const MONSTER_NAME m_eName);
+	_vec3					Patrol_Map(const _float& fSpeed, const _float& fTimeDelta);
+	void					Reverse_Scale_x(void);
+	void					UpdatePos_OnWorld(void);
 	const	_matrix*		Compute_LookAtTarget(const _vec3* pTargetPos);
+
 
 	
 public:
@@ -53,10 +57,15 @@ public:
 	_vec3			m_vScale;
 	_vec3			m_vAngle;
 	_matrix			m_matWorld;
+
 	
 public:
 	static CTransform*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent* Clone(void) override;
+
+private:
+	_vec3		m_vPatrolTarget;
+
 private:
 	virtual void Free(void) override;
 

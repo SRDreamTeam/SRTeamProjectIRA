@@ -37,7 +37,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -122,6 +122,9 @@ void CPlayer::SetUp_OnTerrain(void)
 	NULL_CHECK(pTerrainBufferCom);
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
+	
+	
+	fHeight += 1.f;
 
 	m_pTransformCom->Set_Pos(vPos.x, fHeight, vPos.z);
 }

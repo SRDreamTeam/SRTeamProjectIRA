@@ -5,6 +5,10 @@
 
 #include "Player.h"
 #include "Monster.h"
+#include "GreenEvilSlime.h"
+#include "EvilSoul.h"
+#include "MutationEvilSoul.h"
+
 #include "Terrain.h"
 
 class CStage : public Engine::CScene
