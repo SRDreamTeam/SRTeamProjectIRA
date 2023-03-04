@@ -10,6 +10,9 @@ class CCalculator;
 
 END
 
+class CPlayer;
+
+
 class CGhostChild : public CGhost
 {
 private:
