@@ -109,6 +109,9 @@
     <Filter Include="02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild">
       <UniqueIdentifier>{4fb0c3ec-0201-4658-8aae-9fb7b443bfc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\02. MonsterBullet">
+      <UniqueIdentifier>{b1ff82c3-5c0b-4a09-8163-ced23f724f8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -201,6 +204,9 @@
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>02. GameObject\Stage\04. Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MonsterBullet.h">
+      <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -283,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\GhostChild.cpp">
       <Filter>02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterBullet.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

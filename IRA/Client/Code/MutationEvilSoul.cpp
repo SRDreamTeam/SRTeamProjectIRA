@@ -25,6 +25,12 @@ HRESULT CMutationEvilSoul::Ready_GameObject(void)
 	m_pTransformCom->Set_Pos(rand() % 50, 1.f, rand() % 50);
 	m_pTransformCom->UpdatePos_OnWorld();
 
+	CGameObject* pGameObject = nullptr;
+
+	pGameObject = CMutationEvilSoul::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_4", pGameObject, OBJ_NONE), E_FAIL);
+
 	return S_OK;
 }
 
@@ -174,7 +180,7 @@ void CMutationEvilSoul::Head_Check(const _vec3 vDir)
 	}
 }
 
-CMutationEvilSoul* CMutationEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMutationEvilSoul* CMutationEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev, )
 {
 	CMutationEvilSoul* pInstance = new CMutationEvilSoul(pGraphicDev);
 
