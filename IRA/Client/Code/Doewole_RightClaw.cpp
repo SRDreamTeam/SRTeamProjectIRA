@@ -15,13 +15,14 @@ CDoewole_RightClaw::CDoewole_RightClaw(const CDoewole_RightClaw & rhs)
 
 CDoewole_RightClaw::~CDoewole_RightClaw()
 {
+	Free();
 }
 
 HRESULT CDoewole_RightClaw::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 0.248f * 15.f , 0.467f * 15.f , 1.f };
+	m_pTransformCom->m_vScale = { 0.248f * 30.f , 0.467f * 30.f , 1.f };
 
 	m_fFrame = 10.f;
 
@@ -44,7 +45,7 @@ _int CDoewole_RightClaw::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->m_vInfo[INFO_POS].x += 10.f;
 	// =====================================================
 
-	__super::Update_GameObject(fTimeDelta);
+	CBoss::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 

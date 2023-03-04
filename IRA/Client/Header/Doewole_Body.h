@@ -34,7 +34,7 @@ private:
 	void			Move(const _float& fTimeDelta);
 
 private:
-	CGameObject*					m_pOwner;
+	CGameObject*					m_pOwner = nullptr;
 	_float							m_fAlpha = 1.f;
 
 };

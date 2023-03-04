@@ -15,6 +15,7 @@ CDoewole_LeftClaw::CDoewole_LeftClaw(const CDoewole_LeftClaw & rhs)
 
 CDoewole_LeftClaw::~CDoewole_LeftClaw()
 {
+	Free();
 }
 
 HRESULT CDoewole_LeftClaw::Ready_GameObject(void)
@@ -44,7 +45,7 @@ _int CDoewole_LeftClaw::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->m_vInfo[INFO_POS].x -= 10.f;
 	// =====================================================
 
-	__super::Update_GameObject(fTimeDelta);
+	CBoss::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
