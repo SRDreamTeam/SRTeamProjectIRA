@@ -30,6 +30,16 @@ CGameObject * CScene::Get_GameObject(const _tchar * pLayerTag, const _tchar * pO
 	return iter->second->Get_GameObject(pObjTag);
 }
 
+CLayer* CScene::Get_Layer(const _tchar* pLayerTag)
+{
+	auto	iter = find_if(m_uMapLayer.begin(), m_uMapLayer.end(), CTag_Finder(pLayerTag));
+
+	if (iter == m_uMapLayer.end())
+		return nullptr;
+
+	return iter->second;
+}
+
 _int CScene::Update_Scene(const _float & fTimeDelta)
 {
 	_int iResult = 0;

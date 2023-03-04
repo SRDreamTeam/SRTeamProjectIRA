@@ -67,7 +67,7 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar* pLayerTag)
 	// 오브젝트 
 	pGameObject = CBackGround::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject , OBJ_NONE), E_FAIL);
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 
@@ -79,7 +79,6 @@ HRESULT CLogo::Ready_Prototype(void)
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_RcTex2", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Logo", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg")), E_FAIL);
-
 
 	return S_OK;
 }

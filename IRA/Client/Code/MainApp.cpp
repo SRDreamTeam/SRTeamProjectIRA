@@ -20,8 +20,6 @@ HRESULT CMainApp::Ready_MainApp(void)
 	return S_OK;
 
 	// πŒ∞Ê
-	// ¡ÿºÆ
-	// ¡æ«ı
 }
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)

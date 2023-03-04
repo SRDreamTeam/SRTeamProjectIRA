@@ -1,4 +1,6 @@
 #include "..\..\Header\Layer.h"
+#include "Collider.h"
+#include "CollisionMgr.h"
 
 CLayer::CLayer()
 {
@@ -10,31 +12,41 @@ CLayer::~CLayer()
 
 CComponent * CLayer::Get_Component(const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
 {
-	auto	iter = find_if(m_uMapObject.begin(), m_uMapObject.end(), CTag_Finder(pObjTag));
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		auto	iter = find_if(m_uMapObject[i].begin(), m_uMapObject[i].end(), CTag_Finder(pObjTag));
 
-	if (iter == m_uMapObject.end())
-		return nullptr;
+		if (iter == m_uMapObject[i].end())
+			continue;
 
-	return iter->second->Get_Component(pComponentTag, eID);
+		return iter->second->Get_Component(pComponentTag, eID);
+	}
+
+	return nullptr;
 }
 
 CGameObject * CLayer::Get_GameObject(const _tchar * pObjTag)
 {
-	auto	iter = find_if(m_uMapObject.begin(), m_uMapObject.end(), CTag_Finder(pObjTag));
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		auto	iter = find_if(m_uMapObject[i].begin(), m_uMapObject[i].end(), CTag_Finder(pObjTag));
 
-	if (iter == m_uMapObject.end())
-		return nullptr;
+		if (iter == m_uMapObject[i].end())
+			continue;
 
-	return iter->second;
+		return iter->second;
+	}
+
+	return nullptr;
 }
 
 
-HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject)
+HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject , OBJ_TYPE eID)
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
-	m_uMapObject.insert({ pObjTag, pGameObject });
+	m_uMapObject[eID].insert({pObjTag, pGameObject});
 
 	return S_OK;
 }
@@ -46,14 +58,22 @@ HRESULT CLayer::Ready_Layer(void)
 
 _int CLayer::Update_Layer(const _float & fTimeDelta)
 {
-	_int iResult = 0;
+	int iResult = 0;
 
-	for (auto& iter : m_uMapObject)
+	for (int i = 0; i < OBJ_END; ++i)
 	{
-		iResult = iter.second->Update_GameObject(fTimeDelta);
+		for (auto iter = m_uMapObject[i].begin(); iter != m_uMapObject[i].end();)
+		{
+			int iResult = iter->second->Update_GameObject(fTimeDelta);
 
-		if (iResult & 0x80000000)
-			return iResult;
+			if (OBJ_DEAD == iResult)
+			{
+				Safe_Delete <CGameObject*>(iter->second);
+				m_uMapObject[i].erase(iter++);
+			}
+			else
+				++iter;
+		}
 	}
 
 	return iResult;
@@ -61,8 +81,20 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 
 void CLayer::LateUpdate_Layer(void)
 {
-	for (auto& iter : m_uMapObject)
-		iter.second->LateUpdate_GameObject();
+	_int iResult = 0;
+
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		auto iter = m_uMapObject[i].begin();
+
+		for (; iter != m_uMapObject[i].end(); ++iter)
+			iter->second->LateUpdate_GameObject();
+	}
+
+	//Engine::CCollisionMgr::Collision_Sphere(m_uMapObject[OBJ_PLAYER], m_uMapObject[OBJ_MONSTER]);
+
+
+
 }
 
 
@@ -78,6 +110,9 @@ CLayer * CLayer::Create(void)
 
 void CLayer::Free(void)
 {
-	for_each(m_uMapObject.begin(), m_uMapObject.end(), CDeleteMap());
-	m_uMapObject.clear();
+	for (int i = 0; i < OBJ_END; ++i)
+	{
+		for_each(m_uMapObject[i].begin(), m_uMapObject[i].end(), CDeleteMap());
+		m_uMapObject[i].clear();
+	}
 }

@@ -5,18 +5,21 @@
 #include "ComponentMgr.h"
 #include "Renderer.h"
 #include "LightMgr.h"
+#include "CollisionMgr.h"
 
 #include "TriCol.h"
 #include "RcCol.h"
 #include "RcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"
+#include "SphereTex.h"
 
 #include "Transform.h"
 #include "Texture.h"
 #include "Camera.h"
 #include "Calculator.h"
 #include "Pipeline.h"
+#include "Collider.h"
 
 BEGIN(Engine)
 
@@ -25,6 +28,7 @@ inline	HRESULT			Create_Management(CManagement** ppManagement);
 
 inline CComponent*		Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 inline CGameObject*		Get_GameObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+inline CLayer*			Get_Layer(const _tchar* pLayerTag);
 inline HRESULT			Set_Scene(CScene* pScene);
 inline _int				Update_Management(const _float& fTimeDelta);
 inline void				LateUpdate_Management();
@@ -41,6 +45,7 @@ inline void		Clear_RenderGroup(void);
 
 // LightMgr
 inline 	HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
+
 
 inline void				Release_Utility(void);
 
