@@ -116,7 +116,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject, OBJ_MONSTER), E_FAIL);
 
-	/*pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
+	pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_LeftClaw*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_LeftClaw", pGameObject, OBJ_MONSTER), E_FAIL);
@@ -124,7 +124,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CDoewole_RightClaw::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_RightClaw*>(pGameObject)->Set_Owner(pDoewole);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_RightClaw", pGameObject, OBJ_MONSTER), E_FAIL);*/
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_RightClaw", pGameObject, OBJ_MONSTER), E_FAIL);
 
 	pGameObject = CDoewole_Shadow::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

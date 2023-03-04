@@ -29,7 +29,7 @@ private:
 	virtual void Free(void) override;
 
 private:
-	CGameObject*					m_pOwner;
+	CGameObject* m_pOwner = nullptr;
 
 };
 

@@ -68,6 +68,7 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9 & pGraphicDev)
 	for (auto& iter : m_RenderGroup[RENDER_ALPHA])
 		iter->Render_GameObject();
 
+
 	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
