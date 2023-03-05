@@ -23,6 +23,7 @@ public:
 
 private:
 	unordered_map<const _tchar*, CGameObject*>		m_uMapObject[OBJ_END];
+	vector<CGameObject*>                            m_vecBulletObject[OBJ_END];
 
 public:
 	static CLayer*		Create(void);
