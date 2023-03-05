@@ -9,7 +9,6 @@ class CTransform;
 class CTexture;
 class CCalculator;
 class CCollider;
-class CCollider;
 
 END
 

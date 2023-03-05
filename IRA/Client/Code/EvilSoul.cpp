@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\EvilSoul.h"
 #include "Export_Function.h"
+#include "MonsterBullet.h"
 
 CEvilSoul::CEvilSoul(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_pTextureCom_135_1(nullptr), m_pTextureCom_135_2(nullptr), m_eHead(HEAD_FRONT)
@@ -51,8 +52,7 @@ _int CEvilSoul::Update_GameObject(const _float& fTimeDelta)
 		Change_State();
 
 	Head_Check(vDir);
-
-	
+	Bullet_Test();	
 
 	return 0;
 }
@@ -217,6 +217,27 @@ void CEvilSoul::Head_Check(const _vec3 vDir)
 	{
 		m_pTransformCom->Reverse_Scale_x();
 	}
+}
+
+void CEvilSoul::Bullet_Test(void)
+{	
+	if ((GetAsyncKeyState('K') & 0x8000))
+	{
+		Create_Bullet();
+	}
+}
+
+HRESULT CEvilSoul::Create_Bullet(void)
+{	
+	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
+
+	CLayer* pLayer = CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject* pBulletObject = nullptr;
+	pBulletObject = CMonsterBullet::Create(m_pGraphicDev, vMonster_Pos, true);
+	NULL_CHECK_RETURN(pBulletObject, E_FAIL);
+	pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
 }
 
 CEvilSoul* CEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)

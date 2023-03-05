@@ -10,9 +10,10 @@ class CCalculator;
 class CCollider;
 
 END
+
 class CMonsterBullet : public CBullet
-{
-private:
+{	
+protected:
 	explicit CMonsterBullet(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CMonsterBullet(const CMonsterBullet& rhs);
 	virtual ~CMonsterBullet();
@@ -27,6 +28,16 @@ protected:
 	virtual HRESULT	Add_Component(void) override;
 	virtual void SetUp_OnTerrain(void) override;
 	virtual void Change_State(void) override;
-	virtual void Frame_Check(const _float& fTimeDelta) override;
+	virtual void Frame_Check(const _float& fTimeDelta)override;
+
+public:
+	static CMonsterBullet* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _bool _Target_Check);
+
+private:
+	void Set_FireInfo(_vec3 _Monster_Pos, _bool _Target_Check);
+
+protected:
+	virtual void Free(void) override;
+
 };
 
