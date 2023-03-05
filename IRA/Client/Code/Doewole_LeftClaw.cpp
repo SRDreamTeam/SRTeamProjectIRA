@@ -46,7 +46,7 @@ _int CDoewole_LeftClaw::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	_vec3 v = m_pColliderCom->Get_SpherePos();
 

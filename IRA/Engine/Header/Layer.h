@@ -16,6 +16,7 @@ public:
 	
 public:
 	HRESULT		Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject , OBJ_TYPE eType);
+	void        Add_BulletObject(OBJ_TYPE _eType, CGameObject* pGameObject);
 
 	HRESULT		Ready_Layer(void);
 	_int		Update_Layer(const _float& fTimeDelta);

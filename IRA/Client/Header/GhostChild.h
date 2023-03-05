@@ -42,8 +42,8 @@ private:
 	_float     m_Sprite = 0.f;
 	_float     m_Alive_Time = 0.f;
 	int        m_iAngleState;
-	_float     m_Render_Frame = 0.f;
-	bool       m_bRender = true;
+	int        m_iAlpha = 200;
+
 
 public:
 	_float     m_Render_Time = 0.f;

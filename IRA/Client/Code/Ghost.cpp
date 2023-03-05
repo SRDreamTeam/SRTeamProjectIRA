@@ -8,7 +8,6 @@ CGhost::CGhost(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pBufferCom(nullptr)
 	, m_pTransformCom(nullptr)
 	, m_pCalculatorCom(nullptr)
-	, m_trail_num(6)
 {
 }
 
@@ -17,7 +16,6 @@ CGhost::CGhost(const CGhost& rhs)
 	, m_pBufferCom(rhs.m_pBufferCom)
 	, m_pTransformCom(rhs.m_pTransformCom)
 	, m_pCalculatorCom(rhs.m_pCalculatorCom)
-	, m_trail_num(rhs.m_trail_num)
 {
 }
 
@@ -39,12 +37,11 @@ _int CGhost::Update_GameObject(const _float& fTimeDelta)
 {
 	
 	if (Is_Dash == true) {
-		m_interver += 2.f * fTimeDelta;
-		if (m_interver > 2.f) {
-			//Show_Ghost();
+		m_interver += 7.f * fTimeDelta;
+		if (m_interver > 1.4f) {
+			Show_Ghost();
 			m_interver = 0.f;
 		}
-		
 	}
 
 	__super::Update_GameObject(fTimeDelta);
@@ -77,25 +74,8 @@ void CGhost::Show_Ghost(void)
 		return;
 
 
-	if (i > 5)
-		return;
-
-	if (i == 0)
-		pGameLogicLayer->Add_GameObject(L"Ghost_Child_0", pGameObject, OBJ_GHOST);
-	if (i == 1)
-		pGameLogicLayer->Add_GameObject(L"Ghost_Child_1", pGameObject, OBJ_GHOST);
-	if (i == 2)
-		pGameLogicLayer->Add_GameObject(L"Ghost_Child_2", pGameObject, OBJ_GHOST);
-	if (i == 3)
-		pGameLogicLayer->Add_GameObject(L"Ghost_Child_3", pGameObject, OBJ_GHOST);
-	if (i == 4)
-		pGameLogicLayer->Add_GameObject(L"Ghost_Child_4", pGameObject, OBJ_GHOST);
-	if (i == 5)
-		pGameLogicLayer->Add_GameObject(L"Ghost_Child_5", pGameObject, OBJ_GHOST);
-
-	i++;
-
-
+	pGameLogicLayer->Add_BulletObject(OBJ_GHOST, pGameObject);
+	
 }
 
 HRESULT CGhost::Add_Component(void)

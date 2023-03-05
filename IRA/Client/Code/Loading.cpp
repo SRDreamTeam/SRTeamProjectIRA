@@ -101,6 +101,21 @@ _uint CLoading::Loading_ForStage(void)
 
 #pragma endregion
 
+
+#pragma region Weapon_Texture
+
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Arrow/Spr_Weapon_No039_Sylph'sArrow_%d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Death", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Arrow/Spr_Weapon_No039_Sylph'sArrow_Death_%d.png", 4)), E_FAIL);
+
+
+
+#pragma endregion
+
+
+
+
+
+
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Shadow", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Shadow/spr_ShadowV2.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Terrain", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_SkyBox", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4)), E_FAIL);

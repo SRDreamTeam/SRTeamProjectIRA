@@ -48,11 +48,9 @@ protected:
 
 private:	
 	_float			m_fSpeed = 20.f;
-	int             m_trail_num;
-	_float          m_interver = 0.f;
-	int             i = 0;
-	CGhostChild*    m_Child_List[6];
 
+	_float          m_interver = 0.f;
+	
 public:
 	bool            Is_Dash = false;
 

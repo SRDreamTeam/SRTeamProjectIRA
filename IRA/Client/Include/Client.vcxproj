@@ -157,6 +157,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Arrow.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\Boss.h" />
     <ClInclude Include="..\Header\Doewole.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
+    <ClInclude Include="..\Header\SylphArrow.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -188,6 +190,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Arrow.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\Boss.cpp" />
     <ClCompile Include="..\Code\Doewole.cpp" />
@@ -212,6 +215,7 @@
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\SylphArrow.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

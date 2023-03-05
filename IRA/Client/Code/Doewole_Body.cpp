@@ -39,7 +39,7 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 
 	CBoss::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	return 0;
 }
