@@ -77,3 +77,23 @@ void CMonsterBullet::Change_State(void)
 void CMonsterBullet::Frame_Check(const _float& fTimeDelta)
 {
 }
+
+CMonsterBullet* CMonsterBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _bool _Target_Check)
+{	
+	CMonsterBullet* pInstance = new CMonsterBullet(pGraphicDev);
+	pInstance->m_pTransformCom->m_vInfo[INFO_POS] = _Monster_Pos;
+	pInstance->m_bCheck = _Target_Check;
+
+	if (FAILED(pInstance->Ready_GameObject()))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
+void CMonsterBullet::Free(void)
+{
+	__super::Free();
+}

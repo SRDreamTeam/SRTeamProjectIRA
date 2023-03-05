@@ -31,6 +31,8 @@ private:
 
 	void	Head_Check(const _vec3	vDir);
 
+	HRESULT	Create_Bullet(void);
+
 public:
 	static CEvilSoul* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

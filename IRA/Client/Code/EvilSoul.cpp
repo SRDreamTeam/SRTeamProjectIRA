@@ -219,6 +219,18 @@ void CEvilSoul::Head_Check(const _vec3 vDir)
 	}
 }
 
+HRESULT CEvilSoul::Create_Bullet(void)
+{
+	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
+
+	CGameObject* pGameObject = nullptr;
+	pGameObject = CEvilSoul::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_2", pGameObject, OBJ_NONE), E_FAIL);
+
+
+}
+
 CEvilSoul* CEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CEvilSoul* pInstance = new CEvilSoul(pGraphicDev);
