@@ -30,11 +30,15 @@ public:
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
 
+public:
+	void Show_Ghost(void);
+
+
 private:
 	HRESULT			Add_Component(void);
 	
 
-private:
+protected:
 	CRcTex*			m_pBufferCom;
 	CTransform*		m_pTransformCom;
 
@@ -44,8 +48,13 @@ private:
 
 private:	
 	_float			m_fSpeed = 20.f;
+	int             m_trail_num;
+	_float          m_interver = 0.f;
+	int             i = 0;
+	CGhostChild*    m_Child_List[6];
 
-	CGhostChild*    m_Child_List[7];
+public:
+	bool            Is_Dash = false;
 
 public:
 	static CGhost*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

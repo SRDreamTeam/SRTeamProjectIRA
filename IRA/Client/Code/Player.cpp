@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\Player.h"
 #include "Export_Function.h"
+#include "Ghost.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -39,6 +40,16 @@ HRESULT CPlayer::Ready_GameObject(void)
 
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+
+	if (m_bDead)
+		return OBJ_DEAD;
+
+
+	SetUp_OnTerrain();
+
+	Key_Input(fTimeDelta);
+
+
 	if (m_iState == STAND) {
 		m_fStandFrame += 7.f * fTimeDelta;
 		if (7.f < m_fStandFrame)
@@ -58,9 +69,11 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	if (m_iState == DASH) {
-		m_fDashFrame += 5.f * fTimeDelta * 1.5f;
+		m_fDashFrame += 5.f * fTimeDelta * 1.f;
 		if (5.f < m_fDashFrame) {
+			CGhost* pGhost = dynamic_cast<CGhost*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Ghost"));
 			m_fDashFrame = 0.f;
+			pGhost->Is_Dash = true;
 		}
 	}
 
@@ -71,9 +84,8 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		}
 	}
 
-	SetUp_OnTerrain();
 
-	Key_Input(fTimeDelta);
+
 
 	Update_State();
 
@@ -84,7 +96,9 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+
+    Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	
 
 	_vec3 v = m_pColliderCom->Get_SpherePos();
 
@@ -350,6 +364,10 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
 
 
+	CGhost* pGhost = dynamic_cast<CGhost*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Ghost"));
+
+
+
 	_vec3	vDir;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
 	D3DXVec3Normalize(&vDir, &vDir);
@@ -453,7 +471,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	else if (GetAsyncKeyState(VK_UP)) {
 
 		if (GetAsyncKeyState(VK_LEFT)) {
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_135;
@@ -467,7 +486,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 		else if (GetAsyncKeyState(VK_RIGHT)) {
 
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_225;
@@ -480,7 +500,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else {
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_180;
@@ -496,7 +517,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	else if (GetAsyncKeyState(VK_DOWN)) {
 
 		if (GetAsyncKeyState(VK_LEFT)) {
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_045;
@@ -509,7 +531,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else if (GetAsyncKeyState(VK_RIGHT)) {
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_315;
@@ -522,7 +545,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else {
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_000;
@@ -538,7 +562,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	}
 	else if (GetAsyncKeyState(VK_LEFT)) {
-		if (GetAsyncKeyState(VK_SPACE)) {
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+			pGhost->Is_Dash = true;
 			m_Is_Dash = true;
 			m_iState = DASH;
 			m_iAngleState = ANGLE_090;
@@ -552,7 +577,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	}
 	else if (GetAsyncKeyState(VK_RIGHT)) {
 
-	    if (GetAsyncKeyState(VK_SPACE)) {
+	    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+			pGhost->Is_Dash = true;
 			m_Is_Dash = true;
 			m_iState = DASH;
 			m_iAngleState = ANGLE_270;

@@ -41,8 +41,11 @@ public:
 
 
 public:
-	_float Get_Run_Frame(void) {
+	_float Get_Dash_Frame(void) {
 		return m_fDashFrame;
+	}
+	int    Get_Anlge_State(void) {
+		return m_iAngleState;
 	}
 
 
