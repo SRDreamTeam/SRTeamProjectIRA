@@ -39,7 +39,7 @@ _int CEffect_Doewole_Vanish::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	m_fFrame += m_fMaxFrame * fTimeDelta;
 
