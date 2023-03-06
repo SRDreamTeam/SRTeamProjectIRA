@@ -19,6 +19,12 @@ void CCollisionMgr::Collision_Sphere(unordered_map<const _tchar*, CGameObject*> 
 			if (Check_Sphere(Dest.second, Src.second))
 			{
 				int a = 0;
+
+
+
+
+
+
 			}
 		}
 	}
