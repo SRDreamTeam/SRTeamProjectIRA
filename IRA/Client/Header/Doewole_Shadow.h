@@ -29,7 +29,6 @@ private:
 
 private:
 	CGameObject*					m_pOwner;
-	CTexture*						m_pTextureCom;
 
 };
 

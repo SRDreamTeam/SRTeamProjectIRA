@@ -4,8 +4,6 @@
 
 class CDoewole_RightClaw : public CDoewole
 {
-	enum { STAND, STANDARD_ATTACK, TEX_END };
-
 private:
 	explicit CDoewole_RightClaw(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CDoewole_RightClaw(const CDoewole_RightClaw& rhs);
@@ -23,12 +21,6 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
-	void			State_Update(const _float& fTimeDelta);
-
-private:
-	void			Idle(const _float& fTimeDelta);
-	void			Move(const _float& fTimeDelta);
-	void			Standard_Attack(const _float& fTimeDelta);
 
 public:
 	static CDoewole_RightClaw*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -37,8 +29,7 @@ private:
 	virtual void Free(void) override;
 
 private:
-	CGameObject*				m_pOwner = nullptr;
-	CTexture*					m_pTextureCom[TEX_END];
+	CGameObject* m_pOwner = nullptr;
 
 };
 

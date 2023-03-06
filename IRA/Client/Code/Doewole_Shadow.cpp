@@ -21,7 +21,7 @@ HRESULT CDoewole_Shadow::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 20.f , 20.f , 20.f };
+	m_pTransformCom->m_vScale = { 10.f , 10.f , 10.f };
 
 	_vec3	vRight;
 	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
@@ -37,7 +37,7 @@ _int CDoewole_Shadow::Update_GameObject(const _float& fTimeDelta)
 	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pDoewoleTransformCom, -1);
 
-	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x , 0.01f, pDoewoleTransformCom->m_vInfo[INFO_POS].z};
+	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x , 0.3f, pDoewoleTransformCom->m_vInfo[INFO_POS].z -5.f};
 
 	CBoss::Update_GameObject(fTimeDelta);
 
