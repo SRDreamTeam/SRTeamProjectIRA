@@ -40,11 +40,7 @@ _int CMonsterBullet::Update_GameObject(const _float& fTimeDelta)
 	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 
 	_vec3	vDir = vPlayerPos - m_pTransformCom->m_vInfo[INFO_POS];
-	if ((((vDir.x > -1.0f) && (vDir.x < 1.0f)) && ((vDir.z > -1.0f) && (vDir.z < 1.0f))))
-	{
-		m_bDead = true;
-	}
-
+	
 	m_pTransformCom->Bullet_Move(vDir, m_fSpeed, fTimeDelta, 0);
 	SetUp_OnTerrain();
 	Distance_Dead_Check();
