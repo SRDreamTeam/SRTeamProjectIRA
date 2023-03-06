@@ -85,9 +85,6 @@
     <Filter Include="02. GameObject\Stage\05. Effect">
       <UniqueIdentifier>{f01d1408-2754-4e55-95a8-41304389107a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\05. Effect\Doewole_Vanish">
-      <UniqueIdentifier>{f5f187b6-5535-44df-9a28-78264420821b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Stage\01. Monster\Normal">
       <UniqueIdentifier>{30b8516d-e1be-4034-bfab-9daafefb3e7a}</UniqueIdentifier>
     </Filter>
@@ -108,6 +105,21 @@
     </Filter>
     <Filter Include="02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild">
       <UniqueIdentifier>{4fb0c3ec-0201-4658-8aae-9fb7b443bfc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole">
+      <UniqueIdentifier>{03bf1761-35f1-41a2-af5a-9acd24352384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_StanardAttack">
+      <UniqueIdentifier>{a14153e5-5370-4998-bd47-0bc6473c097c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_Vanish">
+      <UniqueIdentifier>{f5f187b6-5535-44df-9a28-78264420821b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeExplosion">
+      <UniqueIdentifier>{c3b0862e-6e40-4662-92fa-e9e47dd3da12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_Loof">
+      <UniqueIdentifier>{3e17701b-bda0-432b-9d94-ca28551107b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -180,14 +192,11 @@
     <ClInclude Include="..\Header\Doewole_LeftClaw.h">
       <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_LeftClaw</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Doewole_RightClaw.h">
-      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Effect.h">
       <Filter>02. GameObject\Stage\05. Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h">
-      <Filter>02. GameObject\Stage\05. Effect\Doewole_Vanish</Filter>
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Vanish</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\GreenEvilSlime.h">
       <Filter>02. GameObject\Stage\01. Monster\Normal\01. GreenEvilSlime</Filter>
@@ -200,6 +209,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>02. GameObject\Stage\04. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_StandardAttack.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_StanardAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_RightClaw.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_ChargeExplosion.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeExplosion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_Loof.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Loof</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,7 +285,7 @@
       <Filter>02. GameObject\Stage\05. Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp">
-      <Filter>02. GameObject\Stage\05. Effect\Doewole_Vanish</Filter>
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Vanish</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\GreenEvilSlime.cpp">
       <Filter>02. GameObject\Stage\01. Monster\Normal\01. GreenEvilSlime</Filter>
@@ -283,6 +304,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\GhostChild.cpp">
       <Filter>02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_StandardAttack.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_StanardAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_ChargeExplosion.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeExplosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_Loof.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Loof</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

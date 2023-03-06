@@ -62,7 +62,7 @@ void CDoewole_Body::Render_GameObject()
 	if (m_eCurState == CDoewole::IDLE)
 		m_pTextureCom[STAND]->Set_Texture((_uint)m_fFrame);
 
-	else if (m_eCurState == CDoewole::STANDARD_ATTACK)
+	else if (m_eCurState == CDoewole::STANDARD_ATTACK || m_eCurState == CDoewole::OUTSTRECTH_ATTACK)
 		m_pTextureCom[STAND_FACEON]->Set_Texture((_uint)m_fFrame);
 
 	
@@ -122,6 +122,7 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 		Move(fTimeDelta);
 		break;
 	case CDoewole::STANDARD_ATTACK:
+	case CDoewole::OUTSTRECTH_ATTACK:
 		Standard_Attack(fTimeDelta);
 		break;
 	case CDoewole::STATE_END:
@@ -167,11 +168,11 @@ void CDoewole_Body::Standard_Attack(const _float& fTimeDelta)
 	m_fFrame += m_fMaxFrame * fTimeDelta;
 
 	if (m_fMaxFrame < m_fFrame)
-		m_fFrame = m_fMaxFrame;
+		m_fFrame = 0.f;
 
 	// ================Doewole의 위치에 맞게 조정============
 	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
-	NULL_CHECK(pDoewoleTransformCom);
+	NULL_CHECK(pDoewoleTransformCom); 
 
 	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
 											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 10.f,
