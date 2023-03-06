@@ -30,6 +30,8 @@ private:
 	virtual void	Frame_Check(const _float& fTimeDelta) override;
 
 	void	Head_Check(const _vec3	vDir);
+	HRESULT	Create_Bullet(void);
+
 
 public:
 	static CMutationEvilSoul* Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -38,6 +40,7 @@ private:
 	//CTexture* m_pTextureCom_135_1;	//사용 안함
 	//CTexture* m_pTextureCom_135_2;
 	MONSTER_HEAD	m_eHead;
+	_int			m_Count;
 
 private:
 	virtual void Free(void) override;

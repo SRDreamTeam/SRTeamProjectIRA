@@ -73,6 +73,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 		for (auto iter = m_uMapObject[i].begin(); iter != m_uMapObject[i].end();)
 		{
 			iResult = iter->second->Update_GameObject(fTimeDelta);
+
 			if (OBJ_DEAD == iResult)
 			{
 				Safe_Delete <CGameObject*>(iter->second);
@@ -81,7 +82,6 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 			else
 				++iter;
 		}
-
 
 		for (auto iter = m_vecBulletObject[i].begin(); iter != m_vecBulletObject[i].end();)
 		{
@@ -95,6 +95,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 			else
 				++iter;
 		}
+	}
 
 	}
 
@@ -120,7 +121,6 @@ void CLayer::LateUpdate_Layer(void)
 
 }
 
-
 CLayer * CLayer::Create(void)
 {
 	CLayer *	pInstance = new CLayer;
@@ -137,7 +137,6 @@ void CLayer::Free(void)
 	{
 		for_each(m_uMapObject[i].begin(), m_uMapObject[i].end(), CDeleteMap());
 		m_uMapObject[i].clear();
-
 
 		for_each(m_vecBulletObject[i].begin(), m_vecBulletObject[i].end(), CDeleteObj());
 		m_vecBulletObject[i].clear();

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\EvilSoul.h"
 #include "Export_Function.h"
+#include "MonsterBullet.h"
 
 CEvilSoul::CEvilSoul(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_pTextureCom_135_1(nullptr), m_pTextureCom_135_2(nullptr), m_eHead(HEAD_FRONT)
@@ -23,7 +24,8 @@ HRESULT CEvilSoul::Ready_GameObject(void)
 
 	m_eName = NAME_SOUL;
 
-	m_pTransformCom->Set_Pos(rand() % 50, 1.f, rand() % 50);
+	m_fSpeed = 3.f;
+	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
 	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;
@@ -47,10 +49,11 @@ _int CEvilSoul::Update_GameObject(const _float& fTimeDelta)
 
 	_vec3	vDir = vPlayerPos - m_pTransformCom->m_vInfo[INFO_POS];
 
-	if (((vDir.x > -3.0f) && (vDir.x < 3.0f)) && ((vDir.z > -3.0f) && (vDir.z < 3.0f)) && !m_bCheck)
+	if (((vDir.x > -15.0f) && (vDir.x < 15.0f)) && ((vDir.z > -15.0f) && (vDir.z < 15.0f)) && !m_bCheck)
 		Change_State();
 
 	Head_Check(vDir);
+	Bullet_Test();	
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
@@ -66,6 +69,7 @@ void CEvilSoul::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	if (HEAD_FRONT == m_eHead)
 	{
@@ -107,7 +111,7 @@ void CEvilSoul::Render_GameObject()
 	}
 
 	m_pBufferCom->Render_Buffer();
-
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 }
@@ -149,24 +153,19 @@ HRESULT CEvilSoul::Add_Component(void)
 void CEvilSoul::SetUp_OnTerrain(void)
 {
 	_vec3		vPos;
-
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
 	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTex", ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
-
-	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
-
-	// 준석 수정 (23.03.02) : 테스트용 추가 
-	fHeight += 1.f;
-	m_pTransformCom->Set_Pos(vPos.x, fHeight, vPos.z);
-
+	m_pTransformCom->Set_Pos(vPos.x, 1.f, vPos.z);
 }
 
 void CEvilSoul::Change_State(void)
 {
 	if (0.f == m_fFrame)
+	{
 		m_eState = MONSTER_ATTACK;
+		Create_Bullet();
+	}
 }
 
 void CEvilSoul::Frame_Check(const _float& fTimeDelta)
@@ -217,6 +216,24 @@ void CEvilSoul::Head_Check(const _vec3 vDir)
 	{
 		m_pTransformCom->Reverse_Scale_x();
 	}
+}
+
+void CEvilSoul::Bullet_Test(void)
+{	
+	if ((GetAsyncKeyState('K') & 0x8000))
+	{
+		Create_Bullet();
+	}
+}
+
+HRESULT CEvilSoul::Create_Bullet(void)
+{	
+	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
+	CGameObject*	pGameObject = nullptr;
+	CGameObject* pBulletObject = CMonsterBullet::Create(m_pGraphicDev, vMonster_Pos, true);
+	NULL_CHECK(pBulletObject);
+	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+	pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
 }
 
 CEvilSoul* CEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)

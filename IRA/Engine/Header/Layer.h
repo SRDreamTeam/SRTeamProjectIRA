@@ -16,7 +16,8 @@ public:
 	
 public:
 	HRESULT		Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject , OBJ_TYPE eType);
-	void        Add_BulletObject(OBJ_TYPE _eType, CGameObject* pGameObject);
+	void		Add_BulletObject(OBJ_TYPE _eType, CGameObject* pGameObject);
+
 
 	HRESULT		Ready_Layer(void);
 	_int		Update_Layer(const _float& fTimeDelta);
@@ -24,7 +25,7 @@ public:
 
 private:
 	unordered_map<const _tchar*, CGameObject*>		m_uMapObject[OBJ_END];
-	vector<CGameObject*>                            m_vecBulletObject[OBJ_END];
+	vector<CGameObject*>							m_vecBulletObject[OBJ_END];
 
 public:
 	static CLayer*		Create(void);

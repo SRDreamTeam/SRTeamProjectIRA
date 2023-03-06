@@ -31,12 +31,16 @@ void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, c
 	switch (m_eName)
 	{
 	case NAME_SLIME:
-		if (!(((vDir.x > -1.0f) && (vDir.x < 1.0f)) && ((vDir.z > -1.0f) && (vDir.z < 1.0f))))
+		if (!(((vDir.x > -2.0f) && (vDir.x < 2.0f)) && ((vDir.z > -2.0f) && (vDir.z < 2.0f))))
 			m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
 		break;
 
 	case NAME_SOUL:
-		if (!(((vDir.x > -3.0f) && (vDir.x < 3.0f)) && ((vDir.z > -3.0f) && (vDir.z < 3.0f))))
+		if (!(((vDir.x > -15.0f) && (vDir.x < 15.0f)) && ((vDir.z > -15.0f) && (vDir.z < 15.0f))))
+			m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
+		break;
+	case SOUL_BULLET:
+		if (!(((vDir.x > -1.0f) && (vDir.x < 1.0f)) && ((vDir.z > -1.0f) && (vDir.z < 1.0f))))
 			m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
 		break;
 
@@ -47,7 +51,14 @@ void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, c
 
 	//준석 수정 (23.03.02) : 타겟 추적간 임의의 축 회전 필요없기에 주석처리함
 	//matRot = *Compute_LookAtTarget(pTargetPos);
-	D3DXMatrixScaling(&matScale, 5.f, 5.f, 1.f);
+	if (m_eName != SOUL_BULLET)
+	{
+		D3DXMatrixScaling(&matScale, 5.f, 5.f, 1.f);
+	}
+	if (m_eName == SOUL_BULLET)
+	{
+		D3DXMatrixScaling(&matScale, 2.f, 2.f, 1.f);
+	}
 	D3DXMatrixTranslation(&matTrans,
 		m_vInfo[INFO_POS].x,
 		m_vInfo[INFO_POS].y + 4.f,
@@ -57,6 +68,114 @@ void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, c
 	//m_matWorld = matScale * matRot * matTrans;
 	m_matWorld = matScale * matTrans;
 
+}
+
+void CTransform::Bullet_Move(const _vec3 _Dir, const _float& fSpeed, const _float& fTimeDelta, _int iDirCount = 0)
+{	
+	_vec3		vNull(0, 0, 0);
+
+	if (vNull == m_vBulletTarget && 0 == iDirCount)
+	{
+		m_vBulletTarget = _Dir;
+	}
+	if (vNull != m_vBulletTarget && 0 == iDirCount)
+	{
+		m_vInfo[INFO_POS] += *D3DXVec3Normalize(&m_vBulletTarget, &m_vBulletTarget) * fSpeed * fTimeDelta;
+	}
+
+	if (vNull == m_vBulletTarget && 0 != iDirCount)
+	{	
+		_vec3 Temp;
+		Temp.x = float(cos(45 * iDirCount));
+		Temp.y = 0.f;
+		Temp.z = float(sin(45 * iDirCount));
+
+		if (8 == iDirCount)
+		{
+			Temp.x = 0.f;;
+			Temp.y = 0.f;
+			Temp.z = float(sin(45 * iDirCount));
+		}
+		if (8 == iDirCount)
+		{
+			Temp.x = 0.f;;
+			Temp.y = 0.f;
+			Temp.z = float(sin(45 * iDirCount));
+		}
+
+		if (7 == iDirCount)
+		{
+			Temp.x = 0.f;;
+			Temp.y = 0.f;
+			Temp.z = float(sin(180));
+		}
+
+		m_vBulletTarget = Temp;
+	}
+	if (vNull != m_vBulletTarget && 0 != iDirCount)
+	{
+		m_vInfo[INFO_POS] += *D3DXVec3Normalize(&m_vBulletTarget, &m_vBulletTarget) * fSpeed * fTimeDelta;
+	}
+
+	_matrix		matScale, matRot, matTrans;
+
+	D3DXMatrixScaling(&matScale, 2.f, 2.f, 1.f);
+
+	if (0 == iDirCount)
+	{
+		D3DXMatrixTranslation(&matTrans,
+			m_vInfo[INFO_POS].x,
+			m_vInfo[INFO_POS].y + 3.f,
+			m_vInfo[INFO_POS].z);
+
+		m_matWorld = matScale * matTrans;
+	}
+
+	if (0 != iDirCount)
+	{
+		_float Temp_Degree = 0;
+
+		switch (iDirCount)
+		{
+		case 1:
+			Temp_Degree = 135;
+			break;
+		case 2:
+			Temp_Degree = 45;
+			break;
+		case 3:
+			Temp_Degree = 0;
+			break;
+		case 4:
+			Temp_Degree = 315;
+			break;
+		case 5:
+			Temp_Degree = 225;
+			break;
+		case 6:
+			Temp_Degree = 180;
+			break;
+		case 7:
+			Temp_Degree = 270;
+			break;
+		case 8:
+			Temp_Degree = 90;
+			break;
+
+		default:
+			break;
+		}
+
+		_float	fRadian_Bullet = D3DXToRadian(Temp_Degree);
+		//D3DXMatrixRotationY(&matRot, fRadian_Bullet);
+		D3DXMatrixRotationYawPitchRoll(&matRot, fRadian_Bullet, D3DXToRadian(90), 0.f);
+		D3DXMatrixTranslation(&matTrans,
+			m_vInfo[INFO_POS].x,
+			m_vInfo[INFO_POS].y + 3.f,
+			m_vInfo[INFO_POS].z);
+
+		m_matWorld = matScale * matRot * matTrans;
+	}
 }
 
 _vec3 CTransform::Patrol_Map(const _float& fSpeed, const _float& fTimeDelta)
@@ -132,6 +251,19 @@ const _matrix * CTransform::Compute_LookAtTarget(const _vec3 * pTargetPos)
 								D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vDir),
 								acosf(D3DXVec3Dot(D3DXVec3Normalize(&vDir, &vDir), 
 												   D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
+}
+
+void CTransform::Ui_Print(void)
+{
+	D3DXMATRIX		matView, matProj; //직교투영 행렬
+
+	D3DXMatrixIdentity(&m_matWorld); //월드행렬을 항등행렬로
+	D3DXMatrixIdentity(&matView);
+	D3DXMatrixOrthoLH(&matProj, 20.f, 20.f, 0.f, 20.f);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
 void CTransform::Reverse_Scale_x(void)

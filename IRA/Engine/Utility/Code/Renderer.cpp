@@ -84,6 +84,7 @@ void CRenderer::Render_AlphaTest(LPDIRECT3DDEVICE9& pGraphicDev)
 	for (auto& iter : m_RenderGroup[RENDER_ALPHATEST])
 		iter->Render_GameObject();
 
+
 	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 }

@@ -21,15 +21,15 @@ HRESULT CGreenEvilSlime::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eName = NAME_SLIME;
 
-	m_pTransformCom->Set_Pos(rand() % 50, 1.f, rand() % 50);
+	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
 	m_pTransformCom->UpdatePos_OnWorld();
+	m_fSpeed = 3.f;
 
 	return S_OK;
 }
 
 _int CGreenEvilSlime::Update_GameObject(const _float& fTimeDelta)
 {
-	// 준석 수정 (23.03.02)
 	Frame_Check(fTimeDelta);
 	SetUp_OnTerrain();
 	__super::Update_GameObject(fTimeDelta);
@@ -45,7 +45,7 @@ _int CGreenEvilSlime::Update_GameObject(const _float& fTimeDelta)
 
 	_vec3	vDir = vPlayerPos - m_pTransformCom->m_vInfo[INFO_POS];
 
-	if (((vDir.x > -1.0f) && (vDir.x < 1.0f)) && ((vDir.z > -1.0f) && (vDir.z < 1.0f)) && !m_bCheck)
+	if (((vDir.x > -2.0f) && (vDir.x < 2.0f)) && ((vDir.z > -2.0f) && (vDir.z < 2.0f)) && !m_bCheck)
 		Change_State();
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
@@ -62,6 +62,7 @@ void CGreenEvilSlime::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	switch (m_eState)
 	{
@@ -79,7 +80,7 @@ void CGreenEvilSlime::Render_GameObject()
 		break;
 	}
 	m_pBufferCom->Render_Buffer();
-
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 }
@@ -112,18 +113,10 @@ HRESULT CGreenEvilSlime::Add_Component(void)
 void CGreenEvilSlime::SetUp_OnTerrain(void)
 {
 	_vec3		vPos;
-
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
 	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTex", ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
-
-	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
-
-	// 준석 수정 (23.03.02) : 테스트용 추가 
-	fHeight += 1.f;
-	m_pTransformCom->Set_Pos(vPos.x, fHeight, vPos.z);
-
+	m_pTransformCom->Set_Pos(vPos.x, 1.f, vPos.z);
 }
 
 void CGreenEvilSlime::Change_State(void)
