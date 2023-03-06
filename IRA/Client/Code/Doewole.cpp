@@ -46,22 +46,49 @@ void CDoewole::Idle(const _float& fTimeDelta)
 {
 	m_fAccTime += fTimeDelta;
 
-	if (m_fAccTime > 4.f)
+	if (1 == m_iPattern)
 	{
-		m_fAccTime = 0.f;
-		m_eCurState = MOVE;
-	
-		CGameObject* pEffect = CEffect_Doewole_Vanish::Create(m_pGraphicDev);
-		NULL_CHECK(pEffect);
-		CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
-		//pLayer->Add_GameObject(L"Effect_Doewole_Vanish", pEffect, OBJ_NONE);
-		pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+		if (m_fAccTime > 4.f)
+		{
+			m_fAccTime = 0.f;
+			m_eCurState = MOVE;
+			++m_iPattern;
+
+			CGameObject* pEffect = CEffect_Doewole_Vanish::Create(m_pGraphicDev);
+			NULL_CHECK(pEffect);
+			CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+			//pLayer->Add_GameObject(L"Effect_Doewole_Vanish", pEffect, OBJ_NONE);
+			pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+		}
+
 	}
+
+	else if (2 == m_iPattern)
+	{
+		if (m_fAccTime > 2.f)
+		{
+			m_fAccTime = 0.f;
+			m_eCurState = STANDARD_ATTACK;
+			++m_iPattern;
+		}
+	}
+
+	else if (3 == m_iPattern)
+	{
+		if (m_fAccTime > 2.f)
+		{
+			m_fAccTime = 0.f;
+			//m_eCurState = STANDARD_ATTACK;
+			++m_iPattern;
+		}
+	}
+
 }
 
 void CDoewole::Move(const _float& fTimeDelta)
 {
-	m_pTransformCom->m_vInfo[INFO_POS].x -= m_fMoveSpeed * fTimeDelta;
+	if(m_fAccTime > 1.f)
+		m_pTransformCom->m_vInfo[INFO_POS].x -= m_fMoveSpeed * fTimeDelta;
 
 	m_fAccTime += fTimeDelta;
 
@@ -71,6 +98,11 @@ void CDoewole::Move(const _float& fTimeDelta)
 		m_eCurState = IDLE;
 		m_fMoveSpeed *= -1.f;
 	}
+}
+
+void CDoewole::Standard_Attack(const _float& fTimeDelta)
+{
+
 }
 
 HRESULT CDoewole::Add_Component(void)
@@ -86,20 +118,25 @@ HRESULT CDoewole::Add_Component(void)
 
 void CDoewole::State_Update(const _float& fTimeDelta)
 {
-	switch ((int)m_eCurState)
+	switch (m_eCurState)
 	{
-	case (int)CDoewole::IDLE:
+	case CDoewole::IDLE:
 		Idle(fTimeDelta);
 		break;
-	case (int)CDoewole::MOVE:
+	case CDoewole::MOVE:
 		Move(fTimeDelta);
 		break;
-	case (int)CDoewole::STATE_END:
+	case CDoewole::STANDARD_ATTACK:
+		Standard_Attack(fTimeDelta);
+		break;
+	case CDoewole::STATE_END:
 		break;
 	default:
 		break;
 	}
 
+	if (m_iPattern > m_iMaxPattern)
+		m_iPattern = 0;
 }
 CDoewole * CDoewole::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

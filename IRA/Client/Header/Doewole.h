@@ -10,7 +10,8 @@ protected:
 	virtual ~CDoewole();
 
 public:
-	enum DOEWOLE_STATE { IDLE, MOVE, STATE_END };
+	enum DOEWOLE_STATE { IDLE, MOVE, STANDARD_ATTACK, STATE_END };
+
 public:
 	void			Set_State(DOEWOLE_STATE _eState) { m_eCurState = _eState; }
 	DOEWOLE_STATE	Get_State() { return m_eCurState; }
@@ -37,11 +38,14 @@ protected:
 private:
 	void			Idle(const _float& fTimeDelta);
 	void			Move(const _float& fTimeDelta);
+	void			Standard_Attack(const _float& fTimeDelta);
 
 private:
 	HRESULT			Add_Component(void);
 	void			State_Update(const _float& fTimeDelta);
 
-	bool			m_bTest = false;
+private:
+	_uint					m_iPattern = 1;
+	const _uint				m_iMaxPattern = 2;
 };
 

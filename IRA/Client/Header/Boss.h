@@ -29,7 +29,6 @@ public:
 protected:
 	CRcTex*			m_pBufferCom;
 	CTransform*		m_pTransformCom;
-	CTexture*		m_pTextureCom;
 	CCalculator*	m_pCalculatorCom;
 	CCollider*		m_pColliderCom;
 	CSphereTex*		m_pSphereBufferCom;
