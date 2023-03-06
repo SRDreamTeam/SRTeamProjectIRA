@@ -109,7 +109,7 @@ private:
 	CCollider*		m_pColliderCom;
 	CSphereTex*		m_pSphereBufferCom;
 
-	_vec3           m_World_Mouse;
+	_vec3           m_Mouse_Dir;
 	
 	
 

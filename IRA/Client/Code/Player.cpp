@@ -90,13 +90,13 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 
 
-	/*if (m_Is_Fire_Arrow == true) {
+	if (m_Is_Fire_Arrow == true) {
 		m_Fire_Interver += m_Fire_Speed * fTimeDelta;
 		if (m_Fire_Interver > m_Fire_Speed) {
 			Fire_Arrow();
 			m_Fire_Interver = 0.f;
 		}
-	}*/
+	}
 
 
 
@@ -620,13 +620,23 @@ void CPlayer::Fire_Arrow(void)
 	CGameObject* pGameObject = nullptr;
 
 
+	
+	POINT ptCursor;
 
-	m_World_Mouse = Get_World_Mouse();
+	GetCursorPos(&ptCursor);
+	ScreenToClient(g_hWnd, &ptCursor);
+
+	_vec3 Look = { 1.f,0.f,0.f };
+
+	_vec3 Dir = { ptCursor.x - 400.f,ptCursor.y - 300.f,0 };
+	D3DXVec3Normalize(&Dir, &Dir);
+
+	
+	m_Mouse_Dir = { Dir.x,3.f,Dir.y };
 
 	_vec3 vPos = m_pTransformCom->m_vInfo[INFO_POS];
 	
-
-	pGameObject = CSylphArrow::Create(m_pGraphicDev, vPos, m_World_Mouse);
+	pGameObject = CSylphArrow::Create(m_pGraphicDev, vPos, m_Mouse_Dir);
 
 	if (pGameObject == nullptr)
 		return;
