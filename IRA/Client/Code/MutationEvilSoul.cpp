@@ -1,14 +1,15 @@
 #include "stdafx.h"
 #include "..\Header\MutationEvilSoul.h"
 #include "Export_Function.h"
+#include "MonsterBullet_2.h"
 
 CMutationEvilSoul::CMutationEvilSoul(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CMonster(pGraphicDev), m_eHead(HEAD_FRONT)
+	: CMonster(pGraphicDev), m_eHead(HEAD_FRONT), m_Count(0)
 {
 }
 
 CMutationEvilSoul::CMutationEvilSoul(const CMutationEvilSoul& rhs)
-	: CMonster(rhs), m_eHead(HEAD_FRONT)
+	: CMonster(rhs), m_eHead(HEAD_FRONT), m_Count(0)
 {
 }
 
@@ -22,7 +23,7 @@ HRESULT CMutationEvilSoul::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eName = NAME_MUTATION;
 
-	m_pTransformCom->Set_Pos(rand() % 50, 1.f, rand() % 50);
+	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
 	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;
@@ -41,6 +42,7 @@ _int CMutationEvilSoul::Update_GameObject(const _float& fTimeDelta)
 	_vec3	vPlayerPos;
 	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 
+	Change_State();
 	Head_Check((m_pTransformCom->Patrol_Map(m_fSpeed, fTimeDelta)));
 
 	return 0;
@@ -55,6 +57,8 @@ void CMutationEvilSoul::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
 
 	if (HEAD_FRONT == m_eHead)
 	{
@@ -68,7 +72,7 @@ void CMutationEvilSoul::Render_GameObject()
 	}
 
 	m_pBufferCom->Render_Buffer();
-
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
 }
@@ -120,8 +124,12 @@ void CMutationEvilSoul::SetUp_OnTerrain(void)
 
 void CMutationEvilSoul::Change_State(void)
 {
-	if (0.f == m_fFrame)
+	if ((0.f == m_fFrame) && (5 == m_Count))
+	{
 		m_eState = MONSTER_ATTACK;
+		m_Count = 0;
+		Create_Bullet();
+	}
 }
 
 void CMutationEvilSoul::Frame_Check(const _float& fTimeDelta)
@@ -134,6 +142,7 @@ void CMutationEvilSoul::Frame_Check(const _float& fTimeDelta)
 		{
 			m_fFrame = 0.f;
 			m_bCheck = false;
+			m_Count++;
 		}
 	}
 
@@ -171,6 +180,22 @@ void CMutationEvilSoul::Head_Check(const _vec3 vDir)
 	if (0.f < vDir.x)
 	{
 		m_pTransformCom->Reverse_Scale_x();
+	}
+}
+
+
+HRESULT CMutationEvilSoul::Create_Bullet(void)
+{
+	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
+
+	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+	CGameObject* pBulletObject = nullptr;
+
+	for (size_t i = 0; i < 8; i++)
+	{
+		pBulletObject = CMonsterBullet_2::Create(m_pGraphicDev, vMonster_Pos, (i + 1));
+		NULL_CHECK(pBulletObject);
+		pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
 	}
 }
 

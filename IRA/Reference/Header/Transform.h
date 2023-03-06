@@ -60,13 +60,14 @@ public:
 
 
 	void					Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta, const MONSTER_NAME m_eName);
+	void					Bullet_Move(const _vec3 _Dir, const _float& fSpeed, const _float& fTimeDelta, _int iDirCount);
 	_vec3					Patrol_Map(const _float& fSpeed, const _float& fTimeDelta);
 	void					Reverse_Scale_x(void);
 	void					UpdatePos_OnWorld(void);
 	const	_matrix*		Compute_LookAtTarget(const _vec3* pTargetPos);
 
+	void					Ui_Print(void);
 
-	
 public:
 	HRESULT		Ready_Transform(void);
 	virtual _int Update_Component(const _float& fTimeDelta) override;
@@ -86,6 +87,7 @@ public:
 
 private:
 	_vec3		m_vPatrolTarget;
+	_vec3		m_vBulletTarget = {0, 0, 0};
 
 private:
 	virtual void Free(void) override;

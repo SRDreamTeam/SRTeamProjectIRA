@@ -55,22 +55,30 @@ _uint CLoading::Loading_ForStage(void)
 {
 	Set_String(L"Texture Loading.....");
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
-	// 준석 추가함 (23.03.02) 슬라임
+#pragma region Monster_Texture
+	// 슬라임_일반 충돌형_1
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_GreenEvilSlime_Move", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_GreenEvilSlime_Move_0%d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_GreenEvilSlime_Attack", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_GreenEvilSlime_Attack_0%d.png", 9)), E_FAIL);
-	
-	// 준석 추가함 (23.03.03) 이블소울
+	// 이블소울_일반 원거리형_1
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_EvilSoul_45_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_Lv2_EvilSoul_Stand_045_0%d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_EvilSoul_45_Move", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_Lv2_EvilSoul_Move_045_0%d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_EvilSoul_135_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_Lv2_EvilSoul_Stand_135_0%d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_EvilSoul_135_Move", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_Lv2_EvilSoul_Move_135_0%d.png", 7)), E_FAIL);
-
-	// 준석 추가함 (23.03.04) 뮤턴트 이블소울
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Monster_Bullet_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MonsterBullet/Spr_Bullet_Deva_Circle_White_0%d.png", 7)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Monster_Bullet_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MonsterBullet/Spr_Bullet_SwordShot_White_0%d.png", 7)), E_FAIL);
+	// 뮤턴트 이블소울_변형 원거리형_1
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_EvilSoul_45_All", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_MutationEvilSoul_Stand_045_0%d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_EvilSoul_135_All", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_MutationEvilSoul_Stand_135_0%d.png", 7)), E_FAIL);
+#pragma endregion
+
+#pragma region Ui_Texture
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_FieldHp", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Ui_Front/Spr_Ui_FieldHp.png")), E_FAIL);
+#pragma endregion
+
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_Vanish", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_Vanish/Spr_Bullet_Deva_Circle_White_0%d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Doewole_Body", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Boss_Dowewole/Boss_DowewoleBody/Up_FaceOn/Spr_Boss_DoewoleBody_Up_FaceOn_%d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Doewole_Claw", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Boss_Dowewole/Boss_DowewoleClaw/Stand/Spr_Boss_DoewoleClaw_Stand_%d.png", 10)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_Vanish", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_Vanish/Spr_Effect_No051_Vanish_%d.png", 6)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_Vanish", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_Vanish/Spr_Effect_No051_Vanish_%d.png", 6)), E_FAIL);
 
 #pragma region Player_Texture
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Stand_000", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Stand/Spr_Yeon_Stand_000_0%d.png",8)), E_FAIL);

@@ -1,5 +1,5 @@
 #pragma once
-#include "Monster.h"
+#include "Pui.h"
 
 BEGIN(Engine)
 
@@ -10,12 +10,12 @@ class CCalculator;
 
 END
 
-class CMutationEvilSoul : public CMonster
+class CFrontUi_Hp : public CPui
 {
 private:
-	explicit CMutationEvilSoul(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CMutationEvilSoul(const CMutationEvilSoul& rhs);
-	virtual ~CMutationEvilSoul();
+	explicit CFrontUi_Hp(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CFrontUi_Hp(const CFrontUi_Hp& rhs);
+	virtual ~CFrontUi_Hp();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -29,18 +29,15 @@ private:
 	virtual void	Change_State(void) override;
 	virtual void	Frame_Check(const _float& fTimeDelta) override;
 
-	void	Head_Check(const _vec3	vDir);
-	HRESULT	Create_Bullet(void);
-
-
 public:
-	static CMutationEvilSoul* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CFrontUi_Hp* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	//CTexture* m_pTextureCom_135_1;	//사용 안함
-	//CTexture* m_pTextureCom_135_2;
-	MONSTER_HEAD	m_eHead;
-	_int			m_Count;
+	//View
+	//_vec3	m_vAxis[3];
+
+	_int	iMax_Hp;
+	_int	iNow_Hp;
 
 private:
 	virtual void Free(void) override;
