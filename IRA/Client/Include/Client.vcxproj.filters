@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="00. MainApp">
+      <UniqueIdentifier>{ec9abb72-21bc-457a-aa0d-b3714962d634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene">
+      <UniqueIdentifier>{e92fdd27-2885-4fa7-8f6d-ba1a0b77023c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo">
+      <UniqueIdentifier>{f8facf17-efd8-44b8-b991-fb14693f4a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject">
+      <UniqueIdentifier>{1ff9a701-33e6-4731-a9d5-80711e942c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\01. Stage">
+      <UniqueIdentifier>{46af5f2a-93cf-4f4b-b8c7-93ad1a3b1099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\02. Loading">
+      <UniqueIdentifier>{918f0821-f4e5-4bc0-ac9f-aa5cb5d3c6ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Logo">
+      <UniqueIdentifier>{6db44654-18d1-4e1c-8f01-0f9a267f3fcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Logo\00. BackGround">
+      <UniqueIdentifier>{7afaa51b-be9c-4ba2-83f7-74ec72d1692b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage">
+      <UniqueIdentifier>{54e9ffbb-12c5-4fb1-b035-74d36677ca99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Public">
+      <UniqueIdentifier>{87284d43-9562-4fe4-a2bb-10110fb4f190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Public\00. DynamicCamera">
+      <UniqueIdentifier>{67d523a0-0deb-42ed-bd13-3b92601bbb6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player">
+      <UniqueIdentifier>{cb9e5f12-cd64-4569-8f93-857532d69389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster">
+      <UniqueIdentifier>{6e9c756d-7b8f-40b1-9fcb-793e2a078847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\02. Terrain">
+      <UniqueIdentifier>{5fb0d45f-b1fd-4740-93f4-fa1a6e648e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Public\01. StaticCamera">
+      <UniqueIdentifier>{cef2bf03-51cf-40fb-891e-e3c8be50eb3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\03. SkyBox">
+      <UniqueIdentifier>{32b87619-5c66-438a-a7ca-a27699e5dda9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss">
+      <UniqueIdentifier>{b34ae7ac-6565-446d-9250-93072dadc6e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Docheol%28도철%29">
+      <UniqueIdentifier>{cff878e1-735b-4958-ab82-96db3b9edff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29">
+      <UniqueIdentifier>{5b2c8789-60a6-45fe-b31f-acfa35e2e283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Body">
+      <UniqueIdentifier>{17fcc34f-c011-46b5-bc78-0600119e1857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_LeftClaw">
+      <UniqueIdentifier>{80a76e5c-2c6f-4ab2-99bd-5612d101fc29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw">
+      <UniqueIdentifier>{17466def-7b60-49c5-b7da-c2f69eaf13f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Shadow">
+      <UniqueIdentifier>{807adef6-901a-454e-943a-f5b035993262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect">
+      <UniqueIdentifier>{f01d1408-2754-4e55-95a8-41304389107a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole_Vanish">
+      <UniqueIdentifier>{f5f187b6-5535-44df-9a28-78264420821b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster\Normal">
+      <UniqueIdentifier>{30b8516d-e1be-4034-bfab-9daafefb3e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster\Normal\01. GreenEvilSlime">
+      <UniqueIdentifier>{ada8c2d0-e007-4c6f-8eb2-208acf9bc111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster\Normal\02. EvilSoul">
+      <UniqueIdentifier>{1ff17b45-7bd4-411c-9a67-8d97e4bf6e64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\01. Monster\Normal\03. MutationEvilSoul">
+      <UniqueIdentifier>{559a6513-8043-422e-b8b7-16fd337233fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet">
+      <UniqueIdentifier>{c973a802-feaa-463f-acb4-04848cd12e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\00.Ghost">
+      <UniqueIdentifier>{be1bd0ad-ef2d-47b5-9590-ab0590e6ecdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild">
+      <UniqueIdentifier>{4fb0c3ec-0201-4658-8aae-9fb7b443bfc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\02. MonsterBullet">
+      <UniqueIdentifier>{b1ff82c3-5c0b-4a09-8163-ced23f724f8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. PUI">
+      <UniqueIdentifier>{68966fc0-0041-41c6-96b5-8add31f163f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. PUI\00. MenuUi">
+      <UniqueIdentifier>{cceed953-0c28-4d6c-b559-8e3f891b0911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. PUI\01. FrontUi">
+      <UniqueIdentifier>{99b687eb-a21d-4fde-94bd-1063bbe03b9e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainApp.h">
+      <Filter>00. MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Logo.h">
+      <Filter>01. Scene\00. Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BackGround.h">
+      <Filter>02. GameObject\Logo\00. BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Player.h">
+      <Filter>02. GameObject\Stage\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Monster.h">
+      <Filter>02. GameObject\Stage\01. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Terrain.h">
+      <Filter>02. GameObject\Stage\02. Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Stage.h">
+      <Filter>01. Scene\01. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Loading.h">
+      <Filter>01. Scene\02. Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DynamicCamera.h">
+      <Filter>02. GameObject\Public\00. DynamicCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticCamera.h">
+      <Filter>02. GameObject\Public\01. StaticCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SkyBox.h">
+      <Filter>02. GameObject\Stage\03. SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Ghost.h">
+      <Filter>02. GameObject\Stage\00. Player\00.Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GhostChild.h">
+      <Filter>02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Boss.h">
+      <Filter>02. GameObject\Stage\04. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_Body.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Body</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_Shadow.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_LeftClaw.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_LeftClaw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Doewole_RightClaw.h">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect.h">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_Vanish.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole_Vanish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\GreenEvilSlime.h">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\01. GreenEvilSlime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\EvilSoul.h">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\02. EvilSoul</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MutationEvilSoul.h">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\03. MutationEvilSoul</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bullet.h">
+      <Filter>02. GameObject\Stage\04. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MonsterBullet.h">
+      <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MonsterBullet_2.h">
+      <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Pui.h">
+      <Filter>02. GameObject\Stage\09. PUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FrontUi_Hp.h">
+      <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainApp.cpp">
+      <Filter>00. MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Logo.cpp">
+      <Filter>01. Scene\00. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BackGround.cpp">
+      <Filter>02. GameObject\Logo\00. BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player.cpp">
+      <Filter>02. GameObject\Stage\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. GameObject\Stage\01. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Terrain.cpp">
+      <Filter>02. GameObject\Stage\02. Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage.cpp">
+      <Filter>01. Scene\01. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Loading.cpp">
+      <Filter>01. Scene\02. Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicCamera.cpp">
+      <Filter>02. GameObject\Public\00. DynamicCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticCamera.cpp">
+      <Filter>02. GameObject\Public\01. StaticCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SkyBox.cpp">
+      <Filter>02. GameObject\Stage\03. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Boss.cpp">
+      <Filter>02. GameObject\Stage\04. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole_Body.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Body</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole_Shadow.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole_LeftClaw.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_LeftClaw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Doewole_RightClaw.cpp">
+      <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect.cpp">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole_Vanish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GreenEvilSlime.cpp">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\01. GreenEvilSlime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EvilSoul.cpp">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\02. EvilSoul</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MutationEvilSoul.cpp">
+      <Filter>02. GameObject\Stage\01. Monster\Normal\03. MutationEvilSoul</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bullet.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ghost.cpp">
+      <Filter>02. GameObject\Stage\00. Player\00.Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\GhostChild.cpp">
+      <Filter>02. GameObject\Stage\00. Player\00.Ghost\00.GhostChild</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterBullet.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterBullet_2.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Pui.cpp">
+      <Filter>02. GameObject\Stage\09. PUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FrontUi_Hp.cpp">
+      <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Client.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
