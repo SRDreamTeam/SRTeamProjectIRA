@@ -68,6 +68,8 @@ public:
 
 	void					Ui_Print(void);
 
+	void                    Arrow_Move(void);
+
 public:
 	HRESULT		Ready_Transform(void);
 	virtual _int Update_Component(const _float& fTimeDelta) override;
@@ -81,7 +83,6 @@ public:
 
 	
 public:
-
 	static CTransform*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent* Clone(void) override;
 
@@ -90,6 +91,7 @@ private:
 	_vec3		m_vBulletTarget = {0, 0, 0};
 
 private:
+
 	virtual void Free(void) override;
 
 };

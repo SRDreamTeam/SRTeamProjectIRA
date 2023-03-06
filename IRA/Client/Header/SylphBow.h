@@ -1,30 +1,34 @@
 #pragma once
-#include "Arrow.h"
+#include "Bow.h"
 
 BEGIN(Engine)
 
 class CRcTex;
 class CTransform;
 class CTexture;
-class CCalculator;
+
 
 END
 
-class CSylphArrow : public CArrow
+class CSylphBow : public CBow
 {
 
 	enum { ARROW_IDLE, ARROW_DEATH, ARROW_END };
 
 private:
-	explicit CSylphArrow(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CSylphArrow(const CSylphArrow& rhs);
-	virtual ~CSylphArrow();
+	explicit CSylphBow(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CSylphBow(const CSylphBow& rhs);
+	virtual ~CSylphBow();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
+
+public:
+	void    Update_Bow_State();
+
 
 private:
 	virtual HRESULT	Add_Component(void) override;					
@@ -33,7 +37,7 @@ private:
 	virtual void	Frame_Check(const _float& fTimeDelta) override;
 
 public:
-	static CSylphArrow* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec3 vDir,_float Angle);
+	static CSylphBow* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _float Angle);
 
 private:
 	virtual void Free(void) override;

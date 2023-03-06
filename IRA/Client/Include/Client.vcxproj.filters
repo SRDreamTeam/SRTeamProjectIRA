@@ -139,8 +139,14 @@
     <Filter Include="02. GameObject\Stage\00. Player\02. Arrow">
       <UniqueIdentifier>{7212b29b-9a49-4367-a30f-1e5e9412671d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow">
+    <Filter Include="02. GameObject\Stage\00. Player\01. Bow\00.SylphBow">
+      <UniqueIdentifier>{21576022-ecb1-4668-aa1a-4c50360444fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Arrow">
       <UniqueIdentifier>{087f1de0-a0e0-4b2c-9a98-9beb0eb9b4f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\01. Bow\00.SylphBow\00.SylphBowPair">
+      <UniqueIdentifier>{ef9af6bf-a187-4404-ac54-37f9c9f34006}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -259,7 +265,16 @@
       <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SylphArrow.h">
-      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow</Filter>
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bow.h">
+      <Filter>02. GameObject\Stage\00. Player\01. Bow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SylphBow.h">
+      <Filter>02. GameObject\Stage\00. Player\01. Bow\00.SylphBow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SylphBowPair.h">
+      <Filter>02. GameObject\Stage\00. Player\01. Bow\00.SylphBow\00.SylphBowPair</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -369,7 +384,16 @@
       <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SylphArrow.cpp">
-      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow</Filter>
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bow.cpp">
+      <Filter>02. GameObject\Stage\00. Player\01. Bow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SylphBow.cpp">
+      <Filter>02. GameObject\Stage\00. Player\01. Bow\00.SylphBow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SylphBowPair.cpp">
+      <Filter>02. GameObject\Stage\00. Player\01. Bow\00.SylphBow\00.SylphBowPair</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
