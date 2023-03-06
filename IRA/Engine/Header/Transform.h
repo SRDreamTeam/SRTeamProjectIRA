@@ -80,8 +80,8 @@ public:
 	_matrix			m_matWorld;
 
 	
-	
 public:
+
 	static CTransform*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent* Clone(void) override;
 

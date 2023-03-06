@@ -39,7 +39,7 @@ _int CEffect_Doewole_ChargeExplosion::Update_GameObject(const _float& fTimeDelta
 
 	m_fFrame += m_fMaxFrame * fTimeDelta;
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 	
 	__super::Update_GameObject(fTimeDelta);
 

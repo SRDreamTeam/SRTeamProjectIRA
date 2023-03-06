@@ -33,7 +33,7 @@ _int CDoewole_RightClaw::Update_GameObject(const _float& fTimeDelta)
 
 	CBoss::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	return 0;
 }

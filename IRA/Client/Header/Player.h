@@ -39,14 +39,25 @@ public:
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
 
+
+public:
+	_float Get_Dash_Frame(void) {
+		return m_fDashFrame;
+	}
+	int    Get_Anlge_State(void) {
+		return m_iAngleState;
+	}
+
+
 private:
 	HRESULT			Add_Component(void);
 	void			Key_Input(const _float& fTimeDelta);
 	void			SetUp_OnTerrain(void);
 	_vec3			Picking_OnTerrain(void);
 	void            Update_State();
-	_vec3           Get_World_Mouse(int x, int y);
+	_vec3           Get_World_Mouse();
 	void            Dash(const _float& fTimeDelta);
+	void            Fire_Arrow(void);;
 
 private:
 	CRcTex*			m_pBufferCom;
@@ -66,6 +77,7 @@ private:
 
 private:	
 	_float			m_fSpeed = 20.f;
+	_float			m_fDashSpeed = 2.f;
 
 	_float			m_fStandFrame = 0.f;
 	_float			m_fRunFrame = 0.f;
@@ -90,8 +102,14 @@ private:
 	_float          m_Dash_Time = 0.f;
 	bool            m_Is_Dash = false;
 
+	bool            m_Is_Fire_Arrow = false;
+	_float          m_Fire_Interver = 0.f;
+	_float          m_Fire_Speed = 2.f;
+
 	CCollider*		m_pColliderCom;
 	CSphereTex*		m_pSphereBufferCom;
+
+	_vec3           m_Mouse_Dir;
 	
 	
 

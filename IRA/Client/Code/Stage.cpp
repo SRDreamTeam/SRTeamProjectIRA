@@ -12,6 +12,7 @@
 #include "Doewole_LeftClaw.h"
 #include "Doewole_RightClaw.h"
 #include "Effect_Doewole_Vanish.h"
+#include "Ghost.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -105,7 +106,11 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject , OBJ_PLAYER), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject, OBJ_PLAYER), E_FAIL);
+
+	pGameObject = CGhost::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Ghost", pGameObject, OBJ_GHOST), E_FAIL);
 
 	CGameObject* pDoewole = CDoewole::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pDoewole, E_FAIL);
@@ -155,6 +160,8 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CMutationEvilSoul::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_5", pGameObject, OBJ_MONSTER), E_FAIL);
+
+	
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 

@@ -97,6 +97,8 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 		}
 	}
 
+	
+
 	return iResult;
 }
 
@@ -119,7 +121,7 @@ void CLayer::LateUpdate_Layer(void)
 
 }
 
-CLayer * CLayer::Create(void)
+CLayer* CLayer::Create(void)
 {
 	CLayer *	pInstance = new CLayer;
 

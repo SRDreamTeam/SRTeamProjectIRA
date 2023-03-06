@@ -34,7 +34,7 @@ _int CMutationEvilSoul::Update_GameObject(const _float& fTimeDelta)
 	Frame_Check(fTimeDelta);
 	SetUp_OnTerrain();
 	__super::Update_GameObject(fTimeDelta);
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	
 
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
@@ -44,6 +44,8 @@ _int CMutationEvilSoul::Update_GameObject(const _float& fTimeDelta)
 
 	Change_State();
 	Head_Check((m_pTransformCom->Patrol_Map(m_fSpeed, fTimeDelta)));
+
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	return 0;
 }

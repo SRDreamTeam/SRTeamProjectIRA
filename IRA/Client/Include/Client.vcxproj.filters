@@ -133,6 +133,15 @@
     <Filter Include="02. GameObject\Stage\09. PUI\01. FrontUi">
       <UniqueIdentifier>{99b687eb-a21d-4fde-94bd-1063bbe03b9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\01. Bow">
+      <UniqueIdentifier>{8adc4901-34ff-4323-8983-872eae011c15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\02. Arrow">
+      <UniqueIdentifier>{7212b29b-9a49-4367-a30f-1e5e9412671d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow">
+      <UniqueIdentifier>{087f1de0-a0e0-4b2c-9a98-9beb0eb9b4f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -246,6 +255,12 @@
     <ClInclude Include="..\Header\FrontUi_Hp.h">
       <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Arrow.h">
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SylphArrow.h">
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -349,6 +364,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\FrontUi_Hp.cpp">
       <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Arrow.cpp">
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SylphArrow.cpp">
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
