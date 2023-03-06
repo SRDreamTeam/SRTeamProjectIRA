@@ -21,9 +21,9 @@ HRESULT CEffect_Doewole_Vanish::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 4.f , 4.f, 4.f };
+	m_pTransformCom->m_vScale = { 15.f , 15.f, 15.f };
 
-	m_fMaxFrame = 6.f;
+	m_fMaxFrame = 5.f;
 
 	CTransform* pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole_Body", L"Proto_Transform", ID_DYNAMIC));
 
@@ -37,12 +37,11 @@ _int CEffect_Doewole_Vanish::Update_GameObject(const _float& fTimeDelta)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_fAccTime += fTimeDelta;
-
-	if (m_fAccTime > 1.f)
-		m_bDead = true;
-
 	__super::Update_GameObject(fTimeDelta);
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+
+	m_fFrame += m_fMaxFrame * fTimeDelta;
 
 	return OBJ_NONE;
 }
@@ -50,6 +49,12 @@ _int CEffect_Doewole_Vanish::Update_GameObject(const _float& fTimeDelta)
 void CEffect_Doewole_Vanish::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	if (m_fFrame > m_fMaxFrame)
+	{
+		m_bDead = true;
+		m_fFrame = m_fMaxFrame;
+	}
 }
 
 void CEffect_Doewole_Vanish::Render_GameObject()

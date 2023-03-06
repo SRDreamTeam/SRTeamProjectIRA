@@ -24,16 +24,7 @@ CEffect::~CEffect()
 
 _int CEffect::Update_GameObject(const _float& fTimeDelta)
 {
-
-
-	m_fFrame += m_fMaxFrame * fTimeDelta;
-
-	if (m_fFrame > m_fMaxFrame)
-		m_fFrame = 0.f;
-
 	__super::Update_GameObject(fTimeDelta);
-
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
 }
