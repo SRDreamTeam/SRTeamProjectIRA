@@ -112,6 +112,15 @@
     <Filter Include="02. GameObject\Stage\04. Bullet\02. MonsterBullet">
       <UniqueIdentifier>{b1ff82c3-5c0b-4a09-8163-ced23f724f8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\09. PUI">
+      <UniqueIdentifier>{68966fc0-0041-41c6-96b5-8add31f163f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. PUI\00. MenuUi">
+      <UniqueIdentifier>{cceed953-0c28-4d6c-b559-8e3f891b0911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. PUI\01. FrontUi">
+      <UniqueIdentifier>{99b687eb-a21d-4fde-94bd-1063bbe03b9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -207,6 +216,15 @@
     <ClInclude Include="..\Header\MonsterBullet.h">
       <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MonsterBullet_2.h">
+      <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Pui.h">
+      <Filter>02. GameObject\Stage\09. PUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FrontUi_Hp.h">
+      <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -292,6 +310,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\MonsterBullet.cpp">
       <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterBullet_2.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Pui.cpp">
+      <Filter>02. GameObject\Stage\09. PUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FrontUi_Hp.cpp">
+      <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

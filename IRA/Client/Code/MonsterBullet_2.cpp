@@ -1,22 +1,23 @@
 #include "stdafx.h"
-#include "..\Header\MonsterBullet.h"
+#include "..\Header\MonsterBullet_2.h"
 #include "Export_Function.h"
 
-CMonsterBullet::CMonsterBullet(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CBullet(pGraphicDev)
+CMonsterBullet_2::CMonsterBullet_2(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CBullet(pGraphicDev), m_iDirCount(0)
 {
 }
 
-CMonsterBullet::CMonsterBullet(const CMonsterBullet& rhs)
-	: CBullet(rhs)
+CMonsterBullet_2::CMonsterBullet_2(const CMonsterBullet_2& rhs)
+	: CBullet(rhs), m_iDirCount(0)
 {
 }
 
-CMonsterBullet::~CMonsterBullet()
+CMonsterBullet_2::~CMonsterBullet_2()
 {
 }
 
-HRESULT CMonsterBullet::Ready_GameObject(void)
+
+HRESULT CMonsterBullet_2::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -25,8 +26,8 @@ HRESULT CMonsterBullet::Ready_GameObject(void)
 	return S_OK;
 }
 
-_int CMonsterBullet::Update_GameObject(const _float& fTimeDelta)
-{	
+_int CMonsterBullet_2::Update_GameObject(const _float& fTimeDelta)
+{
 	if (m_bDead)
 		return OBJ_DEAD;
 
@@ -45,19 +46,19 @@ _int CMonsterBullet::Update_GameObject(const _float& fTimeDelta)
 		m_bDead = true;
 	}
 
-	m_pTransformCom->Bullet_Move(vDir, m_fSpeed, fTimeDelta, 0);
+	m_pTransformCom->Bullet_Move(vDir, m_fSpeed, fTimeDelta, m_iDirCount);
 	SetUp_OnTerrain();
 	Distance_Dead_Check();
 
 	return OBJ_NOEVENT;
 }
 
-void CMonsterBullet::LateUpdate_GameObject()
+void CMonsterBullet_2::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CMonsterBullet::Render_GameObject()
+void CMonsterBullet_2::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -70,8 +71,8 @@ void CMonsterBullet::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CMonsterBullet::Add_Component(void)
-{	
+HRESULT CMonsterBullet_2::Add_Component(void)
+{
 	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_ProtoComponent(L"Proto_RcTex"));
@@ -82,14 +83,14 @@ HRESULT CMonsterBullet::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Monster_Bullet_1"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Monster_Bullet_2"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Monster_Bullet_1", pComponent });
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Monster_Bullet_2", pComponent });
 
 	return S_OK;
 }
 
-void CMonsterBullet::SetUp_OnTerrain(void)
+void CMonsterBullet_2::SetUp_OnTerrain(void)
 {
 	_vec3		vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -98,11 +99,11 @@ void CMonsterBullet::SetUp_OnTerrain(void)
 	m_pTransformCom->Set_Pos(vPos.x, 3.f, vPos.z);
 }
 
-void CMonsterBullet::Change_State(void)
+void CMonsterBullet_2::Change_State(void)
 {
 }
 
-void CMonsterBullet::Frame_Check(const _float& fTimeDelta)
+void CMonsterBullet_2::Frame_Check(const _float& fTimeDelta)
 {
 	if (m_eState == BULLET_IDLE)
 	{
@@ -116,7 +117,7 @@ void CMonsterBullet::Frame_Check(const _float& fTimeDelta)
 	}
 }
 
-void CMonsterBullet::Distance_Dead_Check(void)
+void CMonsterBullet_2::Distance_Dead_Check(void)
 {
 	_vec3		vPosCheck;
 
@@ -128,9 +129,9 @@ void CMonsterBullet::Distance_Dead_Check(void)
 	}
 }
 
-CMonsterBullet* CMonsterBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _bool _Target_Check)
+CMonsterBullet_2* CMonsterBullet_2::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _int _Dir_Count)
 {
-	CMonsterBullet* pInstance = new CMonsterBullet(pGraphicDev);
+	CMonsterBullet_2* pInstance = new CMonsterBullet_2(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -138,20 +139,20 @@ CMonsterBullet* CMonsterBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Mon
 		return nullptr;
 	}
 
-	pInstance->Set_FireInfo(_Monster_Pos, _Target_Check);
+	pInstance->Set_FireInfo(_Monster_Pos, _Dir_Count);
 
 	return pInstance;
 }
 
-void CMonsterBullet::Set_FireInfo(_vec3 _Monster_Pos, _bool _Target_Check)
+void CMonsterBullet_2::Set_FireInfo(_vec3 _Monster_Pos, _int _Dir_Count)
 {
 	m_pTransformCom->m_vInfo[INFO_POS] = _Monster_Pos;
 	m_vOriginPos = _Monster_Pos;
-	m_bCheck = _Target_Check;
+	m_iDirCount = _Dir_Count;
 	m_pTransformCom->UpdatePos_OnWorld();
 }
 
-void CMonsterBullet::Free(void)
+void CMonsterBullet_2::Free(void)
 {
 	__super::Free();
 }

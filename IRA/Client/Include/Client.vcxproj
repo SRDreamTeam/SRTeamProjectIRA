@@ -169,6 +169,7 @@
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h" />
     <ClInclude Include="..\Header\EvilSoul.h" />
+    <ClInclude Include="..\Header\FrontUi_Hp.h" />
     <ClInclude Include="..\Header\GreenEvilSlime.h" />
     <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\GhostChild.h" />
@@ -177,8 +178,10 @@
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterBullet.h" />
+    <ClInclude Include="..\Header\MonsterBullet_2.h" />
     <ClInclude Include="..\Header\MutationEvilSoul.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\Pui.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
@@ -199,6 +202,7 @@
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\EvilSoul.cpp" />
+    <ClCompile Include="..\Code\FrontUi_Hp.cpp" />
     <ClCompile Include="..\Code\GreenEvilSlime.cpp" />
     <ClCompile Include="..\Code\Ghost.cpp" />
     <ClCompile Include="..\Code\GhostChild.cpp" />
@@ -209,8 +213,10 @@
     <ClCompile Include="..\Code\MainApp.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterBullet.cpp" />
+    <ClCompile Include="..\Code\MonsterBullet_2.cpp" />
     <ClCompile Include="..\Code\MutationEvilSoul.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\Pui.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />

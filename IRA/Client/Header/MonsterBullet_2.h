@@ -1,22 +1,12 @@
 #pragma once
 #include "Bullet.h"
 
-BEGIN(Engine)
-
-class CRcTex;
-class CTransform;
-class CTexture;
-class CCalculator;
-class CCollider;
-
-END
-
-class CMonsterBullet : public CBullet
-{	
+class CMonsterBullet_2 : public CBullet
+{
 protected:
-	explicit CMonsterBullet(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CMonsterBullet(const CMonsterBullet& rhs);
-	virtual ~CMonsterBullet();
+	explicit CMonsterBullet_2(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CMonsterBullet_2(const CMonsterBullet_2& rhs);
+	virtual ~CMonsterBullet_2();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -32,13 +22,14 @@ protected:
 	virtual void Distance_Dead_Check(void) override;
 
 public:
-	static CMonsterBullet* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _bool _Target_Check);
+	static CMonsterBullet_2* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _int _Dir_Count);
 
 private:
-	void Set_FireInfo(_vec3 _Monster_Pos, _bool _Target_Check);
+	void Set_FireInfo(_vec3 _Monster_Pos, _int _Dir_Count);
 
+private:
+	_int	m_iDirCount;
 private:
 	virtual void Free(void) override;
-
 };
 
