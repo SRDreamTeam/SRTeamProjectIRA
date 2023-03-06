@@ -4,13 +4,13 @@
 
 CDoewole_Body::CDoewole_Body(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CDoewole(pGraphicDev)
-
 {
 }
 
 CDoewole_Body::CDoewole_Body(const CDoewole_Body & rhs)
 	: CDoewole(rhs.m_pGraphicDev)
 {
+
 }
 
 CDoewole_Body::~CDoewole_Body()
@@ -32,11 +32,6 @@ HRESULT CDoewole_Body::Ready_GameObject(void)
 _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 {
 	State_Update(fTimeDelta);
-
-	m_fFrame += m_fMaxFrame * fTimeDelta;
-
-	if (m_fMaxFrame < m_fFrame)
-		m_fFrame = 0.f;
 
 	CBoss::Update_GameObject(fTimeDelta);
 
@@ -64,7 +59,13 @@ void CDoewole_Body::Render_GameObject()
 	if (m_fAlpha < 0.f)
 		m_fAlpha = 0.f;*/
 
-	m_pTextureCom->Set_Texture((_uint)m_fFrame);
+	if (m_eCurState == CDoewole::IDLE)
+		m_pTextureCom[STAND]->Set_Texture((_uint)m_fFrame);
+
+	else if (m_eCurState == CDoewole::STANDARD_ATTACK || m_eCurState == CDoewole::OUTSTRECTH_ATTACK)
+		m_pTextureCom[STAND_FACEON]->Set_Texture((_uint)m_fFrame);
+
+	
 	m_pBufferCom->Render_Buffer();
 	//m_pSphereBufferCom->Render_Buffer();
 
@@ -84,9 +85,13 @@ HRESULT CDoewole_Body::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Doewole_Body"));
+	pComponent = m_pTextureCom[STAND] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Doewole_Body_Stand"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body", pComponent });
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body_Stand", pComponent });
+
+	pComponent = m_pTextureCom[STAND_FACEON] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Doewole_Body_Stand_FaceOn"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body_Stand_FaceOn", pComponent });
 
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
@@ -105,6 +110,9 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 {
 	m_eCurState = dynamic_cast<CDoewole*>(m_pOwner)->Get_State();
 
+	if (m_eCurState != m_ePreState)
+		m_fFrame = 0.f;
+
 	switch (m_eCurState)
 	{
 	case CDoewole::IDLE:
@@ -113,17 +121,27 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 	case CDoewole::MOVE:
 		Move(fTimeDelta);
 		break;
+	case CDoewole::STANDARD_ATTACK:
+	case CDoewole::OUTSTRECTH_ATTACK:
+		Standard_Attack(fTimeDelta);
+		break;
 	case CDoewole::STATE_END:
 		break;
 	default:
 		break;
 	}
 
+	m_ePreState = m_eCurState;
 }
 
 void CDoewole_Body::Idle(const _float& fTimeDelta)
 {
 	m_bRender = true;
+
+	m_fFrame += m_fMaxFrame * fTimeDelta;
+
+	if (m_fMaxFrame < m_fFrame)
+		m_fFrame = 0.f;
 
 	// ================Doewole의 위치에 맞게 조정============
 	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
@@ -135,12 +153,34 @@ void CDoewole_Body::Idle(const _float& fTimeDelta)
 	
 	// =====================================================
 
-	m_fMaxFrame = 6.f;
+	m_fMaxFrame = 5.f;
 }
 
 void CDoewole_Body::Move(const _float& fTimeDelta)
 {
 	m_bRender = false;
+}
+
+void CDoewole_Body::Standard_Attack(const _float& fTimeDelta)
+{
+	m_bRender = true;
+
+	m_fFrame += m_fMaxFrame * fTimeDelta;
+
+	if (m_fMaxFrame < m_fFrame)
+		m_fFrame = 0.f;
+
+	// ================Doewole의 위치에 맞게 조정============
+	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK(pDoewoleTransformCom); 
+
+	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 10.f,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].z };
+
+	// =====================================================
+
+	m_fMaxFrame = 9.f;
 }
 
 CDoewole_Body * CDoewole_Body::Create(LPDIRECT3DDEVICE9 pGraphicDev)

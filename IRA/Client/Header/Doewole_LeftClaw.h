@@ -4,6 +4,8 @@
 
 class CDoewole_LeftClaw : public CDoewole
 {
+	enum { STAND, STANDARD_ATTACK, OUTSTRECTH_ATTACK, UP, TEX_END };
+
 private:
 	explicit CDoewole_LeftClaw(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CDoewole_LeftClaw(const CDoewole_LeftClaw& rhs);
@@ -21,6 +23,13 @@ public:
 
 private:
 	HRESULT			Add_Component(void);
+	void			State_Update(const _float& fTimeDelta);
+
+private:
+	void			Idle(const _float& fTimeDelta);
+	void			Move(const _float& fTimeDelta);
+	void			Standard_Attack(const _float& fTimeDelta);
+	void			OutStretch_Attack(const _float& fTimeDelta);
 
 public:
 	static CDoewole_LeftClaw*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -30,6 +39,12 @@ private:
 
 private:
 	CGameObject*					m_pOwner = nullptr;
+	CTexture*						m_pTextureCom[TEX_END];
+
+	_bool							m_bUp = false;
+	_bool							m_bDown = false;
+
+	_int							m_iReplayCnt = 0;
 
 };
 
