@@ -4,6 +4,7 @@
 #include "Ghost.h"
 #include "SylphArrow.h"
 #include "SylphBow.h"
+#include "Effect_Player_Bow_Pulse.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -708,6 +709,17 @@ void CPlayer::Fire_Arrow(void)
 
 
 	pGameLogicLayer->Add_BulletObject(OBJ_ARROW, pGameObject);
+
+
+
+	pGameObject = CEffect_Player_Bow_Pulse::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
+
+
 
 }
 

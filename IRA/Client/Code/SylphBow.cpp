@@ -105,7 +105,7 @@ void CSylphBow::Update_Bow_State()
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
 	pPlayerTransformCom->Get_Info(INFO_POS, &m_Bow_Pos);
 
-	m_pTransformCom->Set_Pos(m_Bow_Pos.x + 4.f, m_Bow_Pos.y + 2.2f +1.f, m_Bow_Pos.z - 2.f);
+	m_pTransformCom->Set_Pos(m_Bow_Pos.x + 4.f, m_Bow_Pos.y + 2.2f + 1.f, m_Bow_Pos.z - 2.f);
 
 
 
