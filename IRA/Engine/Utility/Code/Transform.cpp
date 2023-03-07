@@ -57,7 +57,7 @@ void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, c
 	}
 	if (m_eName == SOUL_BULLET)
 	{
-		D3DXMatrixScaling(&matScale, 2.f, 2.f, 1.f);
+		D3DXMatrixScaling(&matScale, 3.f, 3.f, 1.f);
 	}
 	D3DXMatrixTranslation(&matTrans,
 		m_vInfo[INFO_POS].x,
@@ -92,20 +92,20 @@ void CTransform::Bullet_Move(const _vec3 _Dir, const _float& fSpeed, const _floa
 
 		if (8 == iDirCount)
 		{
-			Temp.x = 0.f;;
+			Temp.x = 0.f;
 			Temp.y = 0.f;
 			Temp.z = float(sin(45 * iDirCount));
 		}
 		if (8 == iDirCount)
 		{
-			Temp.x = 0.f;;
+			Temp.x = 0.f;
 			Temp.y = 0.f;
 			Temp.z = float(sin(45 * iDirCount));
 		}
 
 		if (7 == iDirCount)
 		{
-			Temp.x = 0.f;;
+			Temp.x = 0.f;
 			Temp.y = 0.f;
 			Temp.z = float(sin(180));
 		}
@@ -167,7 +167,7 @@ void CTransform::Bullet_Move(const _vec3 _Dir, const _float& fSpeed, const _floa
 		}
 
 		_float	fRadian_Bullet = D3DXToRadian(Temp_Degree);
-		//D3DXMatrixRotationY(&matRot, fRadian_Bullet);
+
 		D3DXMatrixRotationYawPitchRoll(&matRot, fRadian_Bullet, D3DXToRadian(90), 0.f);
 
 		D3DXMatrixTranslation(&matTrans,
@@ -354,17 +354,47 @@ const _matrix * CTransform::Compute_LookAtTarget(const _vec3 * pTargetPos)
 												   D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
 }
 
-void CTransform::Ui_Print(void)
-{
-	D3DXMATRIX		matView, matProj; //직교투영 행렬
-
+void CTransform::Ui_Status_Print(_int _iHpNumber, _int _iUiNumber)
+{	
+	
+	_matrix		matScale, matRot, matTrans, matView, matProj;
 	D3DXMatrixIdentity(&m_matWorld); //월드행렬을 항등행렬로
 	D3DXMatrixIdentity(&matView);
-	D3DXMatrixOrthoLH(&matProj, 20.f, 20.f, 0.f, 20.f);
+	D3DXMatrixIdentity(&matProj);
+
+	D3DXMatrixLookAtLH(&matView, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 1), &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixOrthoLH(&matProj, 35.f, 35.f, 0.f, 1.f);
+	
+	switch (_iUiNumber)
+	{
+	case 1:
+		m_matWorld._41 = -(15.7f - ((_iHpNumber * 1.3f) - 1.3f));
+		m_matWorld._42 = 15.5f;
+		break;
+
+	case 2:
+		m_matWorld._41 = -(15.7f - ((_iHpNumber * 1.3f) - 1.3f));
+		m_matWorld._42 = 13.7f;
+		break;
+
+	case 3:
+		m_matWorld._41 = -(15.2f - ((_iHpNumber * 1.3f) - 1.3f));
+		m_matWorld._42 = 12.7f;
+		break;
+
+	case 4:
+		m_matWorld._41 = -(15.2f - ((_iHpNumber * 1.3f) - 1.3f));
+		m_matWorld._42 = 12.7f;
+		break;
+
+	default:
+		break;
+	}
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+
 }
 
 void CTransform::Arrow_Move(void)

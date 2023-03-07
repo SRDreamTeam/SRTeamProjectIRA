@@ -69,4 +69,12 @@ typedef	struct tagPlayerInfo
 
 
 
+typedef	struct tagFrontUiInfo
+{
+	_int		iNum;	//  FrontUi 에서 각 오브젝트들이 갖게 될 식별번호
+	_int		iMax;	// 부모 자식 모두 갖게 될 Max 값 ex) MaxHp
+	_int		iNow;	// 부모 자식 모두 갖게 될 Now 값 ex) NowHp
+
+}FRONTUI;
+
 END

@@ -124,13 +124,10 @@
     <Filter Include="02. GameObject\Stage\04. Bullet\02. MonsterBullet">
       <UniqueIdentifier>{b1ff82c3-5c0b-4a09-8163-ced23f724f8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\09. PUI">
+    <Filter Include="02. GameObject\Stage\09. FrontUi">
       <UniqueIdentifier>{68966fc0-0041-41c6-96b5-8add31f163f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\09. PUI\00. MenuUi">
-      <UniqueIdentifier>{cceed953-0c28-4d6c-b559-8e3f891b0911}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Stage\09. PUI\01. FrontUi">
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status">
       <UniqueIdentifier>{99b687eb-a21d-4fde-94bd-1063bbe03b9e}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Stage\00. Player\01. Bow">
@@ -171,6 +168,15 @@
     </Filter>
     <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge">
       <UniqueIdentifier>{5b8cdc17-5b82-417b-a962-99df72308db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\01. Status_Hp">
+      <UniqueIdentifier>{76271434-6a2c-4fe2-97d2-4c5af5312647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\02. Status_Energy">
+      <UniqueIdentifier>{4f582268-e583-41d5-80ea-1e384efed8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key">
+      <UniqueIdentifier>{0ecc862b-0458-4d81-b7f4-5665a9ec38f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -279,11 +285,20 @@
     <ClInclude Include="..\Header\MonsterBullet_2.h">
       <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Pui.h">
-      <Filter>02. GameObject\Stage\09. PUI</Filter>
+    <ClInclude Include="..\Header\FrontUi.h">
+      <Filter>02. GameObject\Stage\09. FrontUi</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\FrontUi_Hp.h">
-      <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
+    <ClInclude Include="..\Header\Status.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\01.Status</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Status_Energy.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\02. Status_Energy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Status_Hp.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\01. Status_Hp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Status_Key.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
@@ -413,11 +428,20 @@
     <ClCompile Include="..\Code\MonsterBullet_2.cpp">
       <Filter>02. GameObject\Stage\04. Bullet\02. MonsterBullet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Pui.cpp">
-      <Filter>02. GameObject\Stage\09. PUI</Filter>
+    <ClCompile Include="..\Code\FrontUi.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\FrontUi_Hp.cpp">
-      <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
+    <ClCompile Include="..\Code\Status.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\01.Status</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Status_Energy.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\02. Status_Energy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Status_Hp.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\01. Status_Hp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Status_Key.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>

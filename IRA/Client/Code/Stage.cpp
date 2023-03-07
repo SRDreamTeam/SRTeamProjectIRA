@@ -88,11 +88,11 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject , OBJ_NONE), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject , OBJ_ETC), E_FAIL);
 
 	pGameObject = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject , OBJ_NONE), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject , OBJ_ETC), E_FAIL);
 		
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 
@@ -105,6 +105,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*	pGameObject = nullptr;
+	CGameObject*	pBulletObject = nullptr;
 
 	
 	pGameObject = CPlayer::Create(m_pGraphicDev);
@@ -147,11 +148,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	dynamic_cast<CDoewole_Shadow*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Shadow", pGameObject, OBJ_NONE), E_FAIL);
 	// 
-	// 준석 추가 (23.03.04)
-	//pGameObject = CFrontUi_Hp::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI_Front_Hp", pGameObject, OBJ_UI), E_FAIL);
-
 	pGameObject = CGreenEvilSlime::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject, OBJ_MONSTER), E_FAIL);
@@ -173,6 +169,14 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_5", pGameObject, OBJ_MONSTER), E_FAIL);
 
 	
+
+	pGameObject = CStatus::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Status_1", pGameObject, OBJ_MONSTER), E_FAIL);
+
+	//pGameObject = CStatus_Hp::Create(m_pGraphicDev,1);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Status_1", pGameObject, OBJ_MONSTER), E_FAIL);
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 

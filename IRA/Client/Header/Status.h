@@ -11,12 +11,12 @@ class CCalculator;
 
 END
 
-class CPui : public Engine::CGameObject
+class CStatus : public Engine::CGameObject
 {
 protected:
-	explicit CPui(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CPui(const CPui& rhs);
-	virtual ~CPui();
+	explicit CStatus(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CStatus(const CStatus& rhs);
+	virtual ~CStatus();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -25,19 +25,25 @@ public:
 	virtual void Render_GameObject() override;
 
 protected:
-	virtual HRESULT	Add_Component(void)PURE;
-	virtual void SetUp_OnTerrain(void)PURE;
-	virtual void Change_State(void)PURE;
-	virtual void Frame_Check(const _float& fTimeDelta)PURE;
+	HRESULT	Add_Component(void);
+	void	Change_State(void);
+	void	Frame_Check(const _float& fTimeDelta);
+
+private:
+	HRESULT	Create_StatusUi(void);
+
+public:
+	static CStatus* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 protected:
-	CRcTex* m_pBufferCom;
-	CTransform* m_pTransformCom;
-	CTexture* m_pTextureCom;
+	CRcTex*			m_pBufferCom;
+	CTransform*		m_pTransformCom;
+	CTexture*		m_pTextureCom;
 
 	_float			m_fFrame;
 	_bool			m_bCheck;
-	UI_CATEGORY		m_eCategory;
+
+	FRONTUI*		m_pINFO;
 
 protected:
 	virtual void Free(void) override;
