@@ -8,7 +8,8 @@
 #include "GreenEvilSlime.h"
 #include "EvilSoul.h"
 #include "MutationEvilSoul.h"
-#include "FrontUi_Hp.h"
+#include "Status.h"
+#include "Status_Hp.h"
 
 #include "Terrain.h"
 

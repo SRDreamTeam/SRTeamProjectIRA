@@ -23,7 +23,7 @@ HRESULT CMutationEvilSoul::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eName = NAME_MUTATION;
 
-	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
+	m_pTransformCom->Set_Pos(_float(rand() % 100), 1.f, _float(rand() % 100));
 	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;
@@ -196,9 +196,10 @@ HRESULT CMutationEvilSoul::Create_Bullet(void)
 	for (size_t i = 0; i < 8; i++)
 	{
 		pBulletObject = CMonsterBullet_2::Create(m_pGraphicDev, vMonster_Pos, (i + 1));
-		NULL_CHECK(pBulletObject);
-		pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+		NULL_CHECK_RETURN(pBulletObject, -1);
+		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
 	}
+	return S_OK;
 }
 
 CMutationEvilSoul* CMutationEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)

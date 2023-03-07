@@ -1,21 +1,12 @@
 #pragma once
-#include "Pui.h"
+#include "FrontUi.h"
 
-BEGIN(Engine)
-
-class CRcTex;
-class CTransform;
-class CTexture;
-class CCalculator;
-
-END
-
-class CFrontUi_Hp : public CPui
+class CStatus_Energy : public CFrontUi
 {
 private:
-	explicit CFrontUi_Hp(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CFrontUi_Hp(const CFrontUi_Hp& rhs);
-	virtual ~CFrontUi_Hp();
+	explicit CStatus_Energy(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CStatus_Energy(const CStatus_Energy& rhs);
+	virtual ~CStatus_Energy();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -25,19 +16,11 @@ public:
 
 private:
 	virtual HRESULT	Add_Component(void) override;
-	virtual void	SetUp_OnTerrain(void) override;
 	virtual void	Change_State(void) override;
 	virtual void	Frame_Check(const _float& fTimeDelta) override;
 
 public:
-	static CFrontUi_Hp* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
-private:
-	//View
-	//_vec3	m_vAxis[3];
-
-	_int	iMax_Hp;
-	_int	iNow_Hp;
+	static CStatus_Energy* Create(LPDIRECT3DDEVICE9 pGraphicDev, _int _iNumber);
 
 private:
 	virtual void Free(void) override;
