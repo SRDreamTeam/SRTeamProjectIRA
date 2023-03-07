@@ -25,7 +25,7 @@ HRESULT CEvilSoul::Ready_GameObject(void)
 	m_eName = NAME_SOUL;
 
 	m_fSpeed = 3.f;
-	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
+	m_pTransformCom->Set_Pos(_float(rand() % 100), 1.f, _float(rand() % 100));
 	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;
@@ -231,9 +231,11 @@ HRESULT CEvilSoul::Create_Bullet(void)
 	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
 	CGameObject*	pGameObject = nullptr;
 	CGameObject* pBulletObject = CMonsterBullet::Create(m_pGraphicDev, vMonster_Pos, true);
-	NULL_CHECK(pBulletObject);
+	NULL_CHECK_RETURN(pBulletObject, -1);
 	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+
+	return S_OK;
 }
 
 CEvilSoul* CEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)

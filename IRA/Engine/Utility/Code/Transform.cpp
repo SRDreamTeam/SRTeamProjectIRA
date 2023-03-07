@@ -286,9 +286,9 @@ _vec3 CTransform::Patrol_Map(const _float& fSpeed, const _float& fTimeDelta)
 
 	if (vNull == m_vPatrolTarget)
 	{	
-		vTemp.x = (rand() % 50);
+		vTemp.x = (_float(rand() % 50));
 		vTemp.y = m_vInfo[INFO_POS].y;
-		vTemp.z = (rand() % 50);
+		vTemp.z = (_float(rand() % 50));
 
 		_vec3		vDir_Temp = vTemp - m_vInfo[INFO_POS];
 

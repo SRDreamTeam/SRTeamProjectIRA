@@ -21,7 +21,7 @@ HRESULT CGreenEvilSlime::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eName = NAME_SLIME;
 
-	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
+	m_pTransformCom->Set_Pos(_float(rand() % 100), 1.f, _float(rand() % 100));
 	m_pTransformCom->UpdatePos_OnWorld();
 	m_fSpeed = 3.f;
 

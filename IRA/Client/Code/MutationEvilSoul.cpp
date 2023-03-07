@@ -196,10 +196,9 @@ HRESULT CMutationEvilSoul::Create_Bullet(void)
 	for (size_t i = 0; i < 8; i++)
 	{
 		pBulletObject = CMonsterBullet_2::Create(m_pGraphicDev, vMonster_Pos, (i + 1));
-		NULL_CHECK(pBulletObject);
+		NULL_CHECK_RETURN(pBulletObject, -1);
 		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
 	}
-	
 	return S_OK;
 }
 
