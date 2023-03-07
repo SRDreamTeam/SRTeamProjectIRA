@@ -65,6 +65,7 @@ void CEffect_Player_Bow_Pulse::LateUpdate_GameObject()
 
 void CEffect_Player_Bow_Pulse::Render_GameObject()
 {
+
 	__super::Render_GameObject();
 }
 
