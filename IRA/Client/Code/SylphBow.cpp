@@ -47,7 +47,7 @@ _int CSylphBow::Update_GameObject(const _float& fTimeDelta)
 
 
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 
 	__super::Update_GameObject(fTimeDelta);
@@ -66,8 +66,7 @@ void CSylphBow::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
+	
 	
     m_pTextureCom->Set_Texture(0);
 
