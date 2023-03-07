@@ -367,6 +367,22 @@ void CTransform::Ui_Print(void)
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
+void CTransform::Arrow_Move(void)
+{
+	D3DXMATRIX		matScale, matRot, matTrans;
+
+
+	D3DXMatrixRotationYawPitchRoll(&matRot, 0.f, D3DXToRadian(90), 0.f);
+	D3DXMatrixTranslation(&matTrans,
+		m_vInfo[INFO_POS].x,
+		m_vInfo[INFO_POS].y,
+		m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matRot * matTrans;
+
+
+}
+
 void CTransform::Reverse_Scale_x(void)
 {
 	_matrix		matScale, matRot, matTrans;

@@ -160,6 +160,7 @@
     <ClInclude Include="..\Header\Arrow.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\Boss.h" />
+    <ClInclude Include="..\Header\Bow.h" />
     <ClInclude Include="..\Header\Doewole.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Circle.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Standard.h" />
@@ -194,6 +195,8 @@
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
     <ClInclude Include="..\Header\SylphArrow.h" />
+    <ClInclude Include="..\Header\SylphBow.h" />
+    <ClInclude Include="..\Header\SylphBowPair.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -204,6 +207,7 @@
     <ClCompile Include="..\Code\Arrow.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\Boss.cpp" />
+    <ClCompile Include="..\Code\Bow.cpp" />
     <ClCompile Include="..\Code\Doewole.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Standard.cpp" />
@@ -238,6 +242,8 @@
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\SylphArrow.cpp" />
+    <ClCompile Include="..\Code\SylphBow.cpp" />
+    <ClCompile Include="..\Code\SylphBowPair.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

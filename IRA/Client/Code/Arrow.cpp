@@ -4,13 +4,13 @@
 
 CArrow::CArrow(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTransformCom(nullptr), m_pColliderCom(nullptr)
-	, m_pCalculatorCom(nullptr), m_fSpeed(30.f)
+	, m_pCalculatorCom(nullptr), m_fSpeed(90.f)
 {
 }
 
 CArrow::CArrow(const CArrow & rhs)
 	: Engine::CGameObject(rhs), m_pBufferCom(rhs.m_pBufferCom), m_pTransformCom(rhs.m_pTransformCom), m_pColliderCom(rhs.m_pColliderCom)
-	, m_pCalculatorCom(rhs.m_pCalculatorCom), m_fSpeed(30.f)
+	, m_pCalculatorCom(rhs.m_pCalculatorCom), m_fSpeed(90.f)
 {
 }
 

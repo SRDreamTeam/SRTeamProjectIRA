@@ -54,13 +54,13 @@ _int CGhostChild::Update_GameObject(const _float& fTimeDelta)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	m_iAlpha -= 8;
+	m_iAlpha -= 7;
 
 	if (m_iAlpha < 0) {
 		m_iAlpha = 0;
 	}
 
-	if (m_iAlpha==0) {
+	if (m_iAlpha == 0) {
 		m_bDead = true;
 	}
 

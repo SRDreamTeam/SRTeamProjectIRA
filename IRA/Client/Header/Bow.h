@@ -7,21 +7,19 @@ BEGIN(Engine)
 class CRcTex;
 class CTransform;
 class CTexture;
-class CCalculator;
-class CCollider;
+
 
 END
 
-class CArrow : public Engine::CGameObject
+class CBow : public Engine::CGameObject
 {
-
-	enum {ARROW_IDLE,ARROW_DEATH,ARROW_END};
-
+	
+	
 
 protected:
-	explicit CArrow(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CArrow(const CArrow& rhs);
-	virtual ~CArrow();
+	explicit CBow(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CBow(const CBow& rhs);
+	virtual ~CBow();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -30,9 +28,7 @@ public:
 	virtual void Render_GameObject() override;
 
 public:
-	void Set_Target_Pos(_vec3 vPos) {
-		m_target_Dir = vPos;
-	}
+	
 
 protected:
 
@@ -46,25 +42,15 @@ protected:
 
 	CTransform*		m_pTransformCom;
 
-	CTexture*       m_pTextureCom[ARROW_END] = {};
+	CTexture*       m_pTextureCom;
 	
-	CCollider*		m_pColliderCom;
-
-	CCalculator*	m_pCalculatorCom;
 	
 	_float			m_fSpeed;
 
-	_float			m_fIdleFrame = 0.f;
-	_float			m_fDeathFrame = 0.f;
+	_float          m_Bow_Angle = 0.f;
+	_float          m_Pre_Bow_Angle = 0.f;
 
-	_vec3           m_vDir;
-	
-	_vec3           m_target_Dir;
-	_vec3           m_Fire_Pos;
-	_float          m_Arrow_Angle = 0.f;
-
-	int             m_iState = ARROW_IDLE;
-	int             m_iPreState = ARROW_IDLE;
+	_vec3           m_Bow_Pos;
 
 protected:
 	virtual void Free(void) override;
