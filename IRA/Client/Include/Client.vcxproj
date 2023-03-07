@@ -160,6 +160,9 @@
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\Boss.h" />
     <ClInclude Include="..\Header\Doewole.h" />
+    <ClInclude Include="..\Header\DoewoleBullet_Circle.h" />
+    <ClInclude Include="..\Header\DoewoleBullet_Standard.h" />
+    <ClInclude Include="..\Header\DoewoleBullet_SwordShot.h" />
     <ClInclude Include="..\Header\Doewole_Body.h" />
     <ClInclude Include="..\Header\Doewole_LeftClaw.h" />
     <ClInclude Include="..\Header\Doewole_RightClaw.h" />
@@ -167,6 +170,7 @@
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Effect.h" />
+    <ClInclude Include="..\Header\Effect_Doewole_ChargeCircle.h" />
     <ClInclude Include="..\Header\Effect_Doewole_ChargeExplosion.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Loof.h" />
     <ClInclude Include="..\Header\Effect_Doewole_StandardAttack.h" />
@@ -198,12 +202,16 @@
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\Boss.cpp" />
     <ClCompile Include="..\Code\Doewole.cpp" />
+    <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp" />
+    <ClCompile Include="..\Code\DoewoleBullet_Standard.cpp" />
+    <ClCompile Include="..\Code\DoewoleBullet_SwordShot.cpp" />
     <ClCompile Include="..\Code\Doewole_Body.cpp" />
     <ClCompile Include="..\Code\Doewole_LeftClaw.cpp" />
     <ClCompile Include="..\Code\Doewole_RightClaw.cpp" />
     <ClCompile Include="..\Code\Doewole_Shadow.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Effect_Doewole_ChargeCircle.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_ChargeExplosion.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Loof.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_StandardAttack.cpp" />

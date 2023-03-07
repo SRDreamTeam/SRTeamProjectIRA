@@ -61,6 +61,7 @@ public:
 
 	void					Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta, const MONSTER_NAME m_eName);
 	void					Bullet_Move(const _vec3 _Dir, const _float& fSpeed, const _float& fTimeDelta, _int iDirCount);
+	void					Bullet_Move_Boss(const _vec3 _Dir, const _float& fSpeed, const _float& fTimeDelta, _int iDirCount);
 	_vec3					Patrol_Map(const _float& fSpeed, const _float& fTimeDelta);
 	void					Reverse_Scale_x(void);
 	void					UpdatePos_OnWorld(void);
