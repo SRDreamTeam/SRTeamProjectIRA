@@ -23,7 +23,7 @@ HRESULT CMutationEvilSoul::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eName = NAME_MUTATION;
 
-	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
+	m_pTransformCom->Set_Pos(_float(rand() % 100), 1.f, _float(rand() % 100));
 	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;
@@ -32,9 +32,9 @@ HRESULT CMutationEvilSoul::Ready_GameObject(void)
 _int CMutationEvilSoul::Update_GameObject(const _float& fTimeDelta)
 {
 	Frame_Check(fTimeDelta);
-	SetUp_OnTerrain();
+	//SetUp_OnTerrain();
 	__super::Update_GameObject(fTimeDelta);
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	
 
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
@@ -44,6 +44,8 @@ _int CMutationEvilSoul::Update_GameObject(const _float& fTimeDelta)
 
 	Change_State();
 	Head_Check((m_pTransformCom->Patrol_Map(m_fSpeed, fTimeDelta)));
+
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	return 0;
 }
@@ -194,9 +196,10 @@ HRESULT CMutationEvilSoul::Create_Bullet(void)
 	for (size_t i = 0; i < 8; i++)
 	{
 		pBulletObject = CMonsterBullet_2::Create(m_pGraphicDev, vMonster_Pos, (i + 1));
-		NULL_CHECK(pBulletObject);
-		pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+		NULL_CHECK_RETURN(pBulletObject, -1);
+		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
 	}
+	return S_OK;
 }
 
 CMutationEvilSoul* CMutationEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)

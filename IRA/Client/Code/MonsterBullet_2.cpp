@@ -22,6 +22,8 @@ HRESULT CMonsterBullet_2::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_fSpeed = 10.f;
+	m_pTransformCom->Set_Pos(m_vOriginPos.x, m_vOriginPos.y, m_vOriginPos.z);
+	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;
 }
@@ -33,6 +35,7 @@ _int CMonsterBullet_2::Update_GameObject(const _float& fTimeDelta)
 
 	Frame_Check(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
+
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));

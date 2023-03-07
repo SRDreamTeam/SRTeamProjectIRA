@@ -25,7 +25,10 @@ HRESULT CMonster::Ready_GameObject(void)
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {	
+	
+
 	__super::Update_GameObject(fTimeDelta);
+
 
 	return 0;
 }

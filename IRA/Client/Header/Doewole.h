@@ -10,10 +10,11 @@ protected:
 	virtual ~CDoewole();
 
 public:
-	enum DOEWOLE_STATE { IDLE, MOVE, STATE_END };
+	enum DOEWOLE_STATE { IDLE, MOVE, STANDARD_ATTACK, OUTSTRECTH_ATTACK , SMASH_ATTACK ,STATE_END };
 public:
 	void			Set_State(DOEWOLE_STATE _eState) { m_eCurState = _eState; }
 	DOEWOLE_STATE	Get_State() { return m_eCurState; }
+	_bool			Get_AttackToIdle() { return m_bAttackToIdle; }
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -37,11 +38,29 @@ protected:
 private:
 	void			Idle(const _float& fTimeDelta);
 	void			Move(const _float& fTimeDelta);
+	void			Standard_Attack(const _float& fTimeDelta);
+	void			OutStretch_Attack(const _float& fTimeDelta);
+	void			Smash_Attack(const _float& fTimeDelta);
+
+	void			Create_StandardBullet();
+	void			Create_CircleBullet();
+
+
 
 private:
 	HRESULT			Add_Component(void);
 	void			State_Update(const _float& fTimeDelta);
+private:
+	_uint					m_iPattern = 3;
+	const _uint				m_iMaxPattern = 4;
 
-	bool			m_bTest = false;
+	_uint					m_iStandardAttackCnt = 0;
+
+	_bool					m_bAttackToIdle = false;
+	_bool					m_bEffect = false;
+
+	_float					m_fAccTime2 = 0.f;
+	
+
 };
 

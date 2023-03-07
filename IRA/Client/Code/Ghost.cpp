@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\Ghost.h"
 #include "Export_Function.h"
+#include "GhostChild.h"
 
 CGhost::CGhost(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -20,13 +21,14 @@ CGhost::CGhost(const CGhost& rhs)
 
 CGhost::~CGhost()
 {
+	Free();
 }
 
 HRESULT CGhost::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Scale({ 5.f, 5.f, 1.f });
+	
 
 	return S_OK;
 }
@@ -34,6 +36,14 @@ HRESULT CGhost::Ready_GameObject(void)
 _int CGhost::Update_GameObject(const _float& fTimeDelta)
 {
 	
+	if (Is_Dash == true) {
+		m_interver += 7.f * fTimeDelta;
+		if (m_interver > 1.4f) {
+			Show_Ghost();
+			m_interver = 0.f;
+		}
+	}
+
 	__super::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
@@ -48,16 +58,24 @@ void CGhost::LateUpdate_GameObject()
 
 void CGhost::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
 	
-	// 자식들 포문 돌리면서 플레이어 현재 스프라이트 출력
+}
 
-	m_pBufferCom->Render_Buffer();
+void CGhost::Show_Ghost(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
+	CGameObject* pGameObject = nullptr;
+
+	pGameObject = CGhostChild::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return;
+
+
+	pGameLogicLayer->Add_BulletObject(OBJ_GHOST, pGameObject);
+	
 }
 
 HRESULT CGhost::Add_Component(void)
@@ -72,7 +90,13 @@ HRESULT CGhost::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
+	pComponent = m_pDashTextureCom[DASH_045] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Player_Ghost_Dash_045"));
+	NULL_CHECK_RETURN(m_pDashTextureCom[DASH_045], E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player_Ghost_Dash_045", pComponent });
 
+	pComponent = m_pDashTextureCom[DASH_135] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Player_Ghost_Dash_135"));
+	NULL_CHECK_RETURN(m_pDashTextureCom[DASH_135], E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player_Ghost_Dash_135", pComponent });
 
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_ProtoComponent(L"Proto_Calculator"));

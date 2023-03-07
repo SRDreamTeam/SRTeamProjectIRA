@@ -21,7 +21,7 @@ HRESULT CGreenEvilSlime::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eName = NAME_SLIME;
 
-	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
+	m_pTransformCom->Set_Pos(_float(rand() % 100), 1.f, _float(rand() % 100));
 	m_pTransformCom->UpdatePos_OnWorld();
 	m_fSpeed = 3.f;
 
@@ -33,8 +33,8 @@ _int CGreenEvilSlime::Update_GameObject(const _float& fTimeDelta)
 	Frame_Check(fTimeDelta);
 	SetUp_OnTerrain();
 	__super::Update_GameObject(fTimeDelta);
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
+	
+	// 준석 수정 (23.03.02) : Layer_Environment 에서 Layer_GameLogic 으로 정정
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
 	_vec3	vPlayerPos;
@@ -47,6 +47,8 @@ _int CGreenEvilSlime::Update_GameObject(const _float& fTimeDelta)
 
 	if (((vDir.x > -2.0f) && (vDir.x < 2.0f)) && ((vDir.z > -2.0f) && (vDir.z < 2.0f)) && !m_bCheck)
 		Change_State();
+
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	return 0;
 }

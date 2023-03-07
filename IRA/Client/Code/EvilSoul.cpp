@@ -25,7 +25,7 @@ HRESULT CEvilSoul::Ready_GameObject(void)
 	m_eName = NAME_SOUL;
 
 	m_fSpeed = 3.f;
-	m_pTransformCom->Set_Pos(rand() % 100, 1.f, rand() % 100);
+	m_pTransformCom->Set_Pos(_float(rand() % 100), 1.f, _float(rand() % 100));
 	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;
@@ -37,7 +37,7 @@ _int CEvilSoul::Update_GameObject(const _float& fTimeDelta)
 	Frame_Check(fTimeDelta);
 	SetUp_OnTerrain();
 	__super::Update_GameObject(fTimeDelta);
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	
 	// 준석 수정 (23.03.02) : Layer_Environment 에서 Layer_GameLogic 으로 정정
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
@@ -54,6 +54,8 @@ _int CEvilSoul::Update_GameObject(const _float& fTimeDelta)
 
 	Head_Check(vDir);
 	Bullet_Test();	
+
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	return 0;
 }
@@ -229,9 +231,11 @@ HRESULT CEvilSoul::Create_Bullet(void)
 	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
 	CGameObject*	pGameObject = nullptr;
 	CGameObject* pBulletObject = CMonsterBullet::Create(m_pGraphicDev, vMonster_Pos, true);
-	NULL_CHECK(pBulletObject);
+	NULL_CHECK_RETURN(pBulletObject, -1);
 	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
-	pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+
+	return S_OK;
 }
 
 CEvilSoul* CEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)
