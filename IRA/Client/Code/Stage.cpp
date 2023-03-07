@@ -212,6 +212,76 @@ HRESULT CStage::Ready_LightInfo()
 	return S_OK;
 }
 
+HRESULT CStage::Load_Terrain_Info(const _tchar* pPath)
+{
+	CLayer* pLayer = dynamic_cast<CLayer*>(Engine::Get_Layer(L"Layer_Environment"));
+	CGameObject* pGameObject = nullptr;
+	pGameObject = CTerrain::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
+
+	HANDLE hFile = CreateFile(pPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD dwByte = 0;
+	DWORD dwStrByte = 0;
+
+	TERRAINDATA tTerrainData;
+	ZeroMemory(&tTerrainData, sizeof(TERRAINDATA));
+	TERRAINDATA_P tTerrainDataPointer;
+	ZeroMemory(&tTerrainDataPointer, sizeof(TERRAINDATA_P));
+
+	ReadFile(hFile, &tTerrainData, sizeof(TERRAINDATA), &dwByte, nullptr);
+
+	ReadFile(hFile, &(tTerrainDataPointer.dwVtxCnt), sizeof(_ulong), &dwByte, nullptr);
+
+	tTerrainDataPointer.pPos = new _vec3[tTerrainDataPointer.dwVtxCnt];
+
+	for (int i = 0; i < tTerrainDataPointer.dwVtxCnt; ++i)
+		ReadFile(hFile, &(tTerrainDataPointer.pPos[i]), sizeof(_vec3), &dwByte, nullptr);
+
+	ReadFile(hFile, &dwStrByte, sizeof(_ulong), &dwByte, nullptr);
+
+	TCHAR* pHeightmapFilePath = nullptr;
+	pHeightmapFilePath = new TCHAR[dwStrByte];
+
+	ReadFile(hFile, pHeightmapFilePath, dwStrByte, &dwByte, nullptr);
+
+	_tchar* pRest = nullptr;
+	pHeightmapFilePath = _tcstok_s(pHeightmapFilePath, L"Client\\", &pRest);
+	_tchar* pHeightmapFilePath_ClientVer = nullptr;
+	pHeightmapFilePath_ClientVer = new TCHAR[dwStrByte];
+	lstrcat(pHeightmapFilePath_ClientVer, L"..\\");
+
+
+
+	CTerrainTex* pTerrainBufCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTex", ID_STATIC));
+	NULL_CHECK_RETURN(pTerrainBufCom, E_FAIL);
+	CTerrain* pTerrain = dynamic_cast<CTerrain*>(Engine::Get_GameObject(L"Layer_Environment", L"Terrain"));
+	NULL_CHECK_RETURN(pTerrain, E_FAIL);
+
+	pTerrainBufCom->Set_VtxCnt(tTerrainData.dwVtxCntX, tTerrainData.dwVtxCntZ, tTerrainData.dwVtxItv);
+	pTerrainBufCom->Set_DetailLevel(tTerrainData.fDetailLevel);
+	pTerrainBufCom->Set_HeightMapLevel(tTerrainData.iHeightMapLevel);
+	pTerrainBufCom->Set_HeightMapFilePath(pHeightmapFilePath_ClientVer);
+	pTerrainBufCom->Set_VtxPos(tTerrainDataPointer.pPos, tTerrainDataPointer.dwVtxCnt);
+	pTerrain->Set_DrawID(tTerrainData.byDrawID);
+	pTerrain->Set_DrawOption(tTerrainData.byDrawOption);
+
+	CloseHandle(hFile);
+
+	pTerrainBufCom->Update_Buffer();
+
+	return S_OK;
+}
+
+HRESULT CStage::Load_Object_Info(const _tchar* pPath)
+{
+	return E_NOTIMPL;
+}
+
 CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CStage *	pInstance = new CStage(pGraphicDev);
