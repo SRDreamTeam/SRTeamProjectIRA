@@ -47,7 +47,7 @@ _int CSylphBowPair::Update_GameObject(const _float& fTimeDelta)
 
 
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 
 	__super::Update_GameObject(fTimeDelta);

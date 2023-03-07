@@ -61,7 +61,7 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 			
 	}
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 
 
@@ -81,7 +81,6 @@ void CSylphArrow::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	if (m_iState == ARROW_IDLE) {
 		m_pTextureCom[ARROW_IDLE]->Set_Texture((_uint)m_fIdleFrame);
