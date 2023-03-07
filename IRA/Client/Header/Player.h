@@ -52,6 +52,14 @@ public:
 
 	void Create_Basic_Bow(void);
 
+	const PLAYER_INFO&  Get_Player_Info(void) {
+		return m_tInfo;
+	}
+
+	void Set_Player_Info(const PLAYER_INFO& tInfo) {
+		m_tInfo = tInfo;
+	}
+
 private:
 	HRESULT			Add_Component(void);
 	void			Key_Input(const _float& fTimeDelta);
@@ -120,6 +128,12 @@ private:
 	bool            m_Bow_Active[BOW_END] = {};
 	bool            m_Bow_Render[BOW_END] = {};
 	
+
+private:
+	// UI Á¤º¸
+	PLAYER_INFO     m_tInfo;
+
+
 
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
