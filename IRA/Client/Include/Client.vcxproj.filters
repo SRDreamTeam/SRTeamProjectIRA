@@ -133,6 +133,7 @@
     <Filter Include="02. GameObject\Stage\09. PUI\01. FrontUi">
       <UniqueIdentifier>{99b687eb-a21d-4fde-94bd-1063bbe03b9e}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="02. GameObject\Stage\00. Player\01. Bow">
       <UniqueIdentifier>{8adc4901-34ff-4323-8983-872eae011c15}</UniqueIdentifier>
     </Filter>
@@ -141,6 +142,22 @@
     </Filter>
     <Filter Include="02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow">
       <UniqueIdentifier>{087f1de0-a0e0-4b2c-9a98-9beb0eb9b4f4}</UniqueIdentifier>
+=======
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet">
+      <UniqueIdentifier>{a2deb263-a8c5-422a-bf7c-e2d79669539c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_Circle">
+      <UniqueIdentifier>{b7688646-d539-47dc-83e5-d99e7afa6d1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeCircle">
+      <UniqueIdentifier>{8efe6a77-a357-4f34-a44c-8358b24a35be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_SwordShot">
+      <UniqueIdentifier>{d79d7250-2d47-4f96-9d2f-32a1bcdfc6fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_Standard">
+      <UniqueIdentifier>{6c3439f0-33a3-46ab-9c3c-2572374a7b58}</UniqueIdentifier>
+>>>>>>> Boss/Doewole
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,11 +272,25 @@
     <ClInclude Include="..\Header\FrontUi_Hp.h">
       <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SylphArrow.h">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow</Filter>
+=======
+    <ClInclude Include="..\Header\DoewoleBullet_SwordShot.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_SwordShot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_Circle.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_ChargeCircle.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeCircle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_Standard.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_Standard</Filter>
+>>>>>>> Boss/Doewole
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,11 +396,25 @@
     <ClCompile Include="..\Code\FrontUi_Hp.cpp">
       <Filter>02. GameObject\Stage\09. PUI\01. FrontUi</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SylphArrow.cpp">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow</Filter>
+=======
+    <ClCompile Include="..\Code\DoewoleBullet_SwordShot.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_SwordShot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_ChargeCircle.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeCircle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_Standard.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\DoewoleBullet_Standard</Filter>
+>>>>>>> Boss/Doewole
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

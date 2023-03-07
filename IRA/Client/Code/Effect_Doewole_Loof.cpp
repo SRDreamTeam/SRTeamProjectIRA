@@ -23,11 +23,13 @@ HRESULT CEffect_Doewole_Loof::Ready_GameObject(void)
 
 	m_pTransformCom->m_vScale = { 15.f , 15.f, 15.f };
 
+	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(90.f));
+
 	m_fMaxFrame = 11.f;
 
 	CTransform* pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole_Body", L"Proto_Transform", ID_DYNAMIC));
 
-	m_pTransformCom->m_vInfo[INFO_POS] = { pTransform->m_vInfo[INFO_POS].x  , pTransform->m_vInfo[INFO_POS].y + 21.f , pTransform->m_vInfo[INFO_POS].z - 1.f };
+	m_pTransformCom->m_vInfo[INFO_POS] = { pTransform->m_vInfo[INFO_POS].x  , pTransform->m_vInfo[INFO_POS].y + 15.f , pTransform->m_vInfo[INFO_POS].z - 1.f };
 
 	return S_OK;
 }
