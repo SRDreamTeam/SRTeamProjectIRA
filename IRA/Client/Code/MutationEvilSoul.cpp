@@ -32,7 +32,7 @@ HRESULT CMutationEvilSoul::Ready_GameObject(void)
 _int CMutationEvilSoul::Update_GameObject(const _float& fTimeDelta)
 {
 	Frame_Check(fTimeDelta);
-	SetUp_OnTerrain();
+	//SetUp_OnTerrain();
 	__super::Update_GameObject(fTimeDelta);
 	
 

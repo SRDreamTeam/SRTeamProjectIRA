@@ -142,6 +142,21 @@
     <Filter Include="02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow">
       <UniqueIdentifier>{087f1de0-a0e0-4b2c-9a98-9beb0eb9b4f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeCircle">
+      <UniqueIdentifier>{8583d3ad-ba1d-4bc8-ade2-f1637e2678ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet">
+      <UniqueIdentifier>{7d62cecd-1cf3-447e-8082-b724fed2139b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Circle">
+      <UniqueIdentifier>{9dd01f15-86a8-4baa-ae59-921bc42247cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Standard">
+      <UniqueIdentifier>{4bf52f8c-9c0e-42b3-8c3b-ca3cd26057aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot">
+      <UniqueIdentifier>{0dd96ab2-49e5-4305-a35e-aba0a4b0aec4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -261,6 +276,18 @@
     <ClInclude Include="..\Header\SylphArrow.h">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_ChargeCircle.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeCircle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_Standard.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Standard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_SwordShot.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_Circle.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Circle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -370,6 +397,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\SylphArrow.cpp">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27sArrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_ChargeCircle.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_ChargeCircle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_Standard.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Standard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_SwordShot.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Circle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
