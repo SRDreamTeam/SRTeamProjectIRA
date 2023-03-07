@@ -66,7 +66,7 @@ public:
 	void					UpdatePos_OnWorld(void);
 	const	_matrix*		Compute_LookAtTarget(const _vec3* pTargetPos);
 
-	void					Ui_Print(void);
+	void					Ui_Status_Print(_int _iHpNumber, _int _iUiNumber);
 
 public:
 	HRESULT		Ready_Transform(void);

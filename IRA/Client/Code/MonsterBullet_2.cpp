@@ -22,6 +22,8 @@ HRESULT CMonsterBullet_2::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_fSpeed = 10.f;
+	m_pTransformCom->Set_Pos(m_vOriginPos.x, m_vOriginPos.y, m_vOriginPos.z);
+	m_pTransformCom->UpdatePos_OnWorld();
 
 	return S_OK;
 }

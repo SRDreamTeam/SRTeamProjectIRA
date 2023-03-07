@@ -17,6 +17,7 @@ CBullet::CBullet(const CBullet& rhs)
 
 CBullet::~CBullet()
 {
+	Free();
 }
 
 HRESULT CBullet::Ready_GameObject(void)
