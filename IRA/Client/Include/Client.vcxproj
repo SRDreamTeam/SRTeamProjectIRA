@@ -171,9 +171,11 @@
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Effect.h" />
+    <ClInclude Include="..\Header\Effect_AlertCircle.h" />
     <ClInclude Include="..\Header\Effect_Doewole_ChargeCircle.h" />
     <ClInclude Include="..\Header\Effect_Doewole_ChargeExplosion.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Loof.h" />
+    <ClInclude Include="..\Header\Effect_Doewole_Slam.h" />
     <ClInclude Include="..\Header\Effect_Doewole_StandardAttack.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h" />
     <ClInclude Include="..\Header\EvilSoul.h" />
@@ -214,9 +216,11 @@
     <ClCompile Include="..\Code\Doewole_Shadow.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\Effect_AlertCircle.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_ChargeCircle.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_ChargeExplosion.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Loof.cpp" />
+    <ClCompile Include="..\Code\Effect_Doewole_Slam.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_StandardAttack.cpp" />
     <ClCompile Include="..\Code\EvilSoul.cpp" />
     <ClCompile Include="..\Code\FrontUi_Hp.cpp" />
