@@ -4,6 +4,9 @@
 
 class CDoewole_Body : public CDoewole
 {
+	enum {STAND, STAND_FACEON ,POWERSLAM ,POWERSLAM_AFTER, POWERSLAM_FACEOFF, TEX_END};
+
+
 private:
 	explicit CDoewole_Body(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CDoewole_Body(const CDoewole_Body& rhs);
@@ -32,10 +35,17 @@ private:
 private:
 	void			Idle(const _float& fTimeDelta);
 	void			Move(const _float& fTimeDelta);
+	void			Standard_Attack(const _float& fTimeDelta);
+	void			Smash_Attack(const _float& fTimeDelta);
 
 private:
 	CGameObject*					m_pOwner = nullptr;
 	_float							m_fAlpha = 1.f;
+	CTexture*						m_pTextureCom[TEX_END];
+
+	_bool							m_bPowerSlam = false;
+	_bool							m_bPowerSlamAfter = false;
+	_bool							m_bPowerSlamFaceOff = false;
 
 };
 

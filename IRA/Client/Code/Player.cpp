@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "..\Header\Player.h"
 #include "Export_Function.h"
+#include "Ghost.h"
+#include "SylphArrow.h"
+#include "SylphBow.h"
+#include "Effect_Player_Bow_Pulse.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -34,11 +38,17 @@ HRESULT CPlayer::Ready_GameObject(void)
 
 	m_pTransformCom->Set_Scale({ 5.f, 5.f, 1.f });
 
+	
+
 	return S_OK;
 }
 
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	if (m_iState == STAND) {
 		m_fStandFrame += 7.f * fTimeDelta;
 		if (7.f < m_fStandFrame)
@@ -58,7 +68,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	if (m_iState == DASH) {
-		m_fDashFrame += 5.f * fTimeDelta * 1.5f;
+		m_fDashFrame += 5.f * fTimeDelta * 2.0;
 		if (5.f < m_fDashFrame) {
 			m_fDashFrame = 0.f;
 		}
@@ -82,9 +92,23 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		Dash(fTimeDelta);
 	}
 
+
+
+	if (m_Is_Fire_Arrow == true) {
+		m_Fire_Frame += m_Fire_Init * fTimeDelta * m_Fire_Speed;
+		if (m_Fire_Frame > m_Fire_Init){
+			Fire_Arrow();
+			m_Fire_Frame = 0.f;
+		}
+	}
+
+
+
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+
+    Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+	
 
 	_vec3 v = m_pColliderCom->Get_SpherePos();
 
@@ -100,6 +124,7 @@ void CPlayer::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	
 
 	if (m_iState == STAND) {
 
@@ -221,7 +246,50 @@ void CPlayer::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 	m_pSphereBufferCom->Render_Buffer();
 
+	
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+}
+
+void CPlayer::Create_Basic_Bow(void)
+{
+	POINT ptCursor;
+
+	GetCursorPos(&ptCursor);
+	ScreenToClient(g_hWnd, &ptCursor);
+
+	_vec3 Axis = { -1.f,0.f,0.f };
+
+	_vec3 Dir = { ptCursor.x - 400.f,ptCursor.y - 300.f,0 };
+	D3DXVec3Normalize(&Dir, &Dir);
+
+
+	// Angle 계산
+	m_fAngle = acos(D3DXVec3Dot(&Axis, &Dir));
+
+	if (300.f < ptCursor.y)
+		m_fAngle = 2.f * D3DX_PI - m_fAngle;
+
+
+	m_Mouse_Dir = { Dir.x,0.f,-Dir.y };
+
+	_vec3 vPos = m_pTransformCom->m_vInfo[INFO_POS];
+
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+
+	CGameObject* pGameObject = nullptr;
+
+
+	pGameObject = CSylphBow::Create(m_pGraphicDev, vPos, m_fAngle);
+
+	if (pGameObject == nullptr)
+		return;
+
+	m_Bow_List[BOW_SYLPH] = pGameObject;
+	m_Bow_Active[BOW_SYLPH] = true;
+	pGameLogicLayer->Add_GameObject(L"SylphBow", pGameObject, OBJ_BOW);    /// ?? 왜 터짐
 
 }
 
@@ -339,13 +407,14 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (m_Is_Dash == true)
 		return;
 
-
-	if (GetAsyncKeyState('Q'))
+	/*if (GetAsyncKeyState('Q'))
 		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
 
 	if (GetAsyncKeyState('E'))
-		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
+		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));*/
 
+
+	CGhost* pGhost = dynamic_cast<CGhost*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Ghost"));
 
 	_vec3	vDir;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
@@ -378,13 +447,14 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (GetAsyncKeyState(VK_LBUTTON)) {
 
+		m_Is_Fire_Arrow = true;
+		
 		POINT ptCursor;
 
 		GetCursorPos(&ptCursor);
 		ScreenToClient(g_hWnd, &ptCursor);
 
-		ptCursor.x;
-
+		
 		if (ptCursor.x>=400 && ptCursor.y <= 300) {
 			m_iAttackAngleState = ATTACK_ANGLE_225;
 			m_iAngleState = ANGLE_225;
@@ -402,12 +472,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_iAngleState = ANGLE_315;
 		}
 
-		if (GetAsyncKeyState(VK_UP)) {
-			if (GetAsyncKeyState(VK_LEFT)) {
+		if (GetAsyncKeyState('W')) {
+			if (GetAsyncKeyState('A')) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vLU * fTimeDelta * m_fSpeed));
 			}
-			else if (GetAsyncKeyState(VK_RIGHT)) {
+			else if (GetAsyncKeyState('D')) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vRU * fTimeDelta * m_fSpeed));
 			}
@@ -416,13 +486,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 				m_pTransformCom->Move_Pos(&(vDir * fTimeDelta * m_fSpeed));
 			}
 		}
-		else if (GetAsyncKeyState(VK_DOWN)) {
+		else if (GetAsyncKeyState('S')) {
 
-			if (GetAsyncKeyState(VK_LEFT)) {
+			if (GetAsyncKeyState('A')) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vLD * fTimeDelta * m_fSpeed));
 			}
-			else if (GetAsyncKeyState(VK_RIGHT)) {
+			else if (GetAsyncKeyState('D')) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vRD * fTimeDelta * m_fSpeed));
 			}
@@ -432,12 +502,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 
 		}
-		else if (GetAsyncKeyState(VK_LEFT)) {
+		else if (GetAsyncKeyState('A')) {
 			m_iState = MOVE_ATTACK;
 			m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed));
 
 		}
-		else if (GetAsyncKeyState(VK_RIGHT)) {
+		else if (GetAsyncKeyState('D')) {
 			m_iState = MOVE_ATTACK;
 			m_pTransformCom->Move_Pos(&(vRight * fTimeDelta * m_fSpeed));
 
@@ -447,10 +517,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 
 	}
-	else if (GetAsyncKeyState(VK_UP)) {
+	else if (GetAsyncKeyState('W')) {
+		m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
 
-		if (GetAsyncKeyState(VK_LEFT)) {
-			if (GetAsyncKeyState(VK_SPACE)) {
+		if (GetAsyncKeyState('A')) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_135;
@@ -462,9 +535,10 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 				m_pTransformCom->Move_Pos(&(vLU * fTimeDelta * m_fSpeed));
 			}
 		}
-		else if (GetAsyncKeyState(VK_RIGHT)) {
+		else if (GetAsyncKeyState('D')) {
 
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_225;
@@ -477,7 +551,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else {
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_180;
@@ -490,10 +565,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 	}
-	else if (GetAsyncKeyState(VK_DOWN)) {
+	else if (GetAsyncKeyState('S')) {
+	    m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
 
-		if (GetAsyncKeyState(VK_LEFT)) {
-			if (GetAsyncKeyState(VK_SPACE)) {
+		if (GetAsyncKeyState('A')) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_045;
@@ -505,8 +583,9 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 				m_pTransformCom->Move_Pos(&(vLD * fTimeDelta * m_fSpeed));
 			}
 		}
-		else if (GetAsyncKeyState(VK_RIGHT)) {
-			if (GetAsyncKeyState(VK_SPACE)) {
+		else if (GetAsyncKeyState('D')) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_315;
@@ -519,7 +598,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else {
-			if (GetAsyncKeyState(VK_SPACE)) {
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
 				m_iAngleState = ANGLE_000;
@@ -534,8 +614,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 
 	}
-	else if (GetAsyncKeyState(VK_LEFT)) {
-		if (GetAsyncKeyState(VK_SPACE)) {
+	else if (GetAsyncKeyState('A')) {
+	    m_Is_Fire_Arrow = false; 
+		m_Fire_Frame = m_Fire_Init;
+	    
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+			pGhost->Is_Dash = true;
 			m_Is_Dash = true;
 			m_iState = DASH;
 			m_iAngleState = ANGLE_090;
@@ -547,9 +631,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed));
 		}
 	}
-	else if (GetAsyncKeyState(VK_RIGHT)) {
+	else if (GetAsyncKeyState('D')) {
+	    m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
 
-	    if (GetAsyncKeyState(VK_SPACE)) {
+	    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+			pGhost->Is_Dash = true;
 			m_Is_Dash = true;
 			m_iState = DASH;
 			m_iAngleState = ANGLE_270;
@@ -562,11 +649,75 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 	}
 	else if (GetAsyncKeyState('P')) {
+	    m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
+
 	    m_iState = DEATH;
     }
 	else {
+	    m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
+
 		m_iState = STAND;
 	}
+
+
+
+}
+
+
+
+void CPlayer::Fire_Arrow(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+
+	CGameObject* pGameObject = nullptr;
+
+
+	
+	POINT ptCursor;
+
+	GetCursorPos(&ptCursor);
+	ScreenToClient(g_hWnd, &ptCursor);
+
+	_vec3 Axis = { -1.f,0.f,0.f };
+
+	_vec3 Dir = { ptCursor.x - 400.f,ptCursor.y - 300.f,0 };
+	D3DXVec3Normalize(&Dir, &Dir);
+
+
+	// Angle 계산
+	m_fAngle = acos(D3DXVec3Dot(&Axis, &Dir));
+
+	if (300.f< ptCursor.y)
+		m_fAngle = 2.f * D3DX_PI - m_fAngle;
+
+	
+	m_Mouse_Dir = { Dir.x,0.f,-Dir.y };
+
+
+	CTransform* pSylphBowTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SylphBow", L"Proto_Transform", ID_DYNAMIC));
+
+
+	_vec3 vPos = pSylphBowTransformCom->m_vInfo[INFO_POS];
+	
+	pGameObject = CSylphArrow::Create(m_pGraphicDev, vPos, m_Mouse_Dir, m_fAngle);
+
+	if (pGameObject == nullptr)
+		return;
+
+
+	pGameLogicLayer->Add_BulletObject(OBJ_ARROW, pGameObject);
+
+
+
+	pGameObject = CEffect_Player_Bow_Pulse::Create(m_pGraphicDev);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
 
 
 
@@ -604,6 +755,7 @@ void CPlayer::Update_State()
 
 
 	if (m_iState == STAND) {
+		
 		if (m_iAngleState == ANGLE_000) {
 			
 		}
@@ -775,39 +927,41 @@ void CPlayer::Update_State()
 
 }
 
-_vec3 CPlayer::Get_World_Mouse(int x, int y)
+_vec3 CPlayer::Get_World_Mouse()
 {
-	_vec3 WorldMouse;
+	POINT		ptMouse{};
+	GetCursorPos(&ptMouse);
+	ScreenToClient(g_hWnd, &ptMouse);
 
-	FLOAT PointX;
-	FLOAT PointY;
+	_vec3	vMousePos;
 
-	D3DVIEWPORT9 ViewPortInfo;
-	m_pGraphicDev->GetViewport(&ViewPortInfo);
+	// 윈도우 -> 투영
+	D3DVIEWPORT9		ViewPort;
+	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
+	m_pGraphicDev->GetViewport(&ViewPort);
 
-	D3DXMATRIX Proj;
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &Proj);
+	vMousePos.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
+	vMousePos.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
+	vMousePos.z = 0.f;
 
-	// 윈도우 > 투영 > 뷰 스페이스
-	PointX = (2.0f * x / ViewPortInfo.Width - 1.0f) / Proj(0, 0);
-	PointY = (-2.0f * y / ViewPortInfo.Height + 1.0f) / Proj(1, 1);
+	// 투영 -> 뷰 스페이스
+	_matrix		matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixInverse(&matProj, 0, &matProj);
+	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
 
-	// 뷰 스페이스 상태
-	WorldMouse = D3DXVECTOR3(PointX, PointY, 1.0f);
+	// 뷰 스페이스 -> 월드
 
-	// 월드 스페이스로 변환
-	D3DXMATRIX View;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &View);
+	_matrix		matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0, &matView);
 
-	D3DXMATRIX ViewInverse;
-	D3DXMatrixInverse(&ViewInverse, 0, &View);
-
-	D3DXVec3TransformCoord(&WorldMouse, &WorldMouse, &ViewInverse);
+	
+	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matView);
+	
 	
 
-
-
-	return WorldMouse;
+	return vMousePos;
 }
 
 
@@ -815,11 +969,13 @@ _vec3 CPlayer::Get_World_Mouse(int x, int y)
 void CPlayer::Dash(const _float& fTimeDelta)
 {
 
-	m_Dash_Time += 5.f * fTimeDelta * 1.5f;
+	m_Dash_Time += 5.f * fTimeDelta * 2.0f;
 
 	if (m_Dash_Time > 5.f) {
 		m_Dash_Time = 0.f;
 		m_Is_Dash = false;
+		CGhost* pGhost = dynamic_cast<CGhost*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Ghost"));
+		pGhost->Is_Dash = false;
 	}
 
 
@@ -845,28 +1001,28 @@ void CPlayer::Dash(const _float& fTimeDelta)
 
 
 	if (m_iAngleState == ANGLE_000) {
-		m_pTransformCom->Move_Pos(&(vDir * fTimeDelta * -m_fSpeed*1.5));
+		m_pTransformCom->Move_Pos(&(vDir * fTimeDelta * -m_fSpeed * m_fDashSpeed));
 	}
 	else if (m_iAngleState == ANGLE_045) {
-		m_pTransformCom->Move_Pos(&(vLD * fTimeDelta * m_fSpeed * 1.5));
+		m_pTransformCom->Move_Pos(&(vLD * fTimeDelta * m_fSpeed * m_fDashSpeed));
 	}
 	else if (m_iAngleState == ANGLE_090) {
-		m_pTransformCom->Move_Pos(&(vRight * fTimeDelta * -m_fSpeed * 1.5));
+		m_pTransformCom->Move_Pos(&(vRight * fTimeDelta * -m_fSpeed * m_fDashSpeed));
 	}
 	else if (m_iAngleState == ANGLE_135) {
-		m_pTransformCom->Move_Pos(&(vLU * fTimeDelta * m_fSpeed * 1.5));
+		m_pTransformCom->Move_Pos(&(vLU * fTimeDelta * m_fSpeed * m_fDashSpeed));
 	}
 	else if (m_iAngleState == ANGLE_180) {
-		m_pTransformCom->Move_Pos(&(vDir * fTimeDelta * m_fSpeed * 1.5));
+		m_pTransformCom->Move_Pos(&(vDir * fTimeDelta * m_fSpeed * m_fDashSpeed));
 	}
 	else if (m_iAngleState == ANGLE_225) {
-		m_pTransformCom->Move_Pos(&(vRU * fTimeDelta * m_fSpeed * 1.5));
+		m_pTransformCom->Move_Pos(&(vRU * fTimeDelta * m_fSpeed * m_fDashSpeed));
 	}
 	else if (m_iAngleState == ANGLE_270) {
-		m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed * 1.5));
+		m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed * m_fDashSpeed));
 	}
 	else if (m_iAngleState == ANGLE_315) {
-		m_pTransformCom->Move_Pos(&(vRD * fTimeDelta * m_fSpeed * 1.5));
+		m_pTransformCom->Move_Pos(&(vRD * fTimeDelta * m_fSpeed * m_fDashSpeed));
 	}
 
 }

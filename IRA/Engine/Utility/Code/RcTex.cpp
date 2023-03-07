@@ -26,6 +26,7 @@ HRESULT CRcTex::Ready_Buffer(void)
 	m_dwTriCnt = 2;
 
 	m_dwIdxSize = sizeof(INDEX32);
+
 	m_IdxFmt = D3DFMT_INDEX32;
 
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
@@ -49,7 +50,7 @@ HRESULT CRcTex::Ready_Buffer(void)
 
 	m_pVB->Unlock();
 
-	INDEX32*		pIndex = nullptr;
+	INDEX32* pIndex = nullptr;
 
 	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
 

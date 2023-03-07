@@ -169,12 +169,113 @@ void CTransform::Bullet_Move(const _vec3 _Dir, const _float& fSpeed, const _floa
 		_float	fRadian_Bullet = D3DXToRadian(Temp_Degree);
 		//D3DXMatrixRotationY(&matRot, fRadian_Bullet);
 		D3DXMatrixRotationYawPitchRoll(&matRot, fRadian_Bullet, D3DXToRadian(90), 0.f);
+
 		D3DXMatrixTranslation(&matTrans,
 			m_vInfo[INFO_POS].x,
 			m_vInfo[INFO_POS].y + 3.f,
 			m_vInfo[INFO_POS].z);
 
 		m_matWorld = matScale * matRot * matTrans;
+	}
+}
+
+void CTransform::Bullet_Move_Boss(const _vec3 _Dir, const _float& fSpeed, const _float& fTimeDelta, _int iDirCount)
+{
+	_vec3		vNull(0, 0, 0);
+
+	if (vNull == m_vBulletTarget && 0 != iDirCount)
+	{
+		_vec3 Temp;
+		Temp.x = float(cos(45 * iDirCount));
+		Temp.y = 0.f;
+		Temp.z = float(sin(45 * iDirCount));
+
+		if (8 == iDirCount)
+		{
+			Temp.x = 0.f;;
+			Temp.y = 0.f;
+			Temp.z = float(sin(45 * iDirCount));
+		}
+		if (8 == iDirCount)
+		{
+			Temp.x = 0.f;;
+			Temp.y = 0.f;
+			Temp.z = float(sin(45 * iDirCount));
+		}
+
+		if (7 == iDirCount)
+		{
+			Temp.x = 0.f;;
+			Temp.y = 0.f;
+			Temp.z = float(sin(180));
+		}
+
+		m_vBulletTarget = Temp;
+	}
+	if (vNull != m_vBulletTarget && 0 != iDirCount)
+	{
+		m_vInfo[INFO_POS] += *D3DXVec3Normalize(&m_vBulletTarget, &m_vBulletTarget) * fSpeed * fTimeDelta;
+	}
+
+	_matrix		matScale, matRot, matTrans;
+
+	D3DXMatrixScaling(&matScale, 2.f, 2.f, 1.f);
+
+	if (0 == iDirCount)
+	{
+		D3DXMatrixTranslation(&matTrans,
+			m_vInfo[INFO_POS].x,
+			m_vInfo[INFO_POS].y + 3.f,
+			m_vInfo[INFO_POS].z);
+
+		m_matWorld = matScale * matTrans;
+	}
+
+	if (0 != iDirCount)
+	{
+		_float Temp_Degree = 0;
+
+		switch (iDirCount)
+		{
+		case 1:
+			Temp_Degree = 135;
+			break;
+		case 2:
+			Temp_Degree = 45;
+			break;
+		case 3:
+			Temp_Degree = 0;
+			break;
+		case 4:
+			Temp_Degree = 315;
+			break;
+		case 5:
+			Temp_Degree = 225;
+			break;
+		case 6:
+			Temp_Degree = 180;
+			break;
+		case 7:
+			Temp_Degree = 270;
+			break;
+		case 8:
+			Temp_Degree = 90;
+			break;
+
+		default:
+			break;
+		}
+
+		_float	fRadian_Bullet = D3DXToRadian(Temp_Degree);
+		//D3DXMatrixRotationY(&matRot, fRadian_Bullet);
+		//D3DXMatrixRotationYawPitchRoll(&matRot, fRadian_Bullet, 0.f, 0.f);
+
+		D3DXMatrixTranslation(&matTrans,
+			m_vInfo[INFO_POS].x,
+			m_vInfo[INFO_POS].y + 3.f,
+			m_vInfo[INFO_POS].z);
+
+		m_matWorld = matScale * matTrans;
 	}
 }
 
@@ -264,6 +365,22 @@ void CTransform::Ui_Print(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+}
+
+void CTransform::Arrow_Move(void)
+{
+	D3DXMATRIX		matScale, matRot, matTrans;
+
+
+	D3DXMatrixRotationYawPitchRoll(&matRot, 0.f, D3DXToRadian(90), 0.f);
+	D3DXMatrixTranslation(&matTrans,
+		m_vInfo[INFO_POS].x,
+		m_vInfo[INFO_POS].y,
+		m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matRot * matTrans;
+
+
 }
 
 void CTransform::Reverse_Scale_x(void)

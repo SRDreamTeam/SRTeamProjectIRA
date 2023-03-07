@@ -33,6 +33,7 @@ _int CMonsterBullet_2::Update_GameObject(const _float& fTimeDelta)
 
 	Frame_Check(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
+
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
