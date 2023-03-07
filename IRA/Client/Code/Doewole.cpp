@@ -5,6 +5,8 @@
 #include "Effect_Doewole_StandardAttack.h"
 #include "Effect_Doewole_ChargeExplosion.h"
 #include "Effect_Doewole_Loof.h"
+#include "DoewoleBullet_SwordShot.h"
+#include "DoewoleBullet_Circle.h"
 
 CDoewole::CDoewole(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBoss(pGraphicDev)
@@ -86,6 +88,16 @@ void CDoewole::Idle(const _float& fTimeDelta)
 		}
 	}
 
+	else if (4 == m_iPattern)
+	{
+		if (m_fAccTime > 1.f)
+		{
+			m_fAccTime = 0.f;
+			m_eCurState = SMASH_ATTACK;
+			++m_iPattern;
+		}
+	}
+
 }
 
 void CDoewole::Move(const _float& fTimeDelta)
@@ -114,7 +126,7 @@ void CDoewole::Standard_Attack(const _float& fTimeDelta)
 			m_fAccTime = 0.f;
 
 			// Standard Bullet 积己
-
+			Create_StandardBullet();
 
 			// Standard_Attack 捞棋飘 积己
 			CGameObject* pEffect = CEffect_Doewole_StandardAttack::Create(m_pGraphicDev);
@@ -142,6 +154,7 @@ void CDoewole::Standard_Attack(const _float& fTimeDelta)
 void CDoewole::OutStretch_Attack(const _float& fTimeDelta)
 {
 	m_fAccTime += fTimeDelta;
+	m_fAccTime2 += fTimeDelta;
 
 	if (!m_bEffect)
 	{
@@ -169,6 +182,49 @@ void CDoewole::OutStretch_Attack(const _float& fTimeDelta)
 			m_fAccTime = 0.f;
 			m_bAttackToIdle = false;
 		}
+	}
+
+	if (m_fAccTime2 > 0.5f)
+	{
+		Create_CircleBullet();
+		m_fAccTime2 = 0.f;
+	}
+}
+
+void CDoewole::Smash_Attack(const _float& fTimeDelta)
+{
+
+}
+
+void CDoewole::Create_StandardBullet()
+{
+	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
+	vMonster_Pos.y += 1.f;
+
+	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+	CGameObject* pBulletObject = nullptr;
+
+	for (size_t i = 0; i < 8; i++)
+	{
+		pBulletObject = CDoewoleBullet_SwordShot::Create(m_pGraphicDev, vMonster_Pos, (i + 1));
+		NULL_CHECK(pBulletObject);
+		pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+	}
+}
+
+void CDoewole::Create_CircleBullet()
+{
+	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
+	vMonster_Pos.y += 1.f;
+
+	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+	CGameObject* pBulletObject = nullptr;
+
+	for (size_t i = 0; i < 8; i++)
+	{
+		pBulletObject = CDoewoleBullet_Circle::Create(m_pGraphicDev, vMonster_Pos, (i + 1));
+		NULL_CHECK(pBulletObject);
+		pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
 	}
 }
 
@@ -198,6 +254,9 @@ void CDoewole::State_Update(const _float& fTimeDelta)
 		break;
 	case CDoewole::OUTSTRECTH_ATTACK:
 		OutStretch_Attack(fTimeDelta);
+		break;
+	case CDoewole::SMASH_ATTACK:
+		Smash_Attack(fTimeDelta);
 		break;
 	case CDoewole::STATE_END:
 		break;
