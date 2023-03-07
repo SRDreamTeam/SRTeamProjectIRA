@@ -3,6 +3,8 @@
 #include "Export_Function.h"
 #include "Effect_Doewole_ChargeCircle.h"
 #include "DoewoleBullet_Standard.h"
+#include "Effect_Doewole_Slam.h"
+#include "Effect_AlertCircle.h"
 
 CDoewole_LeftClaw::CDoewole_LeftClaw(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CDoewole(pGraphicDev)
@@ -338,6 +340,20 @@ void CDoewole_LeftClaw::Smash_Attack(const _float& fTimeDelta)
 		{
 			if (m_fFrame > 6.f)
 				m_fFrame = 6.f;
+
+			// 위험 Circle 이펙트 생성
+			if (!m_bAlert)
+			{
+				m_bAlert = true;
+				// ChargeCircle 이펙트 생성
+
+				_vec3 vPos = { pDoewoleTransformCom->m_vInfo[INFO_POS].x , 0.001f , pDoewoleTransformCom->m_vInfo[INFO_POS].z };
+
+				CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev , vPos, _vec3(25.f,25.f,25.f) , 2.f);
+				NULL_CHECK(pEffect);
+				CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+				pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+			}
 		}
 
 		if (m_fMaxFrame < m_fFrame)
@@ -345,6 +361,7 @@ void CDoewole_LeftClaw::Smash_Attack(const _float& fTimeDelta)
 			m_fFrame = 0.f;
 			m_bUp = true;
 			m_fAccTime = 0.f;
+			m_bAlert = false;
 		}
 	}
 	else
@@ -364,10 +381,16 @@ void CDoewole_LeftClaw::Smash_Attack(const _float& fTimeDelta)
 				if (!m_bSmash)
 				{
 					m_bSmash = true;
-					// 사라지는 이펙트 생성
+					// ChargeCircle 이펙트 생성
 					CGameObject* pEffect = CEffect_Doewole_ChargeCircle::Create(m_pGraphicDev);
 					NULL_CHECK(pEffect);
 					CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+					pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					// Smash 이펙트 생성
+					pEffect = CEffect_Doewole_Slam::Create(m_pGraphicDev);
+					NULL_CHECK(pEffect);
+					pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 					pLayer->Add_BulletObject(OBJ_NONE, pEffect);
 
 					// Standard Bullet 생성
@@ -375,7 +398,7 @@ void CDoewole_LeftClaw::Smash_Attack(const _float& fTimeDelta)
 					{
 						CGameObject* pBullet = CDoewoleBullet_Standard::Create(m_pGraphicDev);
 						NULL_CHECK(pBullet);
-						CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+						pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 						pLayer->Add_BulletObject(OBJ_NONE, pBullet);
 					}
 				}
