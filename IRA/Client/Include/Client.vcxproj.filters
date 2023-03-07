@@ -163,6 +163,15 @@
     <Filter Include="02. GameObject\Stage\00. Player\01. Bow\00.SylphBow\00.SylphBowPair">
       <UniqueIdentifier>{ef9af6bf-a187-4404-ac54-37f9c9f34006}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect">
+      <UniqueIdentifier>{4ac67ed4-d38a-42a1-b967-80d49c024435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse">
+      <UniqueIdentifier>{7512139a-306f-431d-948a-7ef77e75d080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge">
+      <UniqueIdentifier>{5b8cdc17-5b82-417b-a962-99df72308db7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -303,6 +312,9 @@
     <ClInclude Include="..\Header\DoewoleBullet_Circle.h">
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Circle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -433,6 +445,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp">
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

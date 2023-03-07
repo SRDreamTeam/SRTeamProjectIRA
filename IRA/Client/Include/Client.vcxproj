@@ -177,6 +177,7 @@
     <ClInclude Include="..\Header\Effect_Doewole_Loof.h" />
     <ClInclude Include="..\Header\Effect_Doewole_StandardAttack.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h" />
+    <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h" />
     <ClInclude Include="..\Header\EvilSoul.h" />
     <ClInclude Include="..\Header\FrontUi_Hp.h" />
     <ClInclude Include="..\Header\GreenEvilSlime.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="..\Code\Effect_Doewole_ChargeExplosion.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Loof.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_StandardAttack.cpp" />
+    <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp" />
     <ClCompile Include="..\Code\EvilSoul.cpp" />
     <ClCompile Include="..\Code\FrontUi_Hp.cpp" />
     <ClCompile Include="..\Code\GreenEvilSlime.cpp" />
