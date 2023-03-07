@@ -51,4 +51,22 @@ typedef	struct tagIndex32
 
 }INDEX32;
 
+
+
+typedef	struct tagPlayerInfo
+{
+	int Maxhp;
+	int Nowhp;
+	int MaxEnergy;
+	int NowEnergy;
+	int Key;
+	int Money;
+	int Gem;
+
+}PLAYER_INFO;
+
+
+
+
+
 END

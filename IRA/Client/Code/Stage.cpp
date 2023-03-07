@@ -13,6 +13,8 @@
 #include "Doewole_RightClaw.h"
 #include "Effect_Doewole_Vanish.h"
 #include "Ghost.h"
+#include "SylphBow.h"
+#include "SylphBowPair.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -104,9 +106,18 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 
 	CGameObject*	pGameObject = nullptr;
 
+	
 	pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject, OBJ_PLAYER), E_FAIL);
+
+	pGameObject = CSylphBow::Create(m_pGraphicDev,{0.f,0.f,0.f},0.f);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SylphBow", pGameObject, OBJ_BOW), E_FAIL);
+
+	pGameObject = CSylphBowPair::Create(m_pGraphicDev, { 0.f,0.f,0.f }, 0.f);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SylphBowPair", pGameObject, OBJ_BOW), E_FAIL);
 
 	pGameObject = CGhost::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

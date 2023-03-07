@@ -22,23 +22,19 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 
 	m_pTransformCom->Set_Scale({ 1.f, 1.f, 1.f });
 
-	m_pTransformCom->Rotation(ROT_X, 90.f);
-	m_pTransformCom->Rotation(ROT_Z, 180.f);
+	m_pTransformCom->Rotation(ROT_Y, m_Arrow_Angle);
+
+	m_pTransformCom->Arrow_Move(); // 왜 안먹지? 나중에 다시 해결
+
 	
-	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y + 3.f, m_Fire_Pos.z);
+	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y - 2.f, m_Fire_Pos.z);
 
-
-	m_target_Pos = { 500.f,10.f,500.f };
-
-	m_vDir = m_target_Pos - m_pTransformCom->m_vInfo[INFO_POS];
+	m_vDir = m_target_Dir;
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
 
-
-	m_pTransformCom->m_vInfo[INFO_LOOK] = m_vDir;
 	
-
+	
 	__super::Ready_GameObject();
-
 
 	return S_OK;
 }
@@ -48,10 +44,8 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-
 	m_pTransformCom->Move_Pos(&(m_vDir * fTimeDelta * m_fSpeed));
 
-	
 	if (m_iState == ARROW_IDLE) {
 		m_fIdleFrame += 5.f * fTimeDelta;
 		if (5.f < m_fIdleFrame)
@@ -97,9 +91,7 @@ void CSylphArrow::Render_GameObject()
 	}
 
 
-	
 	m_pTransformCom->m_vInfo[INFO_POS];
-
 
 	m_pBufferCom->Render_Buffer();
 
@@ -154,13 +146,14 @@ void CSylphArrow::Frame_Check(const _float& fTimeDelta)
 	
 }
 
-CSylphArrow* CSylphArrow::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec3 vDir)
+CSylphArrow* CSylphArrow::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec3 vDir,_float Angle)
 {
 	CSylphArrow* pInstance = new CSylphArrow(pGraphicDev);
 
 	if (pInstance != nullptr) {
-		pInstance->m_target_Pos = vDir;
+		pInstance->m_target_Dir = vDir;
 		pInstance->m_Fire_Pos = vPos;
+		pInstance->m_Arrow_Angle = Angle;
 	}
 
 	if (FAILED(pInstance->Ready_GameObject()))

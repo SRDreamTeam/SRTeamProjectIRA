@@ -28,6 +28,8 @@ class CPlayer : public Engine::CGameObject
 	enum { ATTACK_ANGLE_045, ATTACK_ANGLE_135, ATTACK_ANGLE_225, ATTACK_ANGLE_315, ATTACK_ANGLE_STATE_END };
 	
 	
+	enum { BOW_SYLPH, BOW_END };
+
 private:
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CPlayer(const CPlayer& rhs);
@@ -48,6 +50,15 @@ public:
 		return m_iAngleState;
 	}
 
+	void Create_Basic_Bow(void);
+
+	const PLAYER_INFO&  Get_Player_Info(void) {
+		return m_tInfo;
+	}
+
+	void Set_Player_Info(const PLAYER_INFO& tInfo) {
+		m_tInfo = tInfo;
+	}
 
 private:
 	HRESULT			Add_Component(void);
@@ -77,7 +88,7 @@ private:
 
 private:	
 	_float			m_fSpeed = 20.f;
-	_float			m_fDashSpeed = 2.f;
+	_float			m_fDashSpeed = 1.8f;
 
 	_float			m_fStandFrame = 0.f;
 	_float			m_fRunFrame = 0.f;
@@ -103,15 +114,26 @@ private:
 	bool            m_Is_Dash = false;
 
 	bool            m_Is_Fire_Arrow = false;
-	_float          m_Fire_Interver = 0.f;
-	_float          m_Fire_Speed = 2.f;
+	_float          m_Fire_Frame = 3.f;
+	_float          m_Fire_Speed = 4.f;
+	_float          m_Fire_Init = 4.f;
 
 	CCollider*		m_pColliderCom;
 	CSphereTex*		m_pSphereBufferCom;
 
 	_vec3           m_Mouse_Dir;
 	
+
+	CGameObject*    m_Bow_List[BOW_END] = {};
+	bool            m_Bow_Active[BOW_END] = {};
+	bool            m_Bow_Render[BOW_END] = {};
 	
+
+private:
+	// UI Á¤º¸
+	PLAYER_INFO     m_tInfo;
+
+
 
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

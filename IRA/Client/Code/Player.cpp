@@ -3,6 +3,7 @@
 #include "Export_Function.h"
 #include "Ghost.h"
 #include "SylphArrow.h"
+#include "SylphBow.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -35,6 +36,8 @@ HRESULT CPlayer::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->Set_Scale({ 5.f, 5.f, 1.f });
+
+	
 
 	return S_OK;
 }
@@ -91,10 +94,10 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 
 	if (m_Is_Fire_Arrow == true) {
-		m_Fire_Interver += m_Fire_Speed * fTimeDelta;
-		if (m_Fire_Interver > m_Fire_Speed) {
+		m_Fire_Frame += m_Fire_Init * fTimeDelta * m_Fire_Speed;
+		if (m_Fire_Frame > m_Fire_Init){
 			Fire_Arrow();
-			m_Fire_Interver = 0.f;
+			m_Fire_Frame = 0.f;
 		}
 	}
 
@@ -248,6 +251,47 @@ void CPlayer::Render_GameObject()
 
 }
 
+void CPlayer::Create_Basic_Bow(void)
+{
+	POINT ptCursor;
+
+	GetCursorPos(&ptCursor);
+	ScreenToClient(g_hWnd, &ptCursor);
+
+	_vec3 Axis = { -1.f,0.f,0.f };
+
+	_vec3 Dir = { ptCursor.x - 400.f,ptCursor.y - 300.f,0 };
+	D3DXVec3Normalize(&Dir, &Dir);
+
+
+	// Angle 계산
+	m_fAngle = acos(D3DXVec3Dot(&Axis, &Dir));
+
+	if (300.f < ptCursor.y)
+		m_fAngle = 2.f * D3DX_PI - m_fAngle;
+
+
+	m_Mouse_Dir = { Dir.x,0.f,-Dir.y };
+
+	_vec3 vPos = m_pTransformCom->m_vInfo[INFO_POS];
+
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+
+	CGameObject* pGameObject = nullptr;
+
+
+	pGameObject = CSylphBow::Create(m_pGraphicDev, vPos, m_fAngle);
+
+	if (pGameObject == nullptr)
+		return;
+
+	m_Bow_List[BOW_SYLPH] = pGameObject;
+	m_Bow_Active[BOW_SYLPH] = true;
+	pGameLogicLayer->Add_GameObject(L"SylphBow", pGameObject, OBJ_BOW);    /// ?? 왜 터짐
+
+}
+
 HRESULT CPlayer::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
@@ -362,7 +406,6 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (m_Is_Dash == true)
 		return;
 
-
 	/*if (GetAsyncKeyState('Q'))
 		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
 
@@ -371,8 +414,6 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 
 	CGhost* pGhost = dynamic_cast<CGhost*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Ghost"));
-
-
 
 	_vec3	vDir;
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
@@ -406,15 +447,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (GetAsyncKeyState(VK_LBUTTON)) {
 
 		m_Is_Fire_Arrow = true;
-
-
+		
 		POINT ptCursor;
 
 		GetCursorPos(&ptCursor);
 		ScreenToClient(g_hWnd, &ptCursor);
 
 		
-
 		if (ptCursor.x>=400 && ptCursor.y <= 300) {
 			m_iAttackAngleState = ATTACK_ANGLE_225;
 			m_iAngleState = ANGLE_225;
@@ -478,6 +517,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	}
 	else if (GetAsyncKeyState('W')) {
+		m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
 
 		if (GetAsyncKeyState('A')) {
 			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
@@ -524,6 +565,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 	}
 	else if (GetAsyncKeyState('S')) {
+	    m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
 
 		if (GetAsyncKeyState('A')) {
 			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
@@ -571,6 +614,9 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	}
 	else if (GetAsyncKeyState('A')) {
+	    m_Is_Fire_Arrow = false; 
+		m_Fire_Frame = m_Fire_Init;
+	    
 		if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 			pGhost->Is_Dash = true;
 			m_Is_Dash = true;
@@ -585,6 +631,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 	}
 	else if (GetAsyncKeyState('D')) {
+	    m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
 
 	    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
 			pGhost->Is_Dash = true;
@@ -600,9 +648,15 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 	}
 	else if (GetAsyncKeyState('P')) {
+	    m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
+
 	    m_iState = DEATH;
     }
 	else {
+	    m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
+
 		m_iState = STAND;
 	}
 
@@ -626,17 +680,28 @@ void CPlayer::Fire_Arrow(void)
 	GetCursorPos(&ptCursor);
 	ScreenToClient(g_hWnd, &ptCursor);
 
-	_vec3 Look = { 1.f,0.f,0.f };
+	_vec3 Axis = { -1.f,0.f,0.f };
 
 	_vec3 Dir = { ptCursor.x - 400.f,ptCursor.y - 300.f,0 };
 	D3DXVec3Normalize(&Dir, &Dir);
 
-	
-	m_Mouse_Dir = { Dir.x,3.f,Dir.y };
 
-	_vec3 vPos = m_pTransformCom->m_vInfo[INFO_POS];
+	// Angle 계산
+	m_fAngle = acos(D3DXVec3Dot(&Axis, &Dir));
+
+	if (300.f< ptCursor.y)
+		m_fAngle = 2.f * D3DX_PI - m_fAngle;
+
 	
-	pGameObject = CSylphArrow::Create(m_pGraphicDev, vPos, m_Mouse_Dir);
+	m_Mouse_Dir = { Dir.x,0.f,-Dir.y };
+
+
+	CTransform* pSylphBowTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SylphBow", L"Proto_Transform", ID_DYNAMIC));
+
+
+	_vec3 vPos = pSylphBowTransformCom->m_vInfo[INFO_POS];
+	
+	pGameObject = CSylphArrow::Create(m_pGraphicDev, vPos, m_Mouse_Dir, m_fAngle);
 
 	if (pGameObject == nullptr)
 		return;
