@@ -48,6 +48,7 @@ private:
 	_int							m_iReplayCnt = 0;
 
 	_bool							m_bSmash = false;
+	_bool							m_bAlert = false;
 
 };
 

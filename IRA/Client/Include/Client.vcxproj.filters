@@ -157,6 +157,12 @@
     <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot">
       <UniqueIdentifier>{0dd96ab2-49e5-4305-a35e-aba0a4b0aec4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_Slam">
+      <UniqueIdentifier>{7640ba89-e667-4f5b-833f-fd25d9820279}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\AlertCircle">
+      <UniqueIdentifier>{45d31adc-bf3a-490a-8205-fd17e8b55550}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\Stage\00. Player\01. Bow\00.SylphBow\00.SylphBowPair">
       <UniqueIdentifier>{ef9af6bf-a187-4404-ac54-37f9c9f34006}</UniqueIdentifier>
     </Filter>
@@ -327,6 +333,12 @@
     <ClInclude Include="..\Header\DoewoleBullet_Circle.h">
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Circle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_Slam.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Slam</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_AlertCircle.h">
+      <Filter>02. GameObject\Stage\05. Effect\AlertCircle</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
     </ClInclude>
@@ -469,6 +481,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp">
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_Slam.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Slam</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_AlertCircle.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\AlertCircle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
