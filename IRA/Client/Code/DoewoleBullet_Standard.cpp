@@ -27,11 +27,16 @@ HRESULT CDoewoleBullet_Standard::Ready_GameObject(void)
 
 	m_pTransformCom->m_vScale = { 3.f , 3.f , 3.f };
 
-	CTransform* pTransformCom = dynamic_cast<CTransform*>( Engine::Get_Component(L"Layer_GameLogic", L"Doewole_LeftClaw", L"Proto_Transform", ID_DYNAMIC));
+	CTransform* pTransformCom = dynamic_cast<CTransform*>( Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTransformCom, -1);
-	m_pTransformCom->m_vInfo[INFO_POS] = { pTransformCom->m_vInfo[INFO_POS].x - (rand() % 30) * 0.02f ,
-											 + 3.f,
-											pTransformCom->m_vInfo[INFO_POS].z - (rand() % 30) * 0.02f };
+
+	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
+
+	if (pTransformCom->m_vInfo[INFO_POS].x >= pPlayerTransformCom->m_vInfo[INFO_POS].x)
+		m_pTransformCom->m_vInfo[INFO_POS] = { pTransformCom->m_vInfo[INFO_POS].x - (rand() % 30) * 0.02f ,3.f,  pTransformCom->m_vInfo[INFO_POS].z - (rand() % 30) * 0.02f };
+	else
+		m_pTransformCom->m_vInfo[INFO_POS] = { pTransformCom->m_vInfo[INFO_POS].x + (rand() % 30) * 0.02f ,3.f,  pTransformCom->m_vInfo[INFO_POS].z - (rand() % 30) * 0.02f };
 
 	pTransformCom->m_vInfo[INFO_POS].y = 3.f;
 

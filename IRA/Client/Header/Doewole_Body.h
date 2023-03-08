@@ -4,7 +4,7 @@
 
 class CDoewole_Body : public CDoewole
 {
-	enum {STAND, STAND_FACEON ,POWERSLAM ,POWERSLAM_AFTER, POWERSLAM_FACEOFF, TEX_END};
+	enum {STAND, STAND_FACEON ,POWERSLAM ,POWERSLAM_AFTER, POWERSLAM_FACEOFF, SCRATCH, TEX_END};
 
 
 private:
@@ -37,6 +37,7 @@ private:
 	void			Move(const _float& fTimeDelta);
 	void			Standard_Attack(const _float& fTimeDelta);
 	void			Smash_Attack(const _float& fTimeDelta);
+	void			Scratch_Attack(const _float& fTimeDelta);
 
 private:
 	CGameObject*					m_pOwner = nullptr;
@@ -46,6 +47,8 @@ private:
 	_bool							m_bPowerSlam = false;
 	_bool							m_bPowerSlamAfter = false;
 	_bool							m_bPowerSlamFaceOff = false;
+
+	int								m_iScratchCnt = 0;
 
 };
 
