@@ -24,6 +24,7 @@ public:
 
 	HRESULT			Ready_Loading(LOADINGID eID);
 	_uint			Loading_ForStage(void);
+	_uint			Loading_TerrainData(void);
 	
 
 private:

@@ -39,5 +39,8 @@ public:
 
 private:
 	virtual void		Free(void);
+
+private:
+	_bool				m_bTerrainInit = false;
 };
 
