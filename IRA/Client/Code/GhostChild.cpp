@@ -24,7 +24,7 @@ HRESULT CGhostChild::Ready_GameObject(void)
 	
 	__super::Ready_GameObject();
 
-	m_pTransformCom->Set_Scale({ 5.f, 5.f, 1.f });
+	m_pTransformCom->Set_Scale_Ratio({ 5.f, 5.f, 1.f });
 
 
 	CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));

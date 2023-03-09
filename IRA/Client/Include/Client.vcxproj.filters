@@ -184,6 +184,15 @@
     <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key">
       <UniqueIdentifier>{0ecc862b-0458-4d81-b7f4-5665a9ec38f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager">
+      <UniqueIdentifier>{59888cd2-6609-4fdc-bb2c-d9cea2c868a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow">
+      <UniqueIdentifier>{fed404c0-c5fa-4696-9f3b-be25825ea02e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\02. Arrow_Hit">
+      <UniqueIdentifier>{3fedde5c-7ec4-4c08-91b2-5d9d5c59b6bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -342,6 +351,18 @@
     <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KeyMgr.h">
+      <Filter>03. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SylphChargeArrow.h">
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Player_Arrow_Hit.h">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\02. Arrow_Hit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -490,6 +511,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KeyMgr.cpp">
+      <Filter>03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SylphChargeArrow.cpp">
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Player_Arrow_Hit.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\02. Arrow_Hit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
