@@ -127,9 +127,6 @@
     <Filter Include="02. GameObject\Stage\09. FrontUi">
       <UniqueIdentifier>{68966fc0-0041-41c6-96b5-8add31f163f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status">
-      <UniqueIdentifier>{99b687eb-a21d-4fde-94bd-1063bbe03b9e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\Stage\00. Player\01. Bow">
       <UniqueIdentifier>{8adc4901-34ff-4323-8983-872eae011c15}</UniqueIdentifier>
     </Filter>
@@ -175,14 +172,71 @@
     <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge">
       <UniqueIdentifier>{5b8cdc17-5b82-417b-a962-99df72308db7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\01. Status_Hp">
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01. Status">
+      <UniqueIdentifier>{99b687eb-a21d-4fde-94bd-1063bbe03b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01. Status\01. Status_Hp">
       <UniqueIdentifier>{76271434-6a2c-4fe2-97d2-4c5af5312647}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\02. Status_Energy">
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01. Status\02. Status_Energy">
       <UniqueIdentifier>{4f582268-e583-41d5-80ea-1e384efed8b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key">
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01. Status\03. Status_Key">
       <UniqueIdentifier>{0ecc862b-0458-4d81-b7f4-5665a9ec38f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01. Status\04. Status_Money">
+      <UniqueIdentifier>{7532db20-97af-45da-ba02-d8fc87c5fcda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01. Status\05. Status_Gem">
+      <UniqueIdentifier>{f92304e8-d45a-412a-9971-2903e3a6e1b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\01. Status\06. Status_Back">
+      <UniqueIdentifier>{0d3a8462-72a7-44c2-af82-ffc316225865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\02. Apostle">
+      <UniqueIdentifier>{5703187b-fca8-46a1-bdab-73348b980c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\02. Apostle\02. Apostle_Pattern">
+      <UniqueIdentifier>{b9b48017-1066-4afb-ae71-208dff461a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\02. Apostle\04. Apostle_Count">
+      <UniqueIdentifier>{2e43acab-ea05-4418-b52e-71c18c188a08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\02. Apostle\01. Apostle_Frame">
+      <UniqueIdentifier>{69aca4d3-e27e-4481-be21-9b3044ed4cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\02. Apostle\05. Apostle_Frame_Back">
+      <UniqueIdentifier>{05811b4d-9baa-4258-9f6a-1279122b0c8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\02. Apostle\03. Apostle_Key_Q">
+      <UniqueIdentifier>{73804958-6c78-4470-91fd-d6b6cafe3af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\02. Apostle\06. Apostle_Glow">
+      <UniqueIdentifier>{ace4c5f1-87d0-421e-a511-a6765fa1a751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\03. MiniMap">
+      <UniqueIdentifier>{5b0acbdb-5c4d-4f27-9c25-06285547e9c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\04. QuickSlot">
+      <UniqueIdentifier>{940fa1ec-c9ab-4021-9444-e2f0cdef5f02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\04. QuickSlot\01. QuickSlot_WeaponImg">
+      <UniqueIdentifier>{91fb10f8-1f19-48b9-8ab2-36592ed22f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\04. QuickSlot\03. QuickSlot_WeaponImg_Back">
+      <UniqueIdentifier>{333ccd09-32ff-46d5-86b8-fefea12c555e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\04. QuickSlot\04. QuickSlot_ArrowCount_Back">
+      <UniqueIdentifier>{c58cc518-693a-4fe2-b601-10b465a91b2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\04. QuickSlot\02. QuickSlot_ArrowCount_Infi">
+      <UniqueIdentifier>{aafdcc9c-36ad-4974-b574-d42ca1331b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\03. MiniMap\01. MiniMap_Back">
+      <UniqueIdentifier>{a1a03604-5707-4065-ab24-df4ef14c7e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\09. FrontUi\03. MiniMap\02. MiniMap_Gage">
+      <UniqueIdentifier>{16cedab8-c357-40a6-9bef-00a9a705b5b4}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Manager">
       <UniqueIdentifier>{59888cd2-6609-4fdc-bb2c-d9cea2c868a2}</UniqueIdentifier>
@@ -313,16 +367,16 @@
       <Filter>02. GameObject\Stage\09. FrontUi</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Status.h">
-      <Filter>02. GameObject\Stage\09. FrontUi\01.Status</Filter>
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Status_Energy.h">
-      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\02. Status_Energy</Filter>
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\02. Status_Energy</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Status_Hp.h">
-      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\01. Status_Hp</Filter>
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\01. Status_Hp</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Status_Key.h">
-      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key</Filter>
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\03. Status_Key</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Arrow.h">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
@@ -359,6 +413,57 @@
     </ClInclude>
     <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Status_Money.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\04. Status_Money</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Status_Gem.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\05. Status_Gem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Status_Back.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\06. Status_Back</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Apostle.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Apostle_Frame_Back.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\05. Apostle_Frame_Back</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Apostle_Frame.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\01. Apostle_Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Apostle_Key_Q.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\03. Apostle_Key_Q</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Apostle_Pattern.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\02. Apostle_Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Apostle_Count.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\04. Apostle_Count</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Apostle_Pattern_Glow.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\06. Apostle_Glow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuickSlot.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\04. QuickSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuickSlot_WeaponImg_Back.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\04. QuickSlot\03. QuickSlot_WeaponImg_Back</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuickSlot_WeaponImg.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\04. QuickSlot\01. QuickSlot_WeaponImg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\QuickSlot_ArrowCount_Infi.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\04. QuickSlot\02. QuickSlot_ArrowCount_Infi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMap.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMap_Back.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap\01. MiniMap_Back</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniMap_Gage.h">
+      <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap\02. MiniMap_Gage</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
@@ -483,16 +588,16 @@
       <Filter>02. GameObject\Stage\09. FrontUi</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Status.cpp">
-      <Filter>02. GameObject\Stage\09. FrontUi\01.Status</Filter>
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Status_Energy.cpp">
-      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\02. Status_Energy</Filter>
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\02. Status_Energy</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Status_Hp.cpp">
-      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\01. Status_Hp</Filter>
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\01. Status_Hp</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Status_Key.cpp">
-      <Filter>02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key</Filter>
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\03. Status_Key</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Arrow.cpp">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow</Filter>
@@ -529,6 +634,57 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Status_Money.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\04. Status_Money</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Status_Gem.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\05. Status_Gem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Status_Back.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\01. Status\06. Status_Back</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Apostle.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Apostle_Frame_Back.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\05. Apostle_Frame_Back</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Apostle_Frame.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\01. Apostle_Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Apostle_Key_Q.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\03. Apostle_Key_Q</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Apostle_Pattern.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\02. Apostle_Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Apostle_Count.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\04. Apostle_Count</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Apostle_Pattern_Glow.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\02. Apostle\06. Apostle_Glow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuickSlot.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\04. QuickSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuickSlot_WeaponImg_Back.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\04. QuickSlot\03. QuickSlot_WeaponImg_Back</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuickSlot_WeaponImg.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\04. QuickSlot\01. QuickSlot_WeaponImg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\QuickSlot_ArrowCount_Infi.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\04. QuickSlot\02. QuickSlot_ArrowCount_Infi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniMap.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniMap_Back.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap\01. MiniMap_Back</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniMap_Gage.cpp">
+      <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap\02. MiniMap_Gage</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>

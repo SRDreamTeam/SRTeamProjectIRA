@@ -180,16 +180,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_5", pGameObject, OBJ_MONSTER), E_FAIL);
 
-	
-
-	pGameObject = CStatus::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Status_1", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	//pGameObject = CStatus_Hp::Create(m_pGraphicDev,1);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Status_1", pGameObject, OBJ_MONSTER), E_FAIL);
-
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -202,6 +192,22 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	// 오브젝트
 	CGameObject*	pGameObject = nullptr;
+
+	pGameObject = CStatus::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FrontUI_Status", pGameObject, OBJ_UI), E_FAIL);
+
+	pGameObject = CApostle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FrontUI_Apostle", pGameObject, OBJ_UI), E_FAIL);
+
+	pGameObject = CQuickSlot::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FrontUI_QuickSlot", pGameObject, OBJ_UI), E_FAIL);
+
+	pGameObject = CMiniMap::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FrontUI_MiniMap", pGameObject, OBJ_UI), E_FAIL);
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 

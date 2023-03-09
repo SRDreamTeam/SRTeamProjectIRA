@@ -358,35 +358,65 @@ const _matrix * CTransform::Compute_LookAtTarget(const _vec3 * pTargetPos)
 
 void CTransform::Ui_Status_Print(_int _iHpNumber, _int _iUiNumber)
 {	
-	
 	_matrix		matScale, matRot, matTrans, matView, matProj;
-	D3DXMatrixIdentity(&m_matWorld); //월드행렬을 항등행렬로
+	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&matView);
 	D3DXMatrixIdentity(&matProj);
 
 	D3DXMatrixLookAtLH(&matView, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 1), &D3DXVECTOR3(0, 1, 0));
-	D3DXMatrixOrthoLH(&matProj, 35.f, 35.f, 0.f, 1.f);
+	D3DXMatrixOrthoLH(&matProj, 40.f, 22.5f, 0.f, 1.f);
 	
 	switch (_iUiNumber)
 	{
 	case 1:
-		m_matWorld._41 = -(15.7f - ((_iHpNumber * 1.3f) - 1.3f));
-		m_matWorld._42 = 15.5f;
+		m_matWorld._11 = 0.55f;
+		m_matWorld._22 = 0.55f;
+		m_matWorld._41 = -(18.6f - ((_iHpNumber * 1.2f) - 1.2f));
+		m_matWorld._42 = 10.3f - ((_iUiNumber - 1) * 1.2);
 		break;
-
 	case 2:
-		m_matWorld._41 = -(15.7f - ((_iHpNumber * 1.3f) - 1.3f));
-		m_matWorld._42 = 13.7f;
+		m_matWorld._11 = 0.6f;
+		m_matWorld._22 = 0.6f;
+		m_matWorld._41 = -(18.6f - ((_iHpNumber * 1.2f) - 1.2f));
+		m_matWorld._42 = 10.3f - ((_iUiNumber - 1) * 1.2);
 		break;
-
 	case 3:
-		m_matWorld._41 = -(15.2f - ((_iHpNumber * 1.3f) - 1.3f));
-		m_matWorld._42 = 12.7f;
+		m_matWorld._11 = 0.65f;
+		m_matWorld._22 = 0.65f;
+		m_matWorld._41 = -18.9f;
+		m_matWorld._42 = 10.3f - ((_iUiNumber - 1) * 1.2);
 		break;
-
 	case 4:
-		m_matWorld._41 = -(15.2f - ((_iHpNumber * 1.3f) - 1.3f));
-		m_matWorld._42 = 12.7f;
+		m_matWorld._11 = 0.65f;
+		m_matWorld._22 = 0.65f;
+		m_matWorld._41 = -18.9f;
+		m_matWorld._42 = 10.3f - ((_iUiNumber - 1) * 1.2);
+		break;
+	case 5:
+		m_matWorld._11 = 0.65f;
+		m_matWorld._22 = 0.65f;
+		m_matWorld._41 = -18.9f;
+		m_matWorld._42 = 10.3f - ((_iUiNumber - 1) * 1.2);
+		break;
+	case 6:
+		m_matWorld._11 = 3.3f;
+		m_matWorld._22 = 2.6f;
+		m_matWorld._41 = -16.2f;
+		m_matWorld._42 = 10.2f - ((_iHpNumber * 1.2f) - 1.2f);
+		//if (3 > _iHpNumber)
+		//{
+		//	m_matWorld._11 = 4.1f;
+		//	m_matWorld._22 = 3.4f;
+		//	m_matWorld._41 = -14.9f;
+		//	m_matWorld._42 = 13.6f - ((_iHpNumber * 1.5f) - 1.5f);
+		//}
+		//if (3 <= _iHpNumber)
+		//{
+		//	m_matWorld._11 = 2.1f;
+		//	m_matWorld._22 = 3.4f;
+		//	m_matWorld._41 = -14.9f;
+		//	m_matWorld._42 = 13.6f - ((_iHpNumber * 1.5f) - 1.5f);
+		//}
 		break;
 
 	default:
@@ -397,6 +427,168 @@ void CTransform::Ui_Status_Print(_int _iHpNumber, _int _iUiNumber)
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 
+}
+
+void CTransform::Ui_Apostle_Print(_int _iApNumber, _int _iUiNumber)
+{
+	_matrix		matScale, matRot, matTrans, matView, matProj;
+	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMatrixIdentity(&matView);
+	D3DXMatrixIdentity(&matProj);
+
+	D3DXMatrixLookAtLH(&matView, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 1), &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixOrthoLH(&matProj, 40.f, 22.5f, 0.f, 1.f);
+
+	switch (_iUiNumber)
+	{
+	case 1:	// Frame
+		m_matWorld._11 = 6.1f;
+		m_matWorld._22 = 2.5f;
+		m_matWorld._41 = -13.4f;
+		m_matWorld._42 = -8.2f;
+		break;
+	case 2: // Pattern
+		m_matWorld._11 = 1.7f;
+		m_matWorld._22 = 1.7f;
+		m_matWorld._41 = -17.2f;
+		m_matWorld._42 = -8.0f;
+		break;
+	case 3: // Frame_Key_Q
+		m_matWorld._11 = 0.4f;
+		m_matWorld._22 = 0.4f;
+		m_matWorld._41 = -17.2f;
+		m_matWorld._42 = -6.0f;
+		break;
+	case 4: // Count
+		m_matWorld._11 = 0.7f;
+		m_matWorld._22 = 0.7f;
+		m_matWorld._41 = -14.5f + ((_iApNumber * 1.55f) - 1.55f);
+		m_matWorld._42 = -9.2f;
+		break;  
+	case 5:	// Frame_Back
+		m_matWorld._11 = 6.1f;
+		m_matWorld._22 = 2.5f;
+		m_matWorld._41 = -13.4f;
+		m_matWorld._42 = -8.2f;
+		break;
+	case 6:	//Glow
+		m_matWorld._11 = 1.7f;
+		m_matWorld._22 = 1.7f;
+		m_matWorld._41 = -17.2f;
+		m_matWorld._42 = -8.0f;
+		break;
+
+	default:
+		break;
+	}
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+}
+
+void CTransform::Ui_QuickSlot_Print(_int _iUiNumber)
+{
+	_matrix		matScale, matRot, matTrans, matView, matProj;
+	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMatrixIdentity(&matView);
+	D3DXMatrixIdentity(&matProj);
+
+	D3DXMatrixLookAtLH(&matView, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 1), &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixOrthoLH(&matProj, 40.f, 22.5f, 0.f, 1.f);
+
+	switch (_iUiNumber)
+	{
+	case 1:
+		m_matWorld._11 = 2.4f;
+		m_matWorld._22 = 2.4f;
+		m_matWorld._41 = 16.9f;
+		m_matWorld._42 = -7.7f;
+		break;
+	case 2:
+		m_matWorld._11 = 1.7f;
+		m_matWorld._22 = 1.7f;
+		m_matWorld._41 = 17.4f;
+		m_matWorld._42 = -7.5f;
+		break;
+	case 3:
+		m_matWorld._11 = 0.6f;
+		m_matWorld._22 = 0.6f;
+		m_matWorld._41 = 17.3f;
+		m_matWorld._42 = -9.63f;
+		break;
+	case 4:
+		m_matWorld._41 = -15.7f;
+		m_matWorld._42 = 7.3f;
+		break;
+
+	default:
+		break;
+	}
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+}
+
+void CTransform::Ui_MiniMap_Print(_int _iUiNumber)
+{
+	_matrix		matScale, matRot, matTrans, matView, matProj;
+	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMatrixIdentity(&matView);
+	D3DXMatrixIdentity(&matProj);
+
+	D3DXMatrixLookAtLH(&matView, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 1), &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixOrthoLH(&matProj, 40.f, 22.5f, 0.f, 1.f);
+
+	switch (_iUiNumber)
+	{
+	case 1:
+		m_matWorld._11 = 2.f;
+		m_matWorld._22 = 2.f;
+		m_matWorld._41 = 17.2f;
+		m_matWorld._42 = 8.1f;
+		break;
+	case 2:
+		m_matWorld._11 = 2.8f;
+		m_matWorld._22 = 2.8f;
+		m_matWorld._41 = 17.3f;
+		m_matWorld._42 = 10.7f;
+		break;
+	case 3:
+		m_matWorld._11 = 0.6f;
+		m_matWorld._22 = 0.6f;
+		m_matWorld._41 = 17.3f;
+		m_matWorld._42 = -9.63f;
+		break;
+
+	default:
+		break;
+	}
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+}
+
+void CTransform::ColorBlend_Hit(_int iFrame)
+{	
+	DWORD AlphaValue;
+	AlphaValue = D3DCOLOR_ARGB(200, 255, 255, 255);
+
+	if (3 == iFrame)
+	{
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(200, 255, 5, 5));
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_BLENDTEXTUREALPHA);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+	}
+	if (3 != iFrame)
+	{	
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_BLENDDIFFUSEALPHA);
+	}
 }
 
 void CTransform::Arrow_Move(float yaw, float pich, float roll)
