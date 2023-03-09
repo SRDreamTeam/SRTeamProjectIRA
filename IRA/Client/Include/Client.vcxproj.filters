@@ -202,6 +202,12 @@
     <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject">
       <UniqueIdentifier>{fd00f0b5-3b0e-4407-b7ee-82145afdef38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\KeyMgr">
+      <UniqueIdentifier>{935a21c9-fbd4-476d-8ffc-157f3e3de61b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\Damage_Font_Mgr">
+      <UniqueIdentifier>{f9ff5cc6-2306-403b-8253-8938880d18e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -363,9 +369,6 @@
     <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KeyMgr.h">
-      <Filter>03. Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SylphChargeArrow.h">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
     </ClInclude>
@@ -380,6 +383,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\DynamicObject.h">
       <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KeyMgr.h">
+      <Filter>03. Manager\KeyMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -533,9 +539,6 @@
     <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KeyMgr.cpp">
-      <Filter>03. Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SylphChargeArrow.cpp">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
     </ClCompile>
@@ -550,6 +553,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DynamicObject.cpp">
       <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KeyMgr.cpp">
+      <Filter>03. Manager\KeyMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
