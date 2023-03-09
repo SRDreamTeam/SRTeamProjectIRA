@@ -182,12 +182,15 @@
     <ClInclude Include="..\Header\Effect_Doewole_Slam.h" />
     <ClInclude Include="..\Header\Effect_Doewole_StandardAttack.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h" />
+    <ClInclude Include="..\Header\Effect_Player_Arrow_Hit.h" />
+    <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h" />
     <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h" />
     <ClInclude Include="..\Header\EvilSoul.h" />
     <ClInclude Include="..\Header\FrontUi.h" />
     <ClInclude Include="..\Header\GreenEvilSlime.h" />
     <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\GhostChild.h" />
+    <ClInclude Include="..\Header\KeyMgr.h" />
     <ClInclude Include="..\Header\Landscape.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
@@ -208,6 +211,7 @@
     <ClInclude Include="..\Header\Status_Energy.h" />
     <ClInclude Include="..\Header\Status_Hp.h" />
     <ClInclude Include="..\Header\Status_Key.h" />
+    <ClInclude Include="..\Header\SylphChargeArrow.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -236,6 +240,8 @@
     <ClCompile Include="..\Code\Effect_Doewole_Loof.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Slam.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_StandardAttack.cpp" />
+    <ClCompile Include="..\Code\Effect_Player_Arrow_Hit.cpp" />
+    <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp" />
     <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp" />
     <ClCompile Include="..\Code\EvilSoul.cpp" />
     <ClCompile Include="..\Code\FrontUi.cpp" />
@@ -244,6 +250,7 @@
     <ClCompile Include="..\Code\GhostChild.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp" />
+    <ClCompile Include="..\Code\KeyMgr.cpp" />
     <ClCompile Include="..\Code\Landscape.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
@@ -264,6 +271,7 @@
     <ClCompile Include="..\Code\Status_Energy.cpp" />
     <ClCompile Include="..\Code\Status_Hp.cpp" />
     <ClCompile Include="..\Code\Status_Key.cpp" />
+    <ClCompile Include="..\Code\SylphChargeArrow.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
