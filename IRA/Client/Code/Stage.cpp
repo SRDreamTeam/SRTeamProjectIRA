@@ -75,7 +75,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	CGameObject*	pGameObject = nullptr;
 
 	// 오브젝트 
-
 	pGameObject = CStaticCamera::Create(m_pGraphicDev,
 		&_vec3(0.f, 10.f, -10.f),
 		&_vec3(0.f, 0.f, 1.f),

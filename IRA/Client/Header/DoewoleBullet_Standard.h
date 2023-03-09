@@ -27,6 +27,7 @@ public:
 private:
 	_float		m_fMaxframe = 0.f;
 	_vec3		m_vDir;
+	_float		m_fAccTime = 0.f;
 
 private:
 	virtual void Free(void) override;
