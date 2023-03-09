@@ -103,4 +103,6 @@ typedef struct tagStaticObjectData
 	_vec3	vPos;
 	_byte	byDrawID;
 	_byte	byDrawOption;
+	_vec3	vColliderPos;
+	_float	fColliderRadius;
 }STATICOBJDATA;

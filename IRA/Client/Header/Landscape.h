@@ -32,6 +32,10 @@ public:
 	void	Set_DrawOption(_byte option) { m_byDrawOption = option; }
 	void	Set_ObjKey(_tchar* pKey, _ulong strLength);
 	_tchar* Get_ObjKey(void) { return m_pObjKey; }
+	_vec3	Get_ColliderPos(void) { return m_vColliderPos; }
+	void	Set_ColliderPos(_vec3* pPos) { m_vColliderPos = *pPos; }
+	_float	Get_ColliderRadius(void) { return m_fColliderRadius; }
+	void	Set_ColliderRadius(_float fradius) { m_fColliderRadius = fradius; }
 
 protected:
 	virtual HRESULT	Add_Component(void)PURE;				
