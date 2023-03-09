@@ -27,7 +27,7 @@ HRESULT CStatus_Key::Ready_GameObject(void)
 _int CStatus_Key::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_UI, this);
 
 	return 0;
 }
@@ -41,25 +41,18 @@ void CStatus_Key::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture((_uint)m_fFrame);
 
 	_matrix matCamWorld;
-
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
-	matCamWorld;
 
 	m_pTransformCom->Ui_Status_Print(m_tINFO.iNum, 3); //서순 주의
 
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matCamWorld);
-	_matrix matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	Reset_Proj_Matrix();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
@@ -75,9 +68,9 @@ HRESULT CStatus_Key::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Energy"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Key"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Energy", pComponent });
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Key", pComponent });
 
 	return S_OK;
 }
@@ -90,6 +83,13 @@ void CStatus_Key::Change_State(void)
 void CStatus_Key::Frame_Check(const _float& fTimeDelta)
 {
 
+}
+
+void CStatus_Key::Reset_Proj_Matrix(void)
+{
+	_matrix matProj;
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
 CStatus_Key* CStatus_Key::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int _iNumber)

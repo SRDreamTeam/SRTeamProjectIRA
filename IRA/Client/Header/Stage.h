@@ -10,6 +10,11 @@
 #include "MutationEvilSoul.h"
 #include "Status.h"
 #include "Status_Hp.h"
+#include "Apostle.h"
+#include "QuickSlot.h"
+#include "MiniMap.h"
+
+
 
 #include "Terrain.h"
 

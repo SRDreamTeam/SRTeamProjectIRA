@@ -72,6 +72,13 @@ public:
 	const	_matrix*		Compute_LookAtTarget(const _vec3* pTargetPos);
 
 	void					Ui_Status_Print(_int _iHpNumber, _int _iUiNumber);
+	void					Ui_Apostle_Print(_int _iApNumber, _int _iUiNumber);
+	void					Ui_QuickSlot_Print(_int _iUiNumber);
+	void					Ui_MiniMap_Print(_int _iUiNumber);
+
+	void					ColorBlend_Hit(_int iFrame);
+
+
 
 	void                    Arrow_Move(float yaw , float pich , float roll);
 

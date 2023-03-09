@@ -18,6 +18,7 @@ private:
 	virtual HRESULT	Add_Component(void) override;
 	virtual void	Change_State(void) override;
 	virtual void	Frame_Check(const _float& fTimeDelta) override;
+	virtual void	Reset_Proj_Matrix(void) override;
 
 public:
 	static CStatus_Energy* Create(LPDIRECT3DDEVICE9 pGraphicDev, _int _iNumber);

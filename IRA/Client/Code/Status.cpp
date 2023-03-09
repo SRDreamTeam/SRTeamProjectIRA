@@ -2,8 +2,12 @@
 #include "..\Header\Status.h"
 #include "Export_Function.h"
 
-#include "..\Header\Status_Hp.h"
-#include "..\Header\Status_Energy.h"
+#include "Status_Hp.h"
+#include "Status_Energy.h"
+#include "Status_Key.h"
+#include "Status_Money.h"
+#include "Status_Gem.h"
+#include "Status_Back.h"
 
 CStatus::CStatus(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev), m_pINFO(nullptr), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_pTransformCom(nullptr)
@@ -71,22 +75,41 @@ void CStatus::Frame_Check(const _float& fTimeDelta)
 
 HRESULT CStatus::Create_StatusUi(void)
 {
-	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+	CLayer* pLayer = Engine::Get_Layer(L"Layer_UI");
 	CGameObject* pBulletObject = nullptr;
 
 	for (size_t i = 0; i < 5; i++)
 	{
+		pBulletObject = CStatus_Back::Create(m_pGraphicDev, (i + 1));
+		NULL_CHECK_RETURN(pBulletObject, -1);
+		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	}
+
+	for (size_t i = 0; i < 5; i++)
+	{
 		pBulletObject = CStatus_Hp::Create(m_pGraphicDev,(i + 1));
-		NULL_CHECK(pBulletObject);
+		NULL_CHECK_RETURN(pBulletObject, -1);
 		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
 	}
 
 	for (size_t i = 0; i < 5; i++)
 	{
 		pBulletObject = CStatus_Energy::Create(m_pGraphicDev, (i + 1));
-		NULL_CHECK(pBulletObject);
+		NULL_CHECK_RETURN(pBulletObject, -1);
 		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
 	}
+
+	pBulletObject = CStatus_Key::Create(m_pGraphicDev, 1);
+	NULL_CHECK_RETURN(pBulletObject, -1);
+	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+
+	pBulletObject = CStatus_Money::Create(m_pGraphicDev, 1);
+	NULL_CHECK_RETURN(pBulletObject, -1);
+	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+
+	pBulletObject = CStatus_Gem::Create(m_pGraphicDev, 1);
+	NULL_CHECK_RETURN(pBulletObject, -1);
+	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
 
 	return S_OK;
 }
@@ -100,8 +123,6 @@ CStatus* CStatus::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		Safe_Release(pInstance);
 		return nullptr;
 	}
-
-	//pInstance->Create_StatusUi();
 
 	return pInstance;
 }
