@@ -4,7 +4,7 @@
 
 class CDoewole_LeftClaw : public CDoewole
 {
-	enum { STAND, STANDARD_ATTACK, OUTSTRECTH_ATTACK, UP, SMASH, TEX_END };
+	enum { STAND, STANDARD_ATTACK, OUTSTRECTH_ATTACK, UP, SMASH, SCRATCH,TEX_END };
 
 private:
 	explicit CDoewole_LeftClaw(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -13,6 +13,7 @@ private:
 
 public:
 	void		Set_Owner(CGameObject* pOwner) { m_pOwner = pOwner; }
+	void		Set_Wait(_bool	_b) { m_bWait = _b;  m_fAccTime = 0.f; }
 
 
 public:
@@ -31,6 +32,8 @@ private:
 	void			Standard_Attack(const _float& fTimeDelta);
 	void			OutStretch_Attack(const _float& fTimeDelta);
 	void			Smash_Attack(const _float& fTimeDelta);
+	void			Scratch_Attack(const _float& fTimeDelta);
+	void			Area_Attack(const _float& fTimeDelta);
 
 public:
 	static CDoewole_LeftClaw*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -49,6 +52,11 @@ private:
 
 	_bool							m_bSmash = false;
 	_bool							m_bAlert = false;
+
+	_bool							m_bWait = true;
+
+	_bool							m_bHurt = false;
+
 
 };
 
