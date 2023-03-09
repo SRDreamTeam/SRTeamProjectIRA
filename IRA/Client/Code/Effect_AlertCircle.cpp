@@ -7,7 +7,7 @@ CEffect_AlertCircle::CEffect_AlertCircle(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CEffect_AlertCircle::CEffect_AlertCircle(const CEffect_AlertCircle & rhs)
+CEffect_AlertCircle::CEffect_AlertCircle(const CEffect_AlertCircle& rhs)
 	: CEffect(rhs)
 {
 }
@@ -17,7 +17,7 @@ CEffect_AlertCircle::~CEffect_AlertCircle()
 	Free();
 }
 
-HRESULT CEffect_AlertCircle::Ready_GameObject(const _vec3& vPos, const _vec3& vScale, const _float& fAliveTime , _bool bSpreadMode)
+HRESULT CEffect_AlertCircle::Ready_GameObject(const _vec3& vPos, const _vec3& vScale, const _float& fAliveTime, _bool bSpreadMode)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -97,11 +97,11 @@ HRESULT CEffect_AlertCircle::Add_Component(void)
 	return S_OK;
 }
 
-CEffect_AlertCircle* CEffect_AlertCircle::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, const _vec3& vScale, const _float& fAliveTime , _bool bSpreadMode)
+CEffect_AlertCircle* CEffect_AlertCircle::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, const _vec3& vScale, const _float& fAliveTime, _bool bSpreadMode)
 {
 	CEffect_AlertCircle* pInstance = new CEffect_AlertCircle(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(vPos , vScale , fAliveTime , bSpreadMode)))
+	if (FAILED(pInstance->Ready_GameObject(vPos, vScale, fAliveTime, bSpreadMode)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

@@ -54,7 +54,10 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 _uint CLoading::Loading_ForStage(void)
 {
 	Set_String(L"Texture Loading.....");
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
+#pragma region Map_Texture
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Terrain", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Tile/Tile%d.png", 38)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_ObjMainLobby", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Object/MainLobby%d.png", 32)), E_FAIL);
+#pragma endregion
 #pragma region Monster_Texture
 	// 슬라임_일반 충돌형_1
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_GreenEvilSlime_Move", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Spr_Monster_GreenEvilSlime_Move_0%d.png", 7)), E_FAIL);
@@ -128,6 +131,10 @@ _uint CLoading::Loading_ForStage(void)
 	
 #pragma endregion
 
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_Vanish", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_Vanish/Spr_Bullet_Deva_Circle_White_0%d.png", 7)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Doewole_Body", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Boss_Dowewole/Boss_DowewoleBody/Up_FaceOn/Spr_Boss_DoewoleBody_Up_FaceOn_%d.png", 6)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Doewole_Claw", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Boss_Dowewole/Boss_DowewoleClaw/Stand/Spr_Boss_DoewoleClaw_Stand_%d.png", 10)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_Vanish", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_Vanish/Spr_Effect_No051_Vanish_%d.png", 6)), E_FAIL);
 
 #pragma region Player_Texture
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Stand_000", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Stand/Spr_Yeon_Stand_000_0%d.png",8)), E_FAIL);
@@ -161,21 +168,23 @@ _uint CLoading::Loading_ForStage(void)
 
 #pragma region Weapon_Texture
 
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Arrow/Spr_Weapon_No039_Sylph'sArrow_%d.png", 6)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Death", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Arrow/Spr_Weapon_No039_Sylph'sArrow_Death_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Arrow/Sylph/Spr_Weapon_No039_Sylph'sArrow_%d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Death", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Arrow/Sylph/Spr_Weapon_No039_Sylph'sArrow_Death_%d.png", 4)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Bow_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Bow/Spr_Weapon_No039_Sylph'sBow.png", 1)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Bow_Sylph_Pair", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Bow/Spr_Weapon_No039_Sylph'sBow_Pair.png", 1)), E_FAIL);
+	
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Bow_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Bow/Sylph/Spr_Weapon_No039_Sylph'sBow.png", 1)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Bow_Sylph_Pair", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Bow/Sylph/Spr_Weapon_No039_Sylph'sBow_Pair.png", 1)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Effect_BowPulse_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Bow_Pulse/Sylph/Spr_Effect_No039_Sylph'sBow_Pulse_%d.png", 10)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Effect_BowCharge_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Bow_Charge/Sylph/Spr_Effect_WindSpiritChargeEffect_%d.png", 6)), E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Effect_ArrowHit_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Arrow_Hit/Sylph/Spr_Effect_No039_Sylph'sBow_HitEffect_%d.png", 12)), E_FAIL);
 
 
 #pragma endregion
 
-
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Shadow", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Shadow/spr_ShadowV2.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Terrain", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Terrain", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_SkyBox", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4)), E_FAIL);
 
 	Set_String(L"Buffer Loading.....");
@@ -183,14 +192,72 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_SphereTex", CSphereTex::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
 
 	Set_String(L"ETC Loading.....");
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Collider", CCollider::Create(m_pGraphicDev)), E_FAIL);
+
+	Loading_TerrainData();
+
 	m_bFinish = true;
 
 	Set_String(L"Loading Complete!!!!!!!");
+
+	return 0;
+}
+
+_uint CLoading::Loading_TerrainData(void)
+{
+	HANDLE hFile = CreateFile(L"../../Data/Terrain/TestMap.dat", GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD dwByte = 0;
+	DWORD dwStrByte = 0;
+
+	TERRAINDATA tTerrainData;
+	ZeroMemory(&tTerrainData, sizeof(TERRAINDATA));
+	TERRAINDATA_P tTerrainDataPointer;
+	ZeroMemory(&tTerrainDataPointer, sizeof(TERRAINDATA_P));
+
+	ReadFile(hFile, &tTerrainData, sizeof(TERRAINDATA), &dwByte, nullptr);
+
+	ReadFile(hFile, &(tTerrainDataPointer.dwVtxCnt), sizeof(_ulong), &dwByte, nullptr);
+
+	tTerrainDataPointer.pPos = new _vec3[tTerrainDataPointer.dwVtxCnt];
+
+	for (int i = 0; i < tTerrainDataPointer.dwVtxCnt; ++i)
+		ReadFile(hFile, &(tTerrainDataPointer.pPos[i]), sizeof(_vec3), &dwByte, nullptr);
+
+	//Safe_Delete_Array(tTerrainDataPointer.pPos);
+
+	ReadFile(hFile, &dwStrByte, sizeof(_ulong), &dwByte, nullptr);
+
+	TCHAR* pHeightmapFilePath = nullptr;
+	pHeightmapFilePath = new TCHAR[dwStrByte];
+
+	ReadFile(hFile, pHeightmapFilePath, dwStrByte, &dwByte, nullptr);
+
+	//wstring strFilePath;
+	//wstring strHeightmapFilePath;
+	//strFilePath = pHeightmapFilePath;
+	//strHeightmapFilePath = strFilePath.substr(0, 3);
+	//strHeightmapFilePath += strFilePath.substr(10);
+
+	//_tchar* pHeightmapPath = nullptr;
+	//pHeightmapPath = new TCHAR[dwStrByte];
+	//lstrcpy(pHeightmapPath, strHeightmapFilePath.c_str());
+
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, tTerrainData.dwVtxCntX, tTerrainData.dwVtxCntZ, tTerrainData.dwVtxItv, pHeightmapPath)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, tTerrainData.dwVtxCntX, tTerrainData.dwVtxCntZ, tTerrainData.dwVtxItv, tTerrainDataPointer.pPos)), E_FAIL);
+
+	Safe_Delete_Array(pHeightmapFilePath);
+	//Safe_Delete_Array(pHeightmapPath);
+
+	CloseHandle(hFile);
 
 	return 0;
 }

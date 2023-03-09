@@ -36,11 +36,16 @@ private:
 	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
 	HRESULT			Ready_LightInfo();
+	HRESULT			Load_Terrain_Info(const _tchar* pPath);
+	HRESULT			Load_Object_Info(const _tchar* pPath);
 
 public:
 	static	CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void		Free(void);
+
+private:
+	_bool				m_bTerrainInit = false;
 };
 

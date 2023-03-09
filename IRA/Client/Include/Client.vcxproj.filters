@@ -465,23 +465,38 @@
     <ClInclude Include="..\Header\MiniMap_Gage.h">
       <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap\02. MiniMap_Gage</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KeyMgr.h">
+      <Filter>03. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SylphChargeArrow.h">
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Player_Arrow_Hit.h">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\02. Arrow_Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Landscape.h">
+      <Filter>02. GameObject\Stage\10. LandScape</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\StaticObject.h">
       <Filter>02. GameObject\Stage\10. LandScape\00. StaticObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\DoewoleBullet_SwordShot2.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\DoewoleBullet_Thorn.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Effect_AlertRect.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\Header\DynamicObject.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Landscape.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="..\Header\DoewoleBullet_SwordShot2.h">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_Thorn.h">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_AlertRect.h">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -683,23 +698,38 @@
     <ClCompile Include="..\Code\MiniMap_Gage.cpp">
       <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap\02. MiniMap_Gage</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KeyMgr.cpp">
+      <Filter>03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SylphChargeArrow.cpp">
+      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Player_Arrow_Hit.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\02. Arrow_Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Landscape.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\StaticObject.cpp">
       <Filter>02. GameObject\Stage\10. LandScape\00. StaticObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\DoewoleBullet_SwordShot2.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DoewoleBullet_Thorn.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Effect_AlertRect.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\Code\DynamicObject.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Landscape.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\Code\DoewoleBullet_SwordShot2.cpp">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_Thorn.cpp">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_AlertRect.cpp">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

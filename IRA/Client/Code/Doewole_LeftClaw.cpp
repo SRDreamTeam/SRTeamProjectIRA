@@ -13,7 +13,7 @@ CDoewole_LeftClaw::CDoewole_LeftClaw(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CDoewole_LeftClaw::CDoewole_LeftClaw(const CDoewole_LeftClaw & rhs)
+CDoewole_LeftClaw::CDoewole_LeftClaw(const CDoewole_LeftClaw& rhs)
 	: CDoewole(rhs.m_pGraphicDev)
 {
 }
@@ -55,7 +55,7 @@ void CDoewole_LeftClaw::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
+
 	switch (m_eCurState)
 	{
 	case CDoewole::IDLE:
@@ -103,7 +103,7 @@ void CDoewole_LeftClaw::Render_GameObject()
 
 HRESULT CDoewole_LeftClaw::Add_Component(void)
 {
-	Engine::CComponent*		pComponent = nullptr;
+	Engine::CComponent* pComponent = nullptr;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_ProtoComponent(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
@@ -365,10 +365,10 @@ void CDoewole_LeftClaw::Smash_Attack(const _float& fTimeDelta)
 			if (!m_bAlert)
 			{
 				m_bAlert = true;
-				
+
 				_vec3 vPos = { pDoewoleTransformCom->m_vInfo[INFO_POS].x , 0.001f , pDoewoleTransformCom->m_vInfo[INFO_POS].z };
 
-				CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev , vPos, _vec3(25.f,25.f,25.f) , 2.f , TRUE);
+				CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos, _vec3(25.f, 25.f, 25.f), 2.f, TRUE);
 				NULL_CHECK(pEffect);
 				CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 				pLayer->Add_BulletObject(OBJ_NONE, pEffect);
@@ -615,9 +615,9 @@ void CDoewole_LeftClaw::Area_Attack(const _float& fTimeDelta)
 	}
 }
 
-CDoewole_LeftClaw * CDoewole_LeftClaw::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CDoewole_LeftClaw* CDoewole_LeftClaw::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CDoewole_LeftClaw * pInstance = new CDoewole_LeftClaw(pGraphicDev);
+	CDoewole_LeftClaw* pInstance = new CDoewole_LeftClaw(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
