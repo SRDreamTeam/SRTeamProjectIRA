@@ -163,6 +163,7 @@
     <ClInclude Include="..\Header\Bow.h" />
     <ClInclude Include="..\Header\Doewole.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Circle.h" />
+    <ClInclude Include="..\Header\DoewoleBullet_SwordShot2.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Thorn.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Standard.h" />
     <ClInclude Include="..\Header\DoewoleBullet_SwordShot.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="..\Code\Bow.cpp" />
     <ClCompile Include="..\Code\Doewole.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp" />
+    <ClCompile Include="..\Code\DoewoleBullet_SwordShot2.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Thorn.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Standard.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_SwordShot.cpp" />

@@ -82,6 +82,14 @@ void CDoewole_Body::Render_GameObject()
 		m_pTextureCom[SCRATCH]->Set_Texture((_uint)m_fFrame);
 	}
 
+	else if (m_eCurState == CDoewole::AREA_ATTACK)
+	{
+		if(m_bPowerSlamAfter)
+			m_pTextureCom[POWERSLAM_AFTER]->Set_Texture((_uint)m_fFrame);
+		if(m_bPowerSlamFaceOff)
+			m_pTextureCom[POWERSLAM_FACEOFF]->Set_Texture((_uint)m_fFrame);
+	}
+
 
 	m_pBufferCom->Render_Buffer();
 	//m_pSphereBufferCom->Render_Buffer();
@@ -163,6 +171,9 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 		break;
 	case CDoewole::SCRATCH_ATTACK:
 		Scratch_Attack(fTimeDelta);
+		break;
+	case CDoewole::AREA_ATTACK:
+		Area_Attack(fTimeDelta);
 		break;
 	case CDoewole::STATE_END:
 		break;
@@ -259,6 +270,7 @@ void CDoewole_Body::Smash_Attack(const _float& fTimeDelta)
 			m_fFrame = 0.f;
 			m_bPowerSlamFaceOff = false;
 			m_bPowerSlam = false;
+			m_bPowerSlamAfter = false;
 		}
 	}
 
@@ -312,6 +324,54 @@ void CDoewole_Body::Scratch_Attack(const _float& fTimeDelta)
 	}
 
 	// ================Doewole의 위치에 맞게 조정============
+	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK(pDoewoleTransformCom);
+
+	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 15.f,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].z + 0.1f };
+}
+
+void CDoewole_Body::Area_Attack(const _float& fTimeDelta)
+{
+	m_bRender = dynamic_cast<CDoewole*>(m_pOwner)->Get_Disappear();
+
+	if (m_bRender)
+	{
+		m_fFrame += m_fMaxFrame * fTimeDelta * 0.5f;
+	}
+
+	if (!m_bArea)
+	{
+		m_bPowerSlamAfter = true;
+		m_bArea = true;
+	}
+
+	if (m_bPowerSlamAfter)
+	{
+		m_fMaxFrame = 8.f;
+
+		if (m_fFrame > m_fMaxFrame)
+		{
+			m_fFrame = 0.f;
+			m_bPowerSlamFaceOff = true;
+			m_bPowerSlamAfter = false;
+		}
+	}
+
+	if (m_bPowerSlamFaceOff)
+	{
+		m_fMaxFrame = 7.f;
+
+		if (m_fFrame > m_fMaxFrame)
+		{
+			m_fFrame = m_fMaxFrame;
+			m_bPowerSlamFaceOff = false;
+			m_bPowerSlamAfter = false;
+			//dynamic_cast<CDoewole*>(m_pOwner)->Set_State(IDLE);
+		}
+	}
+
 	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK(pDoewoleTransformCom);
 

@@ -33,6 +33,7 @@ private:
 	void			OutStretch_Attack(const _float& fTimeDelta);
 	void			Smash_Attack(const _float& fTimeDelta);
 	void			Scratch_Attack(const _float& fTimeDelta);
+	void			Area_Attack(const _float& fTimeDelta);
 
 public:
 	static CDoewole_RightClaw*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -52,6 +53,8 @@ private:
 	_bool						m_bWait = false;
 
 	_bool						m_bHurt = false;
+	
+	_bool						m_bSmash = false;
 
 };
 

@@ -91,7 +91,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_Loof", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_OutStretchAttack/Spr_Effect_Doewole_RadialLinearLoof_%d.png", 12)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_ChargeCircle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_ChargeCircle/Spr_Effect_Doewole_ChargeCircle_%d.png", 13)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_Slam", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_Slam/Spr_Effect_DoewoleClaw_SlamEffect_%d.png", 7)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_AlertCircle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/AlertCircle/AlertCircle.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_AlertCircle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/AlertCircle/AlertCircle2.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_AlertRect", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/AlertRect/Spr_DiagonalWarning.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Doewole_Hurt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Doewole_Hurt/Spr_Effect_Buff_BleedingHurt.png")), E_FAIL);
 

@@ -204,6 +204,7 @@ void CDoewole::OutStretch_Attack(const _float& fTimeDelta)
 			m_eCurState = IDLE;
 			m_fAccTime = 0.f;
 			m_bAttackToIdle = false;
+			m_fAccTime2 = 0.f;
 		}
 	}
 
@@ -262,7 +263,8 @@ void CDoewole::Scratch_Attack(const _float& fTimeDelta)
 void CDoewole::Area_Attack(const _float& fTimeDelta)
 {
 	m_fAccTime += fTimeDelta;
-	m_bDisappear = true;
+	m_fAccTime2 += fTimeDelta;
+	m_bDisappear = false;
 
 	_vec3	vDestPos = { 128.f , 0.f, 128.f };
 	_vec3 vDir;
@@ -280,6 +282,7 @@ void CDoewole::Area_Attack(const _float& fTimeDelta)
 			{
 				m_pTransformCom->m_vInfo[INFO_POS] = vDestPos;
 				m_bAreaAttack = true;
+				m_fAccTime = 0.f;
 			}
 		}
 	}
@@ -325,33 +328,191 @@ void CDoewole::AreaAtaackPattern(const _float& fTimeDelta)
 {
 	_vec3 vPos;
 	_vec3 vPos2;
-
-	if (!m_bTest)
+	_vec3 vPos3;
+	
+	if (m_iThornCnt <= 4)
 	{
-		for (int i = 0; i < 250; ++i)
+		if (m_fAccTime > 0.03f)
 		{
-			vPos = { (_float)i , 5, CalculateZ((_float)i) };
-			vPos2 = { vPos.x , 0.2f , vPos.z };
+			if (!m_bTest)
+			{
+				for (int i = 0; i < 256; i += 12)
+				{
+					vPos = { (_float)i , 5.f, m_fThornZ };
+					vPos2 = { vPos.x - 1.f , 5.f , vPos.z };
+					vPos3 = { vPos.x , 0.2f , vPos.z };
 
-			CGameObject* pBulletObject = nullptr;
-			CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+					CGameObject* pBulletObject = nullptr;
+					CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 
-			// 오른쪽 가시
-			pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f));
-			NULL_CHECK(pBulletObject);
-			pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					// 오른쪽 가시
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f));
+					NULL_CHECK(pBulletObject);
+					pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
 
-			// 왼쪽 가시
-			pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(5.f, 5.f, 5.f));
-			NULL_CHECK(pBulletObject);
-			pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					// 왼쪽 가시
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f));
+					NULL_CHECK(pBulletObject);
+					pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
 
-			// AlertCircle 이펙트 생성
-			CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos2, _vec3(7.f, 7.f, 7.f), 2.f, FALSE);
-			NULL_CHECK(pEffect);
-			pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+					// AlertCircle 이펙트 생성
+					CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE);
+					NULL_CHECK(pEffect);
+					pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					m_fAccTime = 0.f;
+				}
+
+				m_fThornZ += 6.f;
+
+				if (m_fThornZ >= 256.f)
+				{
+					m_bTest = true;
+					m_fThornZ = 3.f;
+					m_iThornCnt++;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < 256; i += 12)
+				{
+					vPos = { (_float)i + 6.f , 5, 256.f - m_fThornZ };
+					vPos2 = { vPos.x - 1.f , 5 , vPos.z };
+					vPos3 = { vPos.x , 0.2f , vPos.z };
+
+					CGameObject* pBulletObject = nullptr;
+					CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+					// 오른쪽 가시
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f));
+					NULL_CHECK(pBulletObject);
+					pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+
+					// 왼쪽 가시
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f));
+					NULL_CHECK(pBulletObject);
+					pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+
+					// AlertCircle 이펙트 생성
+					CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE);
+					NULL_CHECK(pEffect);
+					pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					m_fAccTime = 0.f;
+					m_fAccTime2 = 0.f;
+				}
+				m_fThornZ += 6.f;
+
+				if (m_fThornZ >= 256.f)
+				{
+					m_bTest = false;
+					m_fThornZ = 0.f;
+					m_iThornCnt++;
+				}
+			}
 		}
-		m_bTest = true;
+	}
+
+	if (m_iThornCnt >= 5)
+	{
+		m_bDisappear = true;
+
+		if (m_fAccTime > 2.f)
+		{
+			m_fAccTime2 += fTimeDelta;
+
+			if (m_fAccTime2 > 0.04f)
+			{
+				if (!m_bCrossTron)
+				{
+					// 좌
+					vPos = { m_fThronX , 5.f, 128.f };
+					vPos2 = { vPos.x - 1.f , 5.f , vPos.z };
+					vPos3 = { vPos.x , 0.2f , vPos.z };
+
+					CGameObject* pBulletObject = nullptr;
+					CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+					// 오른쪽 가시
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f)); pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					// 왼쪽 가시
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f));NULL_CHECK(pBulletObject); pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					// AlertCircle 이펙트 생성
+					CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE); pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					// 우
+					vPos = { 256.f - m_fThronX , 5.f, 128.f }; vPos2 = { vPos.x - 1.f , 5.f , vPos.z }; vPos3 = { vPos.x , 0.2f , vPos.z };
+
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f));
+					pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f));
+					pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+
+				
+					pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE);
+					pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+					// 아래
+					vPos = { 128.f, 5.f, m_fThronX };vPos2 = { vPos.x - 1.f , 5.f , vPos.z };vPos3 = { vPos.x , 0.2f , vPos.z };
+
+					// 오른쪽 가시
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f));pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					// 왼쪽 가시
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f));pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					// AlertCircle 이펙트 생성
+					pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE);
+					pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					// 위
+					vPos = { 128.f, 5.f, (256.f-m_fThronX) };
+					vPos2 = { vPos.x - 1.f , 5.f , vPos.z };
+					vPos3 = { vPos.x , 0.2f , vPos.z };
+
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f));
+					pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f));
+					pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+
+			
+					pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE);
+					pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					// 우상
+					vPos = { (256.f - m_fThronX), 5.f, (256.f - m_fThronX) }; vPos2 = { vPos.x - 1.f , 5.f , vPos.z }; vPos3 = { vPos.x , 0.2f , vPos.z };
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f));pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f));pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE); pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					// 우하
+					vPos = { (256.f - m_fThronX), 5.f, m_fThronX}; vPos2 = { vPos.x - 1.f , 5.f , vPos.z }; vPos3 = { vPos.x , 0.2f , vPos.z };
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f)); pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f)); pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE); pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					// 좌하
+					vPos = { m_fThronX, 5.f, m_fThronX }; vPos2 = { vPos.x - 1.f , 5.f , vPos.z }; vPos3 = { vPos.x , 0.2f , vPos.z };
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f)); pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f)); pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE); pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+
+					// 좌상
+					vPos = { m_fThronX, 5.f, (256.f - m_fThronX) }; vPos2 = { vPos.x - 1.f , 5.f , vPos.z }; vPos3 = { vPos.x , 0.2f , vPos.z };
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos, _vec3(-5.f, 6.f, 5.f)); pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					pBulletObject = CDoewoleBullet_Thorn::Create(m_pGraphicDev, vPos2, _vec3(5.f, 5.f, 5.f)); pLayer->Add_BulletObject(OBJ_NONE, pBulletObject);
+					pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos3, _vec3(5.f, 5.f, 5.f), 1.5f, FALSE); pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+					m_fThronX -= 6.f;
+					m_fAccTime2 = 0.f;
+
+					if (m_fThronX < 0.f)
+					{
+						m_bCrossTron = true;
+						m_fAccTime = 0.f;
+						m_eCurState = IDLE;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -403,9 +564,9 @@ void CDoewole::State_Update(const _float& fTimeDelta)
 _float CDoewole::CalculateZ(_float fX)
 {
 	if (fX <= 128.f)
-		return (- 1 / 128.f)* fX* fX + 2.f * fX;
+		return (-1 / 128.f) * fX * fX + 2.f * fX;
 	else
-		return 0.f;
+		return (1.f / 128.f) * fX * fX - 2.f * fX + 256.f;
 
 	
 }

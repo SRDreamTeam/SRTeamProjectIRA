@@ -38,6 +38,7 @@ private:
 	void			Standard_Attack(const _float& fTimeDelta);
 	void			Smash_Attack(const _float& fTimeDelta);
 	void			Scratch_Attack(const _float& fTimeDelta);
+	void			Area_Attack(const _float& fTimeDelta);
 
 private:
 	CGameObject*					m_pOwner = nullptr;
@@ -49,6 +50,8 @@ private:
 	_bool							m_bPowerSlamFaceOff = false;
 
 	int								m_iScratchCnt = 0;
+
+	_bool							m_bArea = false;
 
 };
 

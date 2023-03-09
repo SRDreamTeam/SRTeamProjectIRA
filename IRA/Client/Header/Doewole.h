@@ -58,7 +58,7 @@ private:
 	_float			CalculateZ(_float fX); 
 
 private:
-	_uint					m_iPattern = 6;
+	_uint					m_iPattern = 4;
 	const _uint				m_iMaxPattern = 6;
 
 	_uint					m_iStandardAttackCnt = 0;
@@ -76,5 +76,11 @@ private:
 	_bool					m_bAreaAttack = false;
 
 	_bool					m_bTest = false;
+	_float					m_fThornZ = 0.f;
+	_int					m_iThornCnt = 0;
+
+	_bool					m_bCrossTron = false;
+	_float					m_fThronX = 128.f;
+
 };
 

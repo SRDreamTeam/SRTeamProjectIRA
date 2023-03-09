@@ -53,6 +53,8 @@ _int CDoewoleBullet_Standard::Update_GameObject(const _float& fTimeDelta)
 
 	Frame_Check(fTimeDelta);
 
+	m_fAccTime += fTimeDelta;
+
 	m_pTransformCom->m_vInfo[INFO_POS] += m_vDir * m_fSpeed * fTimeDelta;
 
 	CGameObject::Update_GameObject(fTimeDelta);
@@ -105,6 +107,9 @@ void CDoewoleBullet_Standard::Frame_Check(const _float& fTimeDelta)
 
 	if (m_fMaxframe < m_fFrame)
 		m_fFrame = 0.f;
+
+	if (m_fAccTime > 5.f)
+		m_bDead = true;
 }
 
 CDoewoleBullet_Standard* CDoewoleBullet_Standard::Create(LPDIRECT3DDEVICE9 pGraphicDev)
