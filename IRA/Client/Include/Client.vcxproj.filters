@@ -256,6 +256,18 @@
     <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject">
       <UniqueIdentifier>{fd00f0b5-3b0e-4407-b7ee-82145afdef38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot2">
+      <UniqueIdentifier>{693a9bff-0f4e-4ac0-b9db-3ece07092d50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn">
+      <UniqueIdentifier>{22f39940-a97e-4ec8-80aa-16812d30b94a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\AlertRect">
+      <UniqueIdentifier>{f3fff3bb-d4d2-4271-9876-eddf72ddf14e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Hurt">
+      <UniqueIdentifier>{cb173f2c-300c-4ed6-90c3-56a7aeceac1f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -486,17 +498,17 @@
     <ClInclude Include="..\Header\DynamicObject.h">
       <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\DoewoleBullet_SwordShot2.h">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DoewoleBullet_Thorn.h">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect_AlertRect.h">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
+      <Filter>02. GameObject\Stage\05. Effect\AlertRect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
+      <Filter>02. GameObject\Stage\05. Effect\Hurt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -719,17 +731,17 @@
     <ClCompile Include="..\Code\DynamicObject.cpp">
       <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\DoewoleBullet_SwordShot2.cpp">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DoewoleBullet_Thorn.cpp">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_AlertRect.cpp">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
+      <Filter>02. GameObject\Stage\05. Effect\AlertRect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Hurt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
