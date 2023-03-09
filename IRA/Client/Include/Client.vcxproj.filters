@@ -184,23 +184,17 @@
     <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key">
       <UniqueIdentifier>{0ecc862b-0458-4d81-b7f4-5665a9ec38f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. Manager">
-      <UniqueIdentifier>{59888cd2-6609-4fdc-bb2c-d9cea2c868a2}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Stage\05. Effect\AlertRect">
+      <UniqueIdentifier>{251e1b8b-424b-47f5-b3e9-8e262542afe7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow">
-      <UniqueIdentifier>{fed404c0-c5fa-4696-9f3b-be25825ea02e}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt">
+      <UniqueIdentifier>{759d4016-c44b-4156-abbc-40fcc8630514}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\02. Arrow_Hit">
-      <UniqueIdentifier>{3fedde5c-7ec4-4c08-91b2-5d9d5c59b6bd}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn">
+      <UniqueIdentifier>{bae700c3-7284-4d83-9d73-fea1d35d5084}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\10. LandScape">
-      <UniqueIdentifier>{e85a24ad-c04d-4598-9860-06341f347d21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Stage\10. LandScape\00. StaticObject">
-      <UniqueIdentifier>{3d852bc1-4994-495e-be02-9ce286ab4a3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject">
-      <UniqueIdentifier>{fd00f0b5-3b0e-4407-b7ee-82145afdef38}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SowrdShot2">
+      <UniqueIdentifier>{3b1dbabe-cf7d-49b8-8cb6-c0423dd5afc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -360,26 +354,17 @@
     <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h">
-      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
+    <ClInclude Include="..\Header\Effect_AlertRect.h">
+      <Filter>02. GameObject\Stage\05. Effect\AlertRect</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KeyMgr.h">
-      <Filter>03. Manager</Filter>
+    <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\SylphChargeArrow.h">
-      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
+    <ClInclude Include="..\Header\DoewoleBullet_Thorn.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Effect_Player_Arrow_Hit.h">
-      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\02. Arrow_Hit</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Landscape.h">
-      <Filter>02. GameObject\Stage\10. LandScape</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\StaticObject.h">
-      <Filter>02. GameObject\Stage\10. LandScape\00. StaticObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\DynamicObject.h">
-      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
+    <ClInclude Include="..\Header\DoewoleBullet_SwordShot2.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SowrdShot2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -530,26 +515,17 @@
     <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp">
-      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
+    <ClCompile Include="..\Code\Effect_AlertRect.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\AlertRect</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KeyMgr.cpp">
-      <Filter>03. Manager</Filter>
+    <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SylphChargeArrow.cpp">
-      <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
+    <ClCompile Include="..\Code\DoewoleBullet_Thorn.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Effect_Player_Arrow_Hit.cpp">
-      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\02. Arrow_Hit</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Landscape.cpp">
-      <Filter>02. GameObject\Stage\10. LandScape</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\StaticObject.cpp">
-      <Filter>02. GameObject\Stage\10. LandScape\00. StaticObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DynamicObject.cpp">
-      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
+    <ClCompile Include="..\Code\DoewoleBullet_SwordShot2.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SowrdShot2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ END
 class CArrow : public Engine::CGameObject
 {
 
-	enum { ARROW_IDLE, ARROW_DEATH, ARROW_HIT, ARROW_END };
+	enum {ARROW_IDLE,ARROW_DEATH,ARROW_END};
 
 
 protected:
