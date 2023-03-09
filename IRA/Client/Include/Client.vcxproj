@@ -157,6 +157,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\Apostle.h" />
+    <ClInclude Include="..\Header\Apostle_Count.h" />
+    <ClInclude Include="..\Header\Apostle_Frame.h" />
+    <ClInclude Include="..\Header\Apostle_Frame_Back.h" />
+    <ClInclude Include="..\Header\Apostle_Pattern_Glow.h" />
+    <ClInclude Include="..\Header\Apostle_Key_Q.h" />
+    <ClInclude Include="..\Header\Apostle_Pattern.h" />
     <ClInclude Include="..\Header\Arrow.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\Boss.h" />
@@ -189,17 +196,29 @@
     <ClInclude Include="..\Header\GreenEvilSlime.h" />
     <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\GhostChild.h" />
+    <ClInclude Include="..\Header\Landscape.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\MiniMap.h" />
+    <ClInclude Include="..\Header\MiniMap_Back.h" />
+    <ClInclude Include="..\Header\MiniMap_Gage.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterBullet.h" />
     <ClInclude Include="..\Header\MonsterBullet_2.h" />
     <ClInclude Include="..\Header\MutationEvilSoul.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\QuickSlot.h" />
+    <ClInclude Include="..\Header\QuickSlot_ArrowCount_Infi.h" />
+    <ClInclude Include="..\Header\QuickSlot_WeaponImg.h" />
+    <ClInclude Include="..\Header\QuickSlot_WeaponImg_Back.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
+    <ClInclude Include="..\Header\Status_Back.h" />
+    <ClInclude Include="..\Header\Status_Gem.h" />
+    <ClInclude Include="..\Header\Status_Money.h" />
+    <ClInclude Include="..\Header\StaticObject.h" />
     <ClInclude Include="..\Header\SylphArrow.h" />
     <ClInclude Include="..\Header\SylphBow.h" />
     <ClInclude Include="..\Header\SylphBowPair.h" />
@@ -214,6 +233,13 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\Apostle.cpp" />
+    <ClCompile Include="..\Code\Apostle_Count.cpp" />
+    <ClCompile Include="..\Code\Apostle_Frame.cpp" />
+    <ClCompile Include="..\Code\Apostle_Frame_Back.cpp" />
+    <ClCompile Include="..\Code\Apostle_Pattern_Glow.cpp" />
+    <ClCompile Include="..\Code\Apostle_Key_Q.cpp" />
+    <ClCompile Include="..\Code\Apostle_Pattern.cpp" />
     <ClCompile Include="..\Code\Arrow.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\Boss.cpp" />
@@ -246,17 +272,29 @@
     <ClCompile Include="..\Code\GhostChild.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp" />
+    <ClCompile Include="..\Code\Landscape.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\MiniMap.cpp" />
+    <ClCompile Include="..\Code\MiniMap_Back.cpp" />
+    <ClCompile Include="..\Code\MiniMap_Gage.cpp" />
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterBullet.cpp" />
     <ClCompile Include="..\Code\MonsterBullet_2.cpp" />
     <ClCompile Include="..\Code\MutationEvilSoul.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\QuickSlot.cpp" />
+    <ClCompile Include="..\Code\QuickSlot_ArrowCount_Infi.cpp" />
+    <ClCompile Include="..\Code\QuickSlot_WeaponImg.cpp" />
+    <ClCompile Include="..\Code\QuickSlot_WeaponImg_Back.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\Status_Back.cpp" />
+    <ClCompile Include="..\Code\Status_Gem.cpp" />
+    <ClCompile Include="..\Code\Status_Money.cpp" />
+    <ClCompile Include="..\Code\StaticObject.cpp" />
     <ClCompile Include="..\Code\SylphArrow.cpp" />
     <ClCompile Include="..\Code\SylphBow.cpp" />
     <ClCompile Include="..\Code\SylphBowPair.cpp" />

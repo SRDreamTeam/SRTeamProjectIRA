@@ -27,7 +27,7 @@ HRESULT CStatus_Energy::Ready_GameObject(void)
 _int CStatus_Energy::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_UI, this);
 
 	return 0;
 }
@@ -41,25 +41,18 @@ void CStatus_Energy::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture((_uint)m_fFrame);
 
 	_matrix matCamWorld;
-
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
-	matCamWorld;
 
 	m_pTransformCom->Ui_Status_Print(m_tINFO.iNum, 2); //서순 주의
 
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matCamWorld);
-	_matrix matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	Reset_Proj_Matrix();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
@@ -90,6 +83,13 @@ void CStatus_Energy::Change_State(void)
 void CStatus_Energy::Frame_Check(const _float& fTimeDelta)
 {
 
+}
+
+void CStatus_Energy::Reset_Proj_Matrix(void)
+{
+	_matrix matProj;
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
 CStatus_Energy* CStatus_Energy::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int _iNumber)

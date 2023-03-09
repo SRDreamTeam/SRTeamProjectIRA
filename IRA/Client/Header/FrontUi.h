@@ -33,6 +33,7 @@ protected:
 	virtual HRESULT	Add_Component(void)PURE;
 	virtual void Change_State(void)PURE;
 	virtual void Frame_Check(const _float& fTimeDelta)PURE;
+	virtual void Reset_Proj_Matrix(void) PURE;
 
 protected:
 	CRcTex*			m_pBufferCom;
