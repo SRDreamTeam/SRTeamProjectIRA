@@ -27,16 +27,11 @@ HRESULT CDoewoleBullet_Standard::Ready_GameObject(void)
 
 	m_pTransformCom->m_vScale = { 3.f , 3.f , 3.f };
 
-	CTransform* pTransformCom = dynamic_cast<CTransform*>( Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	CTransform* pTransformCom = dynamic_cast<CTransform*>( Engine::Get_Component(L"Layer_GameLogic", L"Doewole_LeftClaw", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTransformCom, -1);
-
-	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
-
-	if (pTransformCom->m_vInfo[INFO_POS].x >= pPlayerTransformCom->m_vInfo[INFO_POS].x)
-		m_pTransformCom->m_vInfo[INFO_POS] = { pTransformCom->m_vInfo[INFO_POS].x - (rand() % 30) * 0.02f ,3.f,  pTransformCom->m_vInfo[INFO_POS].z - (rand() % 30) * 0.02f };
-	else
-		m_pTransformCom->m_vInfo[INFO_POS] = { pTransformCom->m_vInfo[INFO_POS].x + (rand() % 30) * 0.02f ,3.f,  pTransformCom->m_vInfo[INFO_POS].z - (rand() % 30) * 0.02f };
+	m_pTransformCom->m_vInfo[INFO_POS] = { pTransformCom->m_vInfo[INFO_POS].x - (rand() % 30) * 0.02f ,
+											 + 3.f,
+											pTransformCom->m_vInfo[INFO_POS].z - (rand() % 30) * 0.02f };
 
 	pTransformCom->m_vInfo[INFO_POS].y = 3.f;
 
@@ -52,8 +47,6 @@ _int CDoewoleBullet_Standard::Update_GameObject(const _float& fTimeDelta)
 		return OBJ_DEAD;
 
 	Frame_Check(fTimeDelta);
-
-	m_fAccTime += fTimeDelta;
 
 	m_pTransformCom->m_vInfo[INFO_POS] += m_vDir * m_fSpeed * fTimeDelta;
 
@@ -107,9 +100,6 @@ void CDoewoleBullet_Standard::Frame_Check(const _float& fTimeDelta)
 
 	if (m_fMaxframe < m_fFrame)
 		m_fFrame = 0.f;
-
-	if (m_fAccTime > 5.f)
-		m_bDead = true;
 }
 
 CDoewoleBullet_Standard* CDoewoleBullet_Standard::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -28,11 +28,17 @@ private:
 	HRESULT			SetUp_Material(void);
 	void			Key_Input(const _float& fTimeDelta);
 
+public:
+	void	Set_DrawID(_byte id) { m_byDrawID = id; }
+	void	Set_DrawOption(_byte option) { m_byDrawOption = option; }
+
 private:
 	CTerrainTex*	m_pBufferCom;
-	CTransform*	m_pTransformCom;
-	CTexture*	m_pTextureCom;
-	_float		m_fSpeed = 5.f;
+	CTransform*		m_pTransformCom;
+	CTexture*		m_pTextureCom;
+
+	_byte			m_byDrawID;
+	_byte			m_byDrawOption;
 
 public:
 	static CTerrain*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

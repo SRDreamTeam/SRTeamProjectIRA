@@ -101,6 +101,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Reference/Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,6 +135,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Reference/Library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,8 +165,6 @@
     <ClInclude Include="..\Header\Bow.h" />
     <ClInclude Include="..\Header\Doewole.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Circle.h" />
-    <ClInclude Include="..\Header\DoewoleBullet_SwordShot2.h" />
-    <ClInclude Include="..\Header\DoewoleBullet_Thorn.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Standard.h" />
     <ClInclude Include="..\Header\DoewoleBullet_SwordShot.h" />
     <ClInclude Include="..\Header\Doewole_Body.h" />
@@ -173,22 +173,25 @@
     <ClInclude Include="..\Header\Doewole_Shadow.h" />
     <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
+    <ClInclude Include="..\Header\DynamicObject.h" />
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\Effect_AlertCircle.h" />
-    <ClInclude Include="..\Header\Effect_AlertRect.h" />
     <ClInclude Include="..\Header\Effect_Doewole_ChargeCircle.h" />
     <ClInclude Include="..\Header\Effect_Doewole_ChargeExplosion.h" />
-    <ClInclude Include="..\Header\Effect_Doewole_Hurt.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Loof.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Slam.h" />
     <ClInclude Include="..\Header\Effect_Doewole_StandardAttack.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h" />
+    <ClInclude Include="..\Header\Effect_Player_Arrow_Hit.h" />
+    <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h" />
     <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h" />
     <ClInclude Include="..\Header\EvilSoul.h" />
     <ClInclude Include="..\Header\FrontUi.h" />
     <ClInclude Include="..\Header\GreenEvilSlime.h" />
     <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\GhostChild.h" />
+    <ClInclude Include="..\Header\KeyMgr.h" />
+    <ClInclude Include="..\Header\Landscape.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
@@ -200,6 +203,7 @@
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
+    <ClInclude Include="..\Header\StaticObject.h" />
     <ClInclude Include="..\Header\SylphArrow.h" />
     <ClInclude Include="..\Header\SylphBow.h" />
     <ClInclude Include="..\Header\SylphBowPair.h" />
@@ -207,6 +211,7 @@
     <ClInclude Include="..\Header\Status_Energy.h" />
     <ClInclude Include="..\Header\Status_Hp.h" />
     <ClInclude Include="..\Header\Status_Key.h" />
+    <ClInclude Include="..\Header\SylphChargeArrow.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -220,8 +225,6 @@
     <ClCompile Include="..\Code\Bow.cpp" />
     <ClCompile Include="..\Code\Doewole.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp" />
-    <ClCompile Include="..\Code\DoewoleBullet_SwordShot2.cpp" />
-    <ClCompile Include="..\Code\DoewoleBullet_Thorn.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Standard.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_SwordShot.cpp" />
     <ClCompile Include="..\Code\Doewole_Body.cpp" />
@@ -230,14 +233,15 @@
     <ClCompile Include="..\Code\Doewole_Shadow.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
+    <ClCompile Include="..\Code\DynamicObject.cpp" />
     <ClCompile Include="..\Code\Effect_AlertCircle.cpp" />
-    <ClCompile Include="..\Code\Effect_AlertRect.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_ChargeCircle.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_ChargeExplosion.cpp" />
-    <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Loof.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Slam.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_StandardAttack.cpp" />
+    <ClCompile Include="..\Code\Effect_Player_Arrow_Hit.cpp" />
+    <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp" />
     <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp" />
     <ClCompile Include="..\Code\EvilSoul.cpp" />
     <ClCompile Include="..\Code\FrontUi.cpp" />
@@ -246,6 +250,8 @@
     <ClCompile Include="..\Code\GhostChild.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp" />
+    <ClCompile Include="..\Code\KeyMgr.cpp" />
+    <ClCompile Include="..\Code\Landscape.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
@@ -257,6 +263,7 @@
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
+    <ClCompile Include="..\Code\StaticObject.cpp" />
     <ClCompile Include="..\Code\SylphArrow.cpp" />
     <ClCompile Include="..\Code\SylphBow.cpp" />
     <ClCompile Include="..\Code\SylphBowPair.cpp" />
@@ -264,6 +271,7 @@
     <ClCompile Include="..\Code\Status_Energy.cpp" />
     <ClCompile Include="..\Code\Status_Hp.cpp" />
     <ClCompile Include="..\Code\Status_Key.cpp" />
+    <ClCompile Include="..\Code\SylphChargeArrow.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

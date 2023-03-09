@@ -3,8 +3,12 @@
 #include "Export_Function.h"
 #include "Ghost.h"
 #include "SylphArrow.h"
+#include "SylphChargeArrow.h"
 #include "SylphBow.h"
+#include "SylphBowPair.h"
 #include "Effect_Player_Bow_Pulse.h"
+#include "Effect_Player_Bow_Charge.h"
+#include "KeyMgr.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -30,15 +34,22 @@ CPlayer::CPlayer(const CPlayer & rhs)
 
 CPlayer::~CPlayer()
 {
+	CKeyMgr::Get_Instance()->Destroy_Instance();
 }
 
 HRESULT CPlayer::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Scale({ 5.f, 5.f, 1.f });
+	m_pTransformCom->Set_Scale_Ratio({ 5.f, 5.f, 1.f });
 
-	
+	m_tInfo.Maxhp = 5;
+	m_tInfo.Nowhp = m_tInfo.Maxhp;
+	m_tInfo.MaxEnergy = 5;
+	m_tInfo.NowEnergy = m_tInfo.MaxEnergy;
+	m_tInfo.Gem = 0;
+	m_tInfo.Key = 0;
+	m_tInfo.Money = 1000;
 
 	return S_OK;
 }
@@ -46,53 +57,35 @@ HRESULT CPlayer::Ready_GameObject(void)
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 
+	if (m_bHit == true && m_bImmuned == false) {
+		Hp_Down();
+		m_HitBlend = true;
+		m_bImmuned = true;
+	}
+
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (m_iState == STAND) {
-		m_fStandFrame += 7.f * fTimeDelta;
-		if (7.f < m_fStandFrame)
-			m_fStandFrame = 0.f;
-	}
-
-	if (m_iState == RUN) {
-		m_fRunFrame += 7.f * fTimeDelta * 1.5f;
-		if (7.f < m_fRunFrame)
-			m_fRunFrame = 0.f;
-	}
-
-	if (m_iState == MOVE_ATTACK || m_iState == STAND_ATTACK) {
-		m_fAttackFrame += 9.f * fTimeDelta;
-		if (9.f < m_fAttackFrame)
-			m_fAttackFrame = 0.f;
-	}
-
-	if (m_iState == DASH) {
-		m_fDashFrame += 5.f * fTimeDelta * 2.0;
-		if (5.f < m_fDashFrame) {
-			m_fDashFrame = 0.f;
-		}
-	}
-
-	if (m_iState == DEATH) {
-		m_fDeathFrame += 11.f * fTimeDelta;
-		if (11.f < m_fDeathFrame) {
-			m_fDeathFrame = 11.f;
-		}
-	}
+	Frame_Manage(fTimeDelta);
 
 	SetUp_OnTerrain();
 
+	CKeyMgr::Get_Instance()->Update();
+
+	if (CKeyMgr::Get_Instance()->Key_Down(KEY_H)) {
+		m_bHit = true;
+	}
+
 	Key_Input(fTimeDelta);
+
 
 	Update_State();
 
 
 	if (m_Is_Dash == true) {
+		m_bImmuned = true;
 		Dash(fTimeDelta);
 	}
-
-
 
 	if (m_Is_Fire_Arrow == true) {
 		m_Fire_Frame += m_Fire_Init * fTimeDelta * m_Fire_Speed;
@@ -102,6 +95,9 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		}
 	}
 
+	if (m_Is_Effect_Charge_Arrow == true) {
+		Effect_Charge_Arrow();
+	}
 
 
 	__super::Update_GameObject(fTimeDelta);
@@ -125,6 +121,15 @@ void CPlayer::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	
+
+	if (m_HitBlendRender) {
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(AlphaValue, R, G, B));
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_TFACTOR);
+		
+	}
+
 
 	if (m_iState == STAND) {
 
@@ -247,6 +252,12 @@ void CPlayer::Render_GameObject()
 	m_pSphereBufferCom->Render_Buffer();
 
 	
+	if (m_HitBlendRender) {
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+
+	}
+
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
@@ -292,6 +303,7 @@ void CPlayer::Create_Basic_Bow(void)
 	pGameLogicLayer->Add_GameObject(L"SylphBow", pGameObject, OBJ_BOW);    /// ?? 왜 터짐
 
 }
+
 
 HRESULT CPlayer::Add_Component(void)
 {
@@ -399,6 +411,7 @@ HRESULT CPlayer::Add_Component(void)
 	return S_OK;
 }
 
+
 void CPlayer::Key_Input(const _float & fTimeDelta)
 {
 	if (m_iState == DEATH)
@@ -445,39 +458,41 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	D3DXVec3Normalize(&vRD, &vRD);
 
 
-	if (GetAsyncKeyState(VK_LBUTTON)) {
+	
+	if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_LBUTTON)){
 
 		m_Is_Fire_Arrow = true;
-		
+
 		POINT ptCursor;
 
 		GetCursorPos(&ptCursor);
 		ScreenToClient(g_hWnd, &ptCursor);
 
-		
-		if (ptCursor.x>=400 && ptCursor.y <= 300) {
+
+		if (ptCursor.x >= WINCX*0.5 && ptCursor.y <= WINCY*0.5) {
 			m_iAttackAngleState = ATTACK_ANGLE_225;
 			m_iAngleState = ANGLE_225;
 		}
-		else if (ptCursor.x < 400 && ptCursor.y <= 300) {
+		else if (ptCursor.x < WINCX * 0.5 && ptCursor.y <= WINCY * 0.5) {
 			m_iAttackAngleState = ATTACK_ANGLE_135;
 			m_iAngleState = ANGLE_135;
 		}
-		else if (ptCursor.x < 400 && ptCursor.y > 300) {
+		else if (ptCursor.x < WINCX * 0.5 && ptCursor.y > WINCY * 0.5) {
 			m_iAttackAngleState = ATTACK_ANGLE_045;
 			m_iAngleState = ANGLE_045;
 		}
-		else if (ptCursor.x >= 400 && ptCursor.y > 300) {
+		else if (ptCursor.x >= WINCX * 0.5 && ptCursor.y > WINCY * 0.5) {
 			m_iAttackAngleState = ATTACK_ANGLE_315;
 			m_iAngleState = ANGLE_315;
 		}
 
-		if (GetAsyncKeyState('W')) {
-			if (GetAsyncKeyState('A')) {
+		if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_W)) {
+
+			if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vLU * fTimeDelta * m_fSpeed));
 			}
-			else if (GetAsyncKeyState('D')) {
+			else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vRU * fTimeDelta * m_fSpeed));
 			}
@@ -486,13 +501,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 				m_pTransformCom->Move_Pos(&(vDir * fTimeDelta * m_fSpeed));
 			}
 		}
-		else if (GetAsyncKeyState('S')) {
+		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_S)) {
 
-			if (GetAsyncKeyState('A')) {
+			if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vLD * fTimeDelta * m_fSpeed));
 			}
-			else if (GetAsyncKeyState('D')) {
+			else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vRD * fTimeDelta * m_fSpeed));
 			}
@@ -502,12 +517,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 
 		}
-		else if (GetAsyncKeyState('A')) {
+		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
 			m_iState = MOVE_ATTACK;
 			m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed));
 
 		}
-		else if (GetAsyncKeyState('D')) {
+		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
 			m_iState = MOVE_ATTACK;
 			m_pTransformCom->Move_Pos(&(vRight * fTimeDelta * m_fSpeed));
 
@@ -517,12 +532,85 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 
 	}
-	else if (GetAsyncKeyState('W')) {
+	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_RBUTTON)) {
+
+		m_Is_Effect_Charge_Arrow = true;
+		
+		POINT ptCursor;
+
+		GetCursorPos(&ptCursor);
+		ScreenToClient(g_hWnd, &ptCursor);
+
+
+		if (ptCursor.x >= WINCX * 0.5 && ptCursor.y <= WINCY * 0.5) {
+			m_iAttackAngleState = ATTACK_ANGLE_225;
+			m_iAngleState = ANGLE_225;
+		}
+		else if (ptCursor.x < WINCX * 0.5 && ptCursor.y <= WINCY * 0.5) {
+			m_iAttackAngleState = ATTACK_ANGLE_135;
+			m_iAngleState = ANGLE_135;
+		}
+		else if (ptCursor.x < WINCX * 0.5 && ptCursor.y > WINCY * 0.5) {
+			m_iAttackAngleState = ATTACK_ANGLE_045;
+			m_iAngleState = ANGLE_045;
+		}
+		else if (ptCursor.x >= WINCX * 0.5 && ptCursor.y > WINCY * 0.5) {
+			m_iAttackAngleState = ATTACK_ANGLE_315;
+			m_iAngleState = ANGLE_315;
+		}
+
+		
+		if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_W)) {
+			if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
+				m_iState = MOVE_ATTACK;
+				m_pTransformCom->Move_Pos(&(vLU * fTimeDelta * m_fSpeed));
+			}
+			else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
+				m_iState = MOVE_ATTACK;
+				m_pTransformCom->Move_Pos(&(vRU * fTimeDelta * m_fSpeed));
+			}
+			else {
+				m_iState = MOVE_ATTACK;
+				m_pTransformCom->Move_Pos(&(vDir * fTimeDelta * m_fSpeed));
+			}
+		}
+		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_S)) {
+
+			if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
+				m_iState = MOVE_ATTACK;
+				m_pTransformCom->Move_Pos(&(vLD * fTimeDelta * m_fSpeed));
+			}
+			else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
+				m_iState = MOVE_ATTACK;
+				m_pTransformCom->Move_Pos(&(vRD * fTimeDelta * m_fSpeed));
+			}
+			else {
+				m_iState = MOVE_ATTACK;
+				m_pTransformCom->Move_Pos(&(vDir * fTimeDelta * -m_fSpeed));
+			}
+
+		}
+		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
+			m_iState = MOVE_ATTACK;
+			m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed));
+
+		}
+		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
+			m_iState = MOVE_ATTACK;
+			m_pTransformCom->Move_Pos(&(vRight * fTimeDelta * m_fSpeed));
+
+		}
+		else {
+			m_iState = STAND_ATTACK;
+		}
+
+	}
+	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_W)) {
 		m_Is_Fire_Arrow = false;
 		m_Fire_Frame = m_Fire_Init;
 
-		if (GetAsyncKeyState('A')) {
-			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+		if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
+			if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
@@ -535,9 +623,9 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 				m_pTransformCom->Move_Pos(&(vLU * fTimeDelta * m_fSpeed));
 			}
 		}
-		else if (GetAsyncKeyState('D')) {
+		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
 
-			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+			if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
@@ -551,7 +639,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else {
-			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+			if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
@@ -565,12 +653,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 	}
-	else if (GetAsyncKeyState('S')) {
+	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_S)) {
 	    m_Is_Fire_Arrow = false;
 		m_Fire_Frame = m_Fire_Init;
 
-		if (GetAsyncKeyState('A')) {
-			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+		if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
+			if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
@@ -583,8 +671,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 				m_pTransformCom->Move_Pos(&(vLD * fTimeDelta * m_fSpeed));
 			}
 		}
-		else if (GetAsyncKeyState('D')) {
-			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
+			if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
@@ -598,7 +686,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else {
-			if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+			if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 				pGhost->Is_Dash = true;
 				m_Is_Dash = true;
 				m_iState = DASH;
@@ -614,11 +702,11 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 
 	}
-	else if (GetAsyncKeyState('A')) {
+	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
 	    m_Is_Fire_Arrow = false; 
 		m_Fire_Frame = m_Fire_Init;
 	    
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+		if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 			pGhost->Is_Dash = true;
 			m_Is_Dash = true;
 			m_iState = DASH;
@@ -630,12 +718,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_iAngleState = ANGLE_090;
 			m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed));
 		}
+
 	}
-	else if (GetAsyncKeyState('D')) {
+	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
 	    m_Is_Fire_Arrow = false;
 		m_Fire_Frame = m_Fire_Init;
 
-	    if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+	    if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 			pGhost->Is_Dash = true;
 			m_Is_Dash = true;
 			m_iState = DASH;
@@ -648,19 +737,30 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_pTransformCom->Move_Pos(&(vRight * fTimeDelta * m_fSpeed));
 		}
 	}
-	else if (GetAsyncKeyState('P')) {
+	else if (CKeyMgr::Get_Instance()->Key_Down(KEY_L)) {
 	    m_Is_Fire_Arrow = false;
 		m_Fire_Frame = m_Fire_Init;
 
 	    m_iState = DEATH;
     }
 	else {
-	    m_Is_Fire_Arrow = false;
+		m_Is_Fire_Arrow = false;
 		m_Fire_Frame = m_Fire_Init;
-
 		m_iState = STAND;
 	}
 
+
+	if (CKeyMgr::Get_Instance()->Key_Up(KEY_RBUTTON)) {
+
+		m_Is_Fire_Arrow = false;
+		m_Fire_Frame = m_Fire_Init;
+
+		if (m_Is_Effect_Charge_Arrow == true) {
+			Fire_Charge_Arrow();
+		}
+
+		m_Is_Effect_Charge_Arrow = false;
+	}
 
 
 }
@@ -671,11 +771,8 @@ void CPlayer::Fire_Arrow(void)
 {
 	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
 
-
 	CGameObject* pGameObject = nullptr;
 
-
-	
 	POINT ptCursor;
 
 	GetCursorPos(&ptCursor);
@@ -683,14 +780,14 @@ void CPlayer::Fire_Arrow(void)
 
 	_vec3 Axis = { -1.f,0.f,0.f };
 
-	_vec3 Dir = { ptCursor.x - 400.f,ptCursor.y - 300.f,0 };
+	_vec3 Dir = { (float)(ptCursor.x - WINCX * 0.5),float(ptCursor.y - WINCY * 0.5),0 };
 	D3DXVec3Normalize(&Dir, &Dir);
 
 
 	// Angle 계산
 	m_fAngle = acos(D3DXVec3Dot(&Axis, &Dir));
 
-	if (300.f< ptCursor.y)
+	if (WINCY * 0.5 < ptCursor.y)
 		m_fAngle = 2.f * D3DX_PI - m_fAngle;
 
 	
@@ -723,6 +820,140 @@ void CPlayer::Fire_Arrow(void)
 
 }
 
+void CPlayer::Fire_Charge_Arrow(void)
+{
+
+	CEffect_Player_Bow_Charge* pObject = dynamic_cast<CEffect_Player_Bow_Charge*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Bow_Charge_Effect"));
+
+	if (pObject != nullptr)
+		pObject->Set_Dead();
+	
+	m_Charge_Effect_Cnt--;
+
+
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject = nullptr;
+
+	POINT ptCursor;
+
+	GetCursorPos(&ptCursor);
+	ScreenToClient(g_hWnd, &ptCursor);
+
+	_vec3 Axis = { -1.f,0.f,0.f };
+	D3DXVec3Normalize(&Axis, &Axis);
+
+	_vec3 Dir = { (float)(ptCursor.x - WINCX * 0.5),float(ptCursor.y - WINCY * 0.5),0 };
+	D3DXVec3Normalize(&Dir, &Dir);
+
+
+	// Angle 계산
+	m_fAngle = acos(D3DXVec3Dot(&Axis, &Dir));
+
+	if (WINCY * 0.5 < ptCursor.y)
+		m_fAngle = 2.f * D3DX_PI - m_fAngle;
+
+
+	m_Mouse_Dir = { Dir.x,0.f,-Dir.y };
+
+
+	CTransform* pSylphBowTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SylphBow", L"Proto_Transform", ID_DYNAMIC));
+
+
+	_vec3 vPos = pSylphBowTransformCom->m_vInfo[INFO_POS];
+
+	pGameObject = CSylphChargeArrow::Create(m_pGraphicDev, vPos, m_Mouse_Dir, m_fAngle);
+
+	if (pGameObject == nullptr)
+		return;
+
+
+	pGameLogicLayer->Add_BulletObject(OBJ_ARROW, pGameObject);
+
+
+}
+
+void CPlayer::Effect_Charge_Arrow(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject = nullptr;
+
+
+	if (m_Charge_Effect_Cnt == 0) {
+
+		pGameObject = CEffect_Player_Bow_Charge::Create(m_pGraphicDev);
+
+		if (pGameObject == nullptr)
+			return;
+
+		pGameLogicLayer->Add_GameObject(L"Bow_Charge_Effect", pGameObject, OBJ_EFFECT);
+
+		m_Charge_Effect_Cnt++;
+	}
+
+
+}
+
+void CPlayer::Frame_Manage(const _float& fTimeDelta)
+{
+
+	if (m_iState == STAND) {
+		m_fStandFrame += 7.f * fTimeDelta;
+		if (7.f < m_fStandFrame)
+			m_fStandFrame = 0.f;
+	}
+
+	if (m_iState == RUN) {
+		m_fRunFrame += 7.f * fTimeDelta * 1.5f;
+		if (7.f < m_fRunFrame)
+			m_fRunFrame = 0.f;
+	}
+
+	if (m_iState == MOVE_ATTACK || m_iState == STAND_ATTACK) {
+		m_fAttackFrame += 9.f * fTimeDelta;
+		if (9.f < m_fAttackFrame)
+			m_fAttackFrame = 0.f;
+	}
+
+	if (m_iState == DASH) {
+
+		m_fDashFrame += 5.f * fTimeDelta * 2.0f;
+		if (5.f < m_fDashFrame) {
+			m_fDashFrame = 0.f;
+		}
+	}
+
+	if (m_iState == DEATH) {
+		m_fDeathFrame += 11.f * fTimeDelta;
+		if (11.f < m_fDeathFrame) {
+			m_fDeathFrame = 11.f;
+		}
+	}
+
+	if (m_HitBlend) {
+
+		m_HitBlendFrame += m_HitMaxFrame * fTimeDelta * 6.f;
+		if (m_HitBlendFrame > m_HitMaxFrame) {
+			m_HitBlendFrame = 0.f;
+			m_HitBlendCnt++;
+			if (m_HitBlendRender)
+				m_HitBlendRender = false;
+			else {
+				m_HitBlendRender = true;
+			}
+		}
+	}
+
+	if (m_HitBlendCnt > m_HitBlendMaxCnt) {
+		m_HitBlend = false;
+		m_HitBlendRender = false;
+		m_bImmuned = false;
+		m_HitBlendCnt = 0;
+	}
+
+}
+
 
 void CPlayer::SetUp_OnTerrain(void)
 {
@@ -734,7 +965,7 @@ void CPlayer::SetUp_OnTerrain(void)
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
 
-	m_pTransformCom->Set_Pos(vPos.x, fHeight + 6.4f, vPos.z);
+	m_pTransformCom->Set_Pos(vPos.x, fHeight + 5.4f + jump, vPos.z);
 }
 
 _vec3 CPlayer::Picking_OnTerrain(void)
@@ -753,29 +984,36 @@ void CPlayer::Update_State()
 	if (m_iState == m_iPreState && m_iAngleState == m_iPreAngleState && m_iAttackAngleState == m_iPreAttackAngleState)
 		return;
 
+	CSylphBow* pObject1 = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
+	CSylphBowPair* pObject2 = dynamic_cast<CSylphBowPair*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBowPair"));
 
 	if (m_iState == STAND) {
 		
+		if (pObject1 != nullptr && pObject2 != nullptr) {
+			pObject1->Set_Render(false);
+			pObject2->Set_Render(false);
+		}
+			
 		if (m_iAngleState == ANGLE_000) {
 			
 		}
 		else if (m_iAngleState == ANGLE_045) {
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
 		else if (m_iAngleState == ANGLE_090) {
 			
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
 		else if (m_iAngleState == ANGLE_135) {
 			
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
@@ -785,45 +1023,51 @@ void CPlayer::Update_State()
 		else if (m_iAngleState == ANGLE_225) {
 			
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 		else if (m_iAngleState == ANGLE_270) {
 			
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 		else if (m_iAngleState == ANGLE_315) {
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 	}
 	else if (m_iState == RUN) {
+
+		if (pObject1 != nullptr && pObject2 != nullptr) {
+			pObject1->Set_Render(false);
+			pObject2->Set_Render(false);
+		}
+
 		if (m_iAngleState == ANGLE_000) {
 			
 		}
 		else if (m_iAngleState == ANGLE_045) {
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
 		else if (m_iAngleState == ANGLE_090) {
 			
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
 		else if (m_iAngleState == ANGLE_135) {
 			
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
@@ -833,87 +1077,101 @@ void CPlayer::Update_State()
 		else if (m_iAngleState == ANGLE_225) {
 			
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 		else if (m_iAngleState == ANGLE_270) {
 			
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 		else if (m_iAngleState == ANGLE_315) {
 			
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 	}
 	else if (m_iState == MOVE_ATTACK) {
-	    if (m_iAttackAngleState == ATTACK_ANGLE_045) {
+		if (pObject1 != nullptr && pObject2 != nullptr) {
+			pObject1->Set_Render(true);
+			pObject2->Set_Render(true);
+		}
+		if (m_iAttackAngleState == ATTACK_ANGLE_045) {
 
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
 		else if (m_iAttackAngleState == ATTACK_ANGLE_135) {
 
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
 		else if (m_iAttackAngleState == ATTACK_ANGLE_225) {
 
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 		else if (m_iAttackAngleState == ATTACK_ANGLE_315) {
 
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 	}
 	else if (m_iState == STAND_ATTACK) {
+
+		if (pObject1 != nullptr && pObject2 != nullptr) {
+			pObject1->Set_Render(true);
+			pObject2->Set_Render(true);
+		}
+
+
 		if (m_iAttackAngleState == ATTACK_ANGLE_045) {
 
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
 		else if (m_iAttackAngleState == ATTACK_ANGLE_135) {
 
 			if (m_bReverse == true) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = false;
 			}
 		}
 		else if (m_iAttackAngleState == ATTACK_ANGLE_225) {
 
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 		else if (m_iAttackAngleState == ATTACK_ANGLE_315) {
 
 			if (m_bReverse == false) {
-				m_pTransformCom->Set_Scale_X(-1.f);
+				m_pTransformCom->Set_Scale_X_Ratio(-1.f);
 				m_bReverse = true;
 			}
 		}
 	}
 	else if (m_iState == DASH) {
-
+		if (pObject1 != nullptr && pObject2 != nullptr) {
+			pObject1->Set_Render(false);
+			pObject2->Set_Render(false);
+		}
 	}
 
 
@@ -964,16 +1222,28 @@ _vec3 CPlayer::Get_World_Mouse()
 	return vMousePos;
 }
 
-
-
 void CPlayer::Dash(const _float& fTimeDelta)
 {
 
 	m_Dash_Time += 5.f * fTimeDelta * 2.0f;
 
+
+	jump += 2.f * fTimeDelta * jumpDir * 4.0f;
+
+	if (jump >= 2.f) {
+		jump = 2.f;
+		jumpDir = -1.f;
+	}
+
+	if (jump < 0.f) {
+		jump = 0.f;
+		jumpDir = 1.f;
+	}
+
 	if (m_Dash_Time > 5.f) {
 		m_Dash_Time = 0.f;
 		m_Is_Dash = false;
+		m_bImmuned = false;
 		CGhost* pGhost = dynamic_cast<CGhost*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Ghost"));
 		pGhost->Is_Dash = false;
 	}

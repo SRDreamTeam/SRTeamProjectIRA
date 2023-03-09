@@ -17,14 +17,13 @@ CEffect_AlertCircle::~CEffect_AlertCircle()
 	Free();
 }
 
-HRESULT CEffect_AlertCircle::Ready_GameObject(const _vec3& vPos, const _vec3& vScale, const _float& fAliveTime , _bool bSpreadMode)
+HRESULT CEffect_AlertCircle::Ready_GameObject(const _vec3& vPos, const _vec3& vScale, const _float& fAliveTime)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransformCom->m_vInfo[INFO_POS] = vPos;
 	m_vMaxScale = vScale;
 	m_fAliveTime = fAliveTime;
-	m_bSpreadMode = bSpreadMode;
 
 	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(90.f));
 
@@ -38,18 +37,13 @@ _int CEffect_AlertCircle::Update_GameObject(const _float& fTimeDelta)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (m_bSpreadMode)
-	{
-		m_pTransformCom->m_vScale.x += 0.3f;
-		m_pTransformCom->m_vScale.y += 0.3f;
-		m_pTransformCom->m_vScale.z += 0.3f;
+	m_pTransformCom->m_vScale.x += 0.3f;
+	m_pTransformCom->m_vScale.y += 0.3f;
+	m_pTransformCom->m_vScale.z += 0.3f;
 
-		if (m_pTransformCom->m_vScale.x >= m_vMaxScale.x) m_pTransformCom->m_vScale.x = m_vMaxScale.x;
-		if (m_pTransformCom->m_vScale.y >= m_vMaxScale.y) m_pTransformCom->m_vScale.y = m_vMaxScale.y;
-		if (m_pTransformCom->m_vScale.z >= m_vMaxScale.z) m_pTransformCom->m_vScale.z = m_vMaxScale.z;
-	}
-	else
-		m_pTransformCom->m_vScale = m_vMaxScale;
+	if (m_pTransformCom->m_vScale.x >= m_vMaxScale.x) m_pTransformCom->m_vScale.x = m_vMaxScale.x;
+	if (m_pTransformCom->m_vScale.y >= m_vMaxScale.y) m_pTransformCom->m_vScale.y = m_vMaxScale.y;
+	if (m_pTransformCom->m_vScale.z >= m_vMaxScale.z) m_pTransformCom->m_vScale.z = m_vMaxScale.z;
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -97,11 +91,11 @@ HRESULT CEffect_AlertCircle::Add_Component(void)
 	return S_OK;
 }
 
-CEffect_AlertCircle* CEffect_AlertCircle::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, const _vec3& vScale, const _float& fAliveTime , _bool bSpreadMode)
+CEffect_AlertCircle* CEffect_AlertCircle::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, const _vec3& vScale, const _float& fAliveTime)
 {
 	CEffect_AlertCircle* pInstance = new CEffect_AlertCircle(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(vPos , vScale , fAliveTime , bSpreadMode)))
+	if (FAILED(pInstance->Ready_GameObject(vPos , vScale , fAliveTime)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

@@ -78,3 +78,31 @@ typedef	struct tagFrontUiInfo
 }FRONTUI;
 
 END
+
+typedef struct tagTerrainData
+{
+	_ulong	dwVtxCntX;
+	_ulong	dwVtxCntZ;
+	_ulong	dwVtxItv;
+	_byte	byDrawID;
+	_byte	byDrawOption;
+	_float	fDetailLevel;
+	_int	iHeightMapLevel;
+} TERRAINDATA;
+
+typedef struct tagTerrainDataPointer
+{
+	_ulong	dwVtxCnt;
+	_vec3* pPos;
+} TERRAINDATA_P;
+
+typedef struct tagStaticObjectData
+{
+	_vec3	vScale;
+	_vec3	vAngle;
+	_vec3	vPos;
+	_byte	byDrawID;
+	_byte	byDrawOption;
+	_vec3	vColliderPos;
+	_float	fColliderRadius;
+}STATICOBJDATA;
