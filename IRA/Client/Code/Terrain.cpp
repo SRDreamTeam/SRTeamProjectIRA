@@ -55,14 +55,15 @@ void CTerrain::Key_Input(const _float& fTimeDelta)
 
 }
 
+
+
+
 void CTerrain::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-	if (-1 != m_byDrawID)
-		m_pTextureCom->Set_Texture(m_byDrawID);
+	m_pTextureCom->Set_Texture(0);
 
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();

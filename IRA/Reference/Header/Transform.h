@@ -36,15 +36,14 @@ public:
 		m_vInfo[INFO_POS].y = fY;
 		m_vInfo[INFO_POS].z = fZ;
 	}
-	void				Set_Scale(const _float& fX, const _float& fY, const _float& fZ) { m_vScale.x = fX; m_vScale.y = fY; m_vScale.z = fZ; }
-	void				Set_Angle(const _float& fX, const _float& fY, const _float& fZ) { m_vAngle.x = fX; m_vAngle.y = fY; m_vAngle.z = fZ; }
+
 	void				Set_Right_Reverse()
 	{
 		m_vInfo[INFO_RIGHT] *= -1;
 		
 	}
 
-	void                Set_Scale_Ratio(_vec3 scale) 
+	void                Set_Scale(_vec3 scale) 
 	{
 		m_vScale.x /= fabs(m_vScale.x);
 		m_vScale.x *= scale.x;
@@ -53,14 +52,11 @@ public:
 		m_vScale.y *= scale.y;
 	}
 
-	void                Set_Scale_X_Ratio(_float x)
+	void                Set_Scale_X(_float x)
 	{
 		m_vScale.x *= x;
 	}
 
-	void  Set_Revolution(const _matrix& revol) {
-		m_Revolution = revol;
-	}
 
 
 	void					Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta, const MONSTER_NAME m_eName);
@@ -73,7 +69,7 @@ public:
 
 	void					Ui_Status_Print(_int _iHpNumber, _int _iUiNumber);
 
-	void                    Arrow_Move(float yaw , float pich , float roll);
+	void                    Arrow_Move(void);
 
 public:
 	HRESULT		Ready_Transform(void);
@@ -85,7 +81,6 @@ public:
 	_vec3			m_vScale;
 	_vec3			m_vAngle;
 	_matrix			m_matWorld;
-	_matrix         m_Revolution;
 
 	
 public:

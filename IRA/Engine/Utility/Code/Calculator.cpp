@@ -173,7 +173,6 @@ CComponent * CCalculator::Clone(void)
 	return new CCalculator(*this);
 }
 
-
 void CCalculator::Free(void)
 {
 	__super::Free();

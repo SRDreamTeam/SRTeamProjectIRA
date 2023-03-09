@@ -13,7 +13,7 @@ END
 class CSylphArrow : public CArrow
 {
 
-	enum { ARROW_IDLE, ARROW_DEATH, ARROW_HIT, ARROW_END };
+	enum { ARROW_IDLE, ARROW_DEATH, ARROW_END };
 
 private:
 	explicit CSylphArrow(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -35,27 +35,12 @@ private:
 public:
 	static CSylphArrow* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec3 vDir,_float Angle);
 
-
-public:
-	void Final_Damage(void);
-
-
-public:
-	bool  m_bHit = false;
-	void Create_Hit_Effect(void);
-	void Create_Damage_Font(void);
-
 private:
 	virtual void Free(void) override;
 
-	bool  m_bDisappear = false;
-	float m_AccTime = 0.f;
-	float m_AccMaxTime = 1.f;
 
-	float m_fPower = 400.f;
-	int   m_fAttack_Num = 3;
-	float m_fRandom_Value = 0.f;
-	float m_fDamage = 0.f;
+
+
 
 };
 

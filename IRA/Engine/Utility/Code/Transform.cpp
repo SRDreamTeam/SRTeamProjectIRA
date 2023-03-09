@@ -8,7 +8,6 @@ CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	ZeroMemory(m_vInfo, sizeof(m_vInfo));
 	D3DXMatrixIdentity(&m_matWorld);
-	D3DXMatrixIdentity(&m_Revolution);
 }
 
 CTransform::CTransform(const CTransform & rhs)
@@ -16,7 +15,6 @@ CTransform::CTransform(const CTransform & rhs)
 	, m_vScale(rhs.m_vScale)
 	, m_vAngle(rhs.m_vAngle)
 	, m_matWorld(rhs.m_matWorld)
-	, m_Revolution(rhs.m_Revolution)
 {
 	for (size_t i = 0; i < INFO_END; ++i)
 		m_vInfo[i] = rhs.m_vInfo[i];
@@ -399,12 +397,12 @@ void CTransform::Ui_Status_Print(_int _iHpNumber, _int _iUiNumber)
 
 }
 
-void CTransform::Arrow_Move(float yaw, float pich, float roll)
+void CTransform::Arrow_Move(void)
 {
 	D3DXMATRIX		matScale, matRot, matTrans;
 
 
-	D3DXMatrixRotationYawPitchRoll(&matRot, yaw, pich, roll);
+	D3DXMatrixRotationYawPitchRoll(&matRot, 0.f, D3DXToRadian(90), 0.f);
 	D3DXMatrixTranslation(&matTrans,
 		m_vInfo[INFO_POS].x,
 		m_vInfo[INFO_POS].y,
@@ -472,8 +470,6 @@ _int Engine::CTransform::Update_Component(const _float& fTimeDelta)
 			D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &matRot[j]);
 		}
 	}
-
-	
 
 	for (size_t i = 0; i < INFO_END; ++i)
 		memcpy(&m_matWorld.m[i][0], &m_vInfo[i], sizeof(_vec3));
