@@ -58,7 +58,7 @@ private:
 	_float			CalculateZ(_float fX); 
 
 private:
-	_uint					m_iPattern = 4;
+	_uint					m_iPattern = 1;
 	const _uint				m_iMaxPattern = 6;
 
 	_uint					m_iStandardAttackCnt = 0;

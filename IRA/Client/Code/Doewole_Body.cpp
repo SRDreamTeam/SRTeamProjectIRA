@@ -54,7 +54,6 @@ void CDoewole_Body::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	/*m_fAlpha -= 0.01f;
 
@@ -93,8 +92,6 @@ void CDoewole_Body::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 	//m_pSphereBufferCom->Render_Buffer();
-
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
