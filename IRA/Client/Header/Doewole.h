@@ -51,8 +51,8 @@ private:
 	HRESULT			Add_Component(void);
 	void			State_Update(const _float& fTimeDelta);
 private:
-	_uint					m_iPattern = 3;
-	const _uint				m_iMaxPattern = 4;
+	_uint					m_iPattern = 1;
+	const _uint				m_iMaxPattern = 6;
 
 	_uint					m_iStandardAttackCnt = 0;
 
