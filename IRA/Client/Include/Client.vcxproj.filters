@@ -184,6 +184,15 @@
     <Filter Include="02. GameObject\Stage\09. FrontUi\01.Status\03. Status_Key">
       <UniqueIdentifier>{0ecc862b-0458-4d81-b7f4-5665a9ec38f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape">
+      <UniqueIdentifier>{e85a24ad-c04d-4598-9860-06341f347d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\00. StaticObject">
+      <UniqueIdentifier>{3d852bc1-4994-495e-be02-9ce286ab4a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject">
+      <UniqueIdentifier>{fd00f0b5-3b0e-4407-b7ee-82145afdef38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -342,6 +351,15 @@
     <ClInclude Include="..\Header\Effect_Player_Bow_Pulse.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Landscape.h">
+      <Filter>02. GameObject\Stage\10. LandScape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\StaticObject.h">
+      <Filter>02. GameObject\Stage\10. LandScape\00. StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DynamicObject.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -490,6 +508,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\00. Bow_Pulse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Landscape.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\StaticObject.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\00. StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DynamicObject.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

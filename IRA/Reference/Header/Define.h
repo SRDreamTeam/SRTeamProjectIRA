@@ -1,7 +1,7 @@
 #pragma once
 
-#define		WINCX		800
-#define		WINCY		600
+#define		WINCX		1600
+#define		WINCY		900
 
 #define		VTXCNTX		257
 #define		VTXCNTZ		257

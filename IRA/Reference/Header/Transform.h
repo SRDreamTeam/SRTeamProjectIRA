@@ -36,7 +36,8 @@ public:
 		m_vInfo[INFO_POS].y = fY;
 		m_vInfo[INFO_POS].z = fZ;
 	}
-
+	void				Set_Scale(const _float& fX, const _float& fY, const _float& fZ) { m_vScale.x = fX; m_vScale.y = fY; m_vScale.z = fZ; }
+	void				Set_Angle(const _float& fX, const _float& fY, const _float& fZ) { m_vAngle.x = fX; m_vAngle.y = fY; m_vAngle.z = fZ; }
 	void				Set_Right_Reverse()
 	{
 		m_vInfo[INFO_RIGHT] *= -1;

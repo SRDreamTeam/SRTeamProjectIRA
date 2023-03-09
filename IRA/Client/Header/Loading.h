@@ -24,7 +24,7 @@ public:
 
 	HRESULT			Ready_Loading(LOADINGID eID);
 	_uint			Loading_ForStage(void);
-	
+	_uint			Loading_TerrainData(void);
 
 private:
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
