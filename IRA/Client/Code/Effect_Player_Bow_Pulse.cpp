@@ -21,7 +21,7 @@ HRESULT CEffect_Player_Bow_Pulse::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 2.f , 3.f, 3.f };
+	m_pTransformCom->m_vScale = { 0.95f , 1.98f, 1.f };
 
 	m_fMaxFrame = 9.f;
 
@@ -40,7 +40,7 @@ _int CEffect_Player_Bow_Pulse::Update_GameObject(const _float& fTimeDelta)
 
 	CTransform* pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SylphBow", L"Proto_Transform", ID_DYNAMIC));
 
-	m_pTransformCom->m_vInfo[INFO_POS] = { pTransform->m_vInfo[INFO_POS].x + 0.7f , pTransform->m_vInfo[INFO_POS].y - 2.f , pTransform->m_vInfo[INFO_POS].z };
+	m_pTransformCom->m_vInfo[INFO_POS] = { pTransform->m_vInfo[INFO_POS].x + 0.5f , pTransform->m_vInfo[INFO_POS].y - 2.3f , pTransform->m_vInfo[INFO_POS].z };
 
 
 	m_fFrame += m_fMaxFrame * fTimeDelta * 1.5f;
@@ -65,6 +65,7 @@ void CEffect_Player_Bow_Pulse::LateUpdate_GameObject()
 
 void CEffect_Player_Bow_Pulse::Render_GameObject()
 {
+
 	__super::Render_GameObject();
 }
 

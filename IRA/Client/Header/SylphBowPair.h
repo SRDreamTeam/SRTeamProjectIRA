@@ -29,6 +29,9 @@ public:
 public:
 	void    Update_Bow_State();
 
+	void    Set_Render(bool render) {
+		 m_bRender = render;
+	}
 
 private:
 	virtual HRESULT	Add_Component(void) override;					
@@ -42,8 +45,9 @@ public:
 private:
 	virtual void Free(void) override;
 
-
-
+	bool   m_bRender = false;
+	bool   m_bRealRender = false;
+	float  m_Time = 3.f;
 
 
 };

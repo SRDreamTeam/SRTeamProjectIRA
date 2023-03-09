@@ -47,7 +47,9 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 		Load_Terrain_Info(L"../../Data/Terrain/TestMap.dat");
 		m_bTerrainInit = true;
 
-		Load_Object_Info(L"../../Data/Object/Object2.dat");
+		//Load_Object_Info(L"../../Data/Object/Object2.dat");
+		//Load_Object_Info(L"../../Data/Object/Test3.dat");
+		Load_Object_Info(L"../../Data/Object/SizeTest.dat");
 	}
 
 	return __super::Update_Scene(fTimeDelta);
@@ -350,6 +352,9 @@ HRESULT CStage::Load_Object_Info(const _tchar* pPath)
 
 		dynamic_cast<CStaticObject*>(pGameObject)->Set_DrawID(tStaticObjData.byDrawID);
 		dynamic_cast<CStaticObject*>(pGameObject)->Set_DrawOption(tStaticObjData.byDrawOption);
+		dynamic_cast<CStaticObject*>(pGameObject)->Set_ColliderPos(&tStaticObjData.vColliderPos);
+		dynamic_cast<CStaticObject*>(pGameObject)->Set_ColliderRadius(tStaticObjData.fColliderRadius);
+
 	}
 
 	CloseHandle(hFile);

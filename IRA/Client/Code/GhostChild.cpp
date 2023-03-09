@@ -24,7 +24,7 @@ HRESULT CGhostChild::Ready_GameObject(void)
 	
 	__super::Ready_GameObject();
 
-	m_pTransformCom->Set_Scale({ 5.f, 5.f, 1.f });
+	m_pTransformCom->Set_Scale_Ratio({ 5.f, 5.f, 1.f });
 
 
 	CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
@@ -129,7 +129,7 @@ void CGhostChild::Render_GameObject()
 	AlphaValue = D3DCOLOR_ARGB(255, 255, 255, 255);
 	m_pGraphicDev->SetTextureStageState(0, D3DTSS_CONSTANT, AlphaValue);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
