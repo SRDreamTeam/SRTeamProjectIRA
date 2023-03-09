@@ -154,17 +154,11 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-<<<<<<< HEAD
+
     HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
     0, 0, 
     rc.right - rc.left, 
     rc.bottom - rc.top, nullptr, nullptr, hInstance, nullptr);
-=======
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      0, 0, 
-	  rc.right - rc.left, 
-	  rc.bottom - rc.top, nullptr, nullptr, hInstance, nullptr);
->>>>>>> Boss/Doewole3
 
    if (!hWnd)
    {
