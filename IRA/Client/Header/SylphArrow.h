@@ -37,7 +37,7 @@ public:
 
 
 public:
-	void Final_Damage(void);
+	bool Final_Damage(void);
 
 
 public:
@@ -53,9 +53,11 @@ private:
 	float m_AccMaxTime = 1.f;
 
 	float m_fPower = 400.f;
-	int   m_fAttack_Num = 3;
+	int   m_fAttack_Num = 1;
 	float m_fRandom_Value = 0.f;
 	float m_fDamage = 0.f;
+
+	list<int> m_Font_List;
 
 };
 

@@ -794,10 +794,10 @@ void CPlayer::Fire_Arrow(void)
 	m_Mouse_Dir = { Dir.x,0.f,-Dir.y };
 
 
-	CTransform* pSylphBowTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SylphBow", L"Proto_Transform", ID_DYNAMIC));
+	CSylphBow* pSylphBow = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
 
 
-	_vec3 vPos = pSylphBowTransformCom->m_vInfo[INFO_POS];
+	_vec3 vPos = pSylphBow->m_vPos;
 	
 	pGameObject = CSylphArrow::Create(m_pGraphicDev, vPos, m_Mouse_Dir, m_fAngle);
 
@@ -857,10 +857,10 @@ void CPlayer::Fire_Charge_Arrow(void)
 	m_Mouse_Dir = { Dir.x,0.f,-Dir.y };
 
 
-	CTransform* pSylphBowTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SylphBow", L"Proto_Transform", ID_DYNAMIC));
+	CSylphBow* pSylphBow = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
 
 
-	_vec3 vPos = pSylphBowTransformCom->m_vInfo[INFO_POS];
+	_vec3 vPos = pSylphBow->m_vPos;
 
 	pGameObject = CSylphChargeArrow::Create(m_pGraphicDev, vPos, m_Mouse_Dir, m_fAngle);
 

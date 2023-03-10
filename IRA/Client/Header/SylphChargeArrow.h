@@ -38,6 +38,9 @@ public:
 public:
 	bool  m_bHit = false;
 	void Create_Hit_Effect(void);
+	bool Final_Damage(void);
+	void Create_Damage_Font(void);
+
 
 private:
 	virtual void Free(void) override;
@@ -46,7 +49,12 @@ private:
 	float m_AccTime = 0.f;
 	float m_AccMaxTime = 1.f;
 
+	float m_fPower = 1217.f;
+	int   m_fAttack_Num = 1;
+	float m_fRandom_Value = 0.f;
+	float m_fDamage = 0.f;
 
+	list<int> m_Font_List;
 
 };
 

@@ -1,5 +1,6 @@
  #include "..\..\Header\TerrainTex.h"
 
+
 CTerrainTex::CTerrainTex(void)
 	:CVIBuffer()
 	, m_pPos(nullptr)

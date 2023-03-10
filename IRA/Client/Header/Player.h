@@ -67,6 +67,7 @@ private:
 	void			Key_Input(const _float& fTimeDelta);
 
 	void			SetUp_OnTerrain(void);
+
 	_vec3			Picking_OnTerrain(void);
 
 	void            Update_State();
