@@ -13,6 +13,7 @@ private:
 public:
 	HRESULT			Ready_Texture(TEXTYPE eType, const _tchar* pPath, const _uint& iCnt);
 	void			Set_Texture(const _uint& iIndex = 0);
+	void			Get_Texture(const _uint& iIndex = 0);
 
 private:
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;

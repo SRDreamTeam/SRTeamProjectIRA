@@ -44,12 +44,12 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 {
 	if (!m_bTerrainInit)
 	{
-		Load_Terrain_Info(L"../../Data/Terrain/TestMap.dat");
+		//Load_Terrain_Info(L"../../Data/Terrain/TestMap.dat");
+		Load_Terrain_Info(L"../../Data/Terrain/BossDowoleMap.dat");
 		m_bTerrainInit = true;
 
-		//Load_Object_Info(L"../../Data/Object/Object2.dat");
-		//Load_Object_Info(L"../../Data/Object/Test3.dat");
-		Load_Object_Info(L"../../Data/Object/SizeTest.dat");
+		//Load_Object_Info(L"../../Data/Object/SizeTest.dat");
+		Load_Object_Info(L"../../Data/Object/BossDowoleMapObj.dat");
 	}
 
 	return __super::Update_Scene(fTimeDelta);
@@ -136,59 +136,49 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Ghost", pGameObject, OBJ_GHOST), E_FAIL);
 
-	//CGameObject* pDoewole = CDoewole::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pDoewole, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole", pDoewole, OBJ_NONE), E_FAIL);
+	CGameObject* pDoewole = CDoewole::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pDoewole, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole", pDoewole, OBJ_NONE), E_FAIL);
 
-	//pGameObject = CDoewole_Body::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	//pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//dynamic_cast<CDoewole_LeftClaw*>(pGameObject)->Set_Owner(pDoewole);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_LeftClaw", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	//pGameObject = CDoewole_RightClaw::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//dynamic_cast<CDoewole_RightClaw*>(pGameObject)->Set_Owner(pDoewole);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_RightClaw", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	//pGameObject = CDoewole_Shadow::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//dynamic_cast<CDoewole_Shadow*>(pGameObject)->Set_Owner(pDoewole);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Shadow", pGameObject, OBJ_NONE), E_FAIL);
-	// 
-	//pGameObject = CGreenEvilSlime::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	//pGameObject = CEvilSoul::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_2", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	//pGameObject = CEvilSoul::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_3", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	//pGameObject = CMutationEvilSoul::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_4", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	//pGameObject = CMutationEvilSoul::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_5", pGameObject, OBJ_MONSTER), E_FAIL);
-
-	
-
-	pGameObject = CStatus::Create(m_pGraphicDev);
+	pGameObject = CDoewole_Body::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Status_1", pGameObject, OBJ_MONSTER), E_FAIL);
+	dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject, OBJ_MONSTER), E_FAIL);
 
-	//pGameObject = CStatus_Hp::Create(m_pGraphicDev,1);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Status_1", pGameObject, OBJ_MONSTER), E_FAIL);
+	pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CDoewole_LeftClaw*>(pGameObject)->Set_Owner(pDoewole);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_LeftClaw", pGameObject, OBJ_MONSTER), E_FAIL);
+
+	pGameObject = CDoewole_RightClaw::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CDoewole_RightClaw*>(pGameObject)->Set_Owner(pDoewole);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_RightClaw", pGameObject, OBJ_MONSTER), E_FAIL);
+
+	pGameObject = CDoewole_Shadow::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	dynamic_cast<CDoewole_Shadow*>(pGameObject)->Set_Owner(pDoewole);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Shadow", pGameObject, OBJ_NONE), E_FAIL);
+	 
+	/*pGameObject = CGreenEvilSlime::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject, OBJ_MONSTER), E_FAIL);
+
+	pGameObject = CEvilSoul::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_2", pGameObject, OBJ_MONSTER), E_FAIL);
+
+	pGameObject = CEvilSoul::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_3", pGameObject, OBJ_MONSTER), E_FAIL);
+
+	pGameObject = CMutationEvilSoul::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_4", pGameObject, OBJ_MONSTER), E_FAIL);
+
+	pGameObject = CMutationEvilSoul::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_5", pGameObject, OBJ_MONSTER), E_FAIL);*/
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 
@@ -202,6 +192,22 @@ HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
 
 	// 오브젝트
 	CGameObject*	pGameObject = nullptr;
+
+	pGameObject = CStatus::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FrontUI_Status", pGameObject, OBJ_UI), E_FAIL);
+
+	pGameObject = CApostle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FrontUI_Apostle", pGameObject, OBJ_UI), E_FAIL);
+
+	pGameObject = CQuickSlot::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FrontUI_QuickSlot", pGameObject, OBJ_UI), E_FAIL);
+
+	pGameObject = CMiniMap::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"FrontUI_MiniMap", pGameObject, OBJ_UI), E_FAIL);
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 
@@ -331,7 +337,7 @@ HRESULT CStage::Load_Object_Info(const _tchar* pPath)
 
 		if (0 == dwByte)
 		{
-			delete[] pObjKey;
+			Safe_Delete_Array(pObjKey);
 			break;
 		}
 
@@ -339,6 +345,25 @@ HRESULT CStage::Load_Object_Info(const _tchar* pPath)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 
 		dynamic_cast<CStaticObject*>(pGameObject)->Set_ObjKey(pObjKey, dwStrByte);
+
+		wstring strComponentKey = pObjKey;
+
+		if (string::npos != strComponentKey.find('|'))	// 클론인경우
+		{	
+			size_t startPos = strComponentKey.find('|');
+			strComponentKey = strComponentKey.substr(0, startPos);
+		}
+
+		int iNum = strComponentKey.length() - 1;
+		for (; iNum >= 0; --iNum)
+		{
+			if (0 == isdigit(pObjKey[iNum]))	// 숫자가 아닌 경우
+				break;
+		}
+
+		strComponentKey = strComponentKey.substr(0, iNum+1);
+
+		dynamic_cast<CStaticObject*>(pGameObject)->Set_StaticObj_ID(dynamic_cast<CStaticObject*>(pGameObject)->CompareID(strComponentKey));
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(dynamic_cast<CStaticObject*>(pGameObject)->Get_ObjKey(), pGameObject, OBJ_LANDSCAPE), E_FAIL);
 		// dynamic은 Dynamic으로 따로 빼기
 		Safe_Delete_Array<_tchar*>(pObjKey);

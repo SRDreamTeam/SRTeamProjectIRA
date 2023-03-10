@@ -25,6 +25,11 @@ public:
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
 
+public:
+	STATIC_OBJECT_ID	CompareID(wstring strObjKey);
+	STATIC_OBJECT_ID	Get_StaticObj_ID(void) { return m_eID; }
+	void				Set_StaticObj_ID(STATIC_OBJECT_ID id) { m_eID = id; }
+
 private:
 	virtual HRESULT	Add_Component(void) override;
 	virtual void SetUp_OnTerrain(void) override;
@@ -32,7 +37,8 @@ private:
 	//virtual void Frame_Check(const _float& fTimeDelta)PURE;
 
 private:
-
+	CTexture*			m_pTextureCom[STATIC_OBJ_END];
+	STATIC_OBJECT_ID	m_eID;
 
 public:
 	static CStaticObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);

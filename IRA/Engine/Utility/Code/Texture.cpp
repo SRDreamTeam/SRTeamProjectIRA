@@ -60,6 +60,14 @@ void CTexture::Set_Texture(const _uint & iIndex)
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
 }
 
+void CTexture::Get_Texture(const _uint& iIndex)
+{
+	if (m_vecTexture.size() < iIndex)
+		return;
+
+	m_pGraphicDev->GetTexture(0, &m_vecTexture[iIndex]);
+}
+
 CComponent * CTexture::Clone(void)
 {
 	return new CTexture(*this);

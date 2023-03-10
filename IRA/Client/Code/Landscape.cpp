@@ -5,7 +5,7 @@
 CLandscape::CLandscape(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_pBufferCom(nullptr)
-	, m_pTextureCom(nullptr)
+	//, m_pTextureCom(nullptr)
 	, m_pTransformCom(nullptr)
 	, m_byDrawID(-1)
 	, m_byDrawOption(0)
@@ -18,7 +18,7 @@ CLandscape::CLandscape(LPDIRECT3DDEVICE9 pGraphicDev)
 CLandscape::CLandscape(const CLandscape & rhs)
 	: Engine::CGameObject(rhs)
 	, m_pBufferCom(rhs.m_pBufferCom)
-	, m_pTextureCom(rhs.m_pTextureCom)
+	//, m_pTextureCom(rhs.m_pTextureCom)
 	, m_pTransformCom(rhs.m_pTransformCom)
 	, m_byDrawID(rhs.m_byDrawID)
 	, m_byDrawOption(rhs.m_byDrawOption)
@@ -57,15 +57,15 @@ void CLandscape::LateUpdate_GameObject()
 
 void CLandscape::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	if (-1 != m_byDrawID)
-		m_pTextureCom->Set_Texture(m_byDrawID);
+	//if (-1 != m_byDrawID)
+	//	m_pTextureCom->Set_Texture(m_byDrawID);
 
-	m_pBufferCom->Render_Buffer();
+	//m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CLandscape::Set_ObjKey(_tchar* pKey, _ulong strLength)
