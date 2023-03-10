@@ -20,13 +20,6 @@ HRESULT CSylphBow::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Scale_Ratio({ 1.5f, 1.5f, 1.5f });
-
-	m_pTransformCom->Rotation(ROT_Y, m_Bow_Angle);
-
-	m_pTransformCom->Set_Pos(m_Bow_Pos.x, m_Bow_Pos.y, m_Bow_Pos.z);
-
-	
 	
 	__super::Ready_GameObject();
 
@@ -68,16 +61,11 @@ void CSylphBow::LateUpdate_GameObject()
 
 void CSylphBow::Render_GameObject()
 {
-
 	if (m_bRealRender == false) {
 		return;
 	}
 		
-	
-
-
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_MatWorld);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
@@ -92,6 +80,13 @@ void CSylphBow::Render_GameObject()
 
 void CSylphBow::Update_Bow_State()
 {
+	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
+
+	pPlayerTransformCom->Get_Info(INFO_POS, &m_Bow_Pos);
+
+	_vec3       Player_Axis = { 0.f,1.f,0.f };
+
+
 	POINT ptCursor;
 
 	GetCursorPos(&ptCursor);
@@ -103,35 +98,38 @@ void CSylphBow::Update_Bow_State()
 	D3DXVec3Normalize(&Dir, &Dir);
 
 
-	// Angle °è»ê
 	m_Bow_Angle = acos(D3DXVec3Dot(&Axis, &Dir));
 
 	if (WINCY * 0.5 < ptCursor.y)
 		m_Bow_Angle = 2.f * D3DX_PI - m_Bow_Angle;
 
 
-	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
-	pPlayerTransformCom->Get_Info(INFO_POS, &m_Bow_Pos);
+	_matrix matScale, matTrans_Pre, matRot, matTrans, matRev;
 
-	m_pTransformCom->Set_Pos(m_Bow_Pos.x + 4.f, m_Bow_Pos.y + 2.2f + 1.f, m_Bow_Pos.z - 2.f);
+	D3DXMatrixIdentity(&m_MatWorld);
+
+	D3DXMatrixScaling(&matScale, -1.5f, 1.5f, 1.5f);
+	D3DXMatrixRotationY(&matRot, 220);
+	D3DXMatrixTranslation(&matTrans_Pre, 3.f, 0.f, 0.f);
+	D3DXMatrixTranslation(&matTrans, m_Bow_Pos.x - 0.1f, m_Bow_Pos.y + 2.0f, m_Bow_Pos.z);
 
 
+	m_vPos = { m_Bow_Pos.x , m_Bow_Pos.y + 2.0f, m_Bow_Pos.z };
 
-	if (m_Bow_Angle == m_Pre_Bow_Angle)
-		return;
 
-	m_pTransformCom->Rotation(ROT_Y, m_Bow_Angle - m_Pre_Bow_Angle);
+	Axis = { 1.f,0.f,0.f };
 
+	m_Bow_Angle = acos(D3DXVec3Dot(&Axis, &Dir));
+
+	if (WINCY * 0.5 < ptCursor.y)
+		m_Bow_Angle = 2.f * D3DX_PI - m_Bow_Angle;
+
+	D3DXMatrixRotationAxis(&matRev, &Player_Axis, -m_Bow_Angle);
 	
-	_matrix		matRevol;
-	_vec3       Player_Axis;
-	pPlayerTransformCom->Get_Info(INFO_UP, &Player_Axis);
-	D3DXMatrixRotationAxis(&matRevol, &Player_Axis, m_Bow_Angle - m_Pre_Bow_Angle);
 
-	m_pTransformCom->Set_Revolution(matRevol);
+	m_MatWorld = matScale * matRot * matTrans_Pre * matRev * matTrans;
 
 	m_Pre_Bow_Angle = m_Bow_Angle;
-
 }
 
 HRESULT CSylphBow::Add_Component(void)

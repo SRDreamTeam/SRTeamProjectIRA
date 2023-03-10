@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\Effect_Player_Bow_Pulse.h"
 #include "Export_Function.h"
+#include "SylphBow.h"
+
 
 CEffect_Player_Bow_Pulse::CEffect_Player_Bow_Pulse(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CEffect(pGraphicDev)
@@ -21,13 +23,13 @@ HRESULT CEffect_Player_Bow_Pulse::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 0.95f , 1.98f, 1.f };
+
+	_vec3 Scale = { 0.95f , 1.98f, 1.f };
+
+	m_pTransformCom->m_vScale = Scale * 1.2f;
 
 	m_fMaxFrame = 9.f;
-
-	CTransform* pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SylphBow", L"Proto_Transform", ID_DYNAMIC));
-
-	m_pTransformCom->m_vInfo[INFO_POS] = { pTransform->m_vInfo[INFO_POS].x  , pTransform->m_vInfo[INFO_POS].y-2.f , pTransform->m_vInfo[INFO_POS].z };
+;
 
 	return S_OK;
 }
@@ -38,9 +40,31 @@ _int CEffect_Player_Bow_Pulse::Update_GameObject(const _float& fTimeDelta)
 		return OBJ_DEAD;
 
 
-	CTransform* pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"SylphBow", L"Proto_Transform", ID_DYNAMIC));
+	POINT ptCursor;
 
-	m_pTransformCom->m_vInfo[INFO_POS] = { pTransform->m_vInfo[INFO_POS].x + 0.5f , pTransform->m_vInfo[INFO_POS].y - 2.3f , pTransform->m_vInfo[INFO_POS].z };
+	GetCursorPos(&ptCursor);
+	ScreenToClient(g_hWnd, &ptCursor);
+
+	_vec3 Axis = { -1.f,0.f,0.f };
+	D3DXVec3Normalize(&Axis, &Axis);
+
+	_vec3 Dir = { (float)(ptCursor.x - WINCX * 0.5),float(ptCursor.y - WINCY * 0.5),0 };
+	D3DXVec3Normalize(&Dir, &Dir);
+
+
+	_vec3 EffectDir = { Dir.x,0.f,-Dir.y };
+	
+
+	CSylphBow* pSylphBow = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
+
+	_vec3 vPos = pSylphBow->m_vPos;
+
+	vPos += EffectDir * 5.f;
+
+	m_pTransformCom->Set_Pos(vPos.x, vPos.y - 2.f, vPos.z);
+
+
+
 
 
 	m_fFrame += m_fMaxFrame * fTimeDelta * 1.5f;

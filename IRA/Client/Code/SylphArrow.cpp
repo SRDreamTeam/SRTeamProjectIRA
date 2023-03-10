@@ -2,6 +2,7 @@
 #include "..\Header\SylphArrow.h"
 #include "Export_Function.h"
 #include "Effect_Player_Arrow_Hit.h"
+#include "Effect_Player_Damage_Font.h"
 #include "Player.h"
 
 CSylphArrow::CSylphArrow(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -27,10 +28,17 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 
 	m_pTransformCom->Rotation(ROT_Y, m_Arrow_Angle);
 
-	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y - 2.f, m_Fire_Pos.z);
-
 	m_vDir = m_target_Dir;
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
+
+	_vec3 Dir;
+	D3DXVec3Normalize(&Dir, &m_vDir);
+
+	m_Fire_Pos += Dir * 5.f;
+
+	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y - 2.f, m_Fire_Pos.z);
+
+	
 
 	
 	
@@ -46,6 +54,7 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bHit) {
 		Create_Hit_Effect();
+		Create_Damage_Font();
 		return OBJ_DEAD;
 	}
 
@@ -177,7 +186,7 @@ CSylphArrow* CSylphArrow::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec
 	return pInstance;
 }
 
-void CSylphArrow::Final_Damage(void)
+bool CSylphArrow::Final_Damage(void)
 {
 
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Player"));
@@ -198,6 +207,31 @@ void CSylphArrow::Final_Damage(void)
 	m_fRandom_Value = (float)(rand() % (100 / 8 - 100 / 16 + 1) - (100 / 8 - 100 / 16 + 1));
 
 	m_fDamage = (m_fPower * 0.5f + m_fRandom_Value) * (1.f + 1.3f * Critical);
+
+	int temp = (int)m_fDamage;
+	int cnt = 0;
+
+	while (temp > 0) {
+		temp /= 10;
+		cnt++;
+	}
+
+	temp = (int)m_fDamage;
+
+	for (int i = 0; i < cnt; i++) {
+
+		if (i == cnt - 1) {
+			m_Font_List.emplace_front(temp);
+			break;
+		}
+
+		m_Font_List.emplace_front(temp % 10);
+		temp /= 10;
+
+	}
+
+
+	return Critical;
 
 }
 
@@ -220,7 +254,33 @@ void CSylphArrow::Create_Hit_Effect(void)
 void CSylphArrow::Create_Damage_Font(void)
 {
 
-	
+	bool Cri = Final_Damage();
+
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject;
+
+
+	for (int i = 0; i < m_fAttack_Num; i++) {
+
+		int j = 0;
+
+		for (auto iter : m_Font_List) {
+			_vec3 pos = m_pTransformCom->m_vInfo[INFO_POS];
+
+			pos.x += 2.2f * j;
+
+			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, Cri);
+
+			if (pGameObject == nullptr)
+				return;
+
+			pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
+
+			j++;
+		}
+
+	}
 
 
 }
