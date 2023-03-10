@@ -44,13 +44,12 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 {
 	if (!m_bTerrainInit)
 	{
-		Load_Terrain_Info(L"../../Data/Terrain/TestMap.dat");
-		//Load_Terrain_Info(L"../../Data/Terrain/TestTerrain7.dat");
+		//Load_Terrain_Info(L"../../Data/Terrain/TestMap.dat");
+		Load_Terrain_Info(L"../../Data/Terrain/BossDowoleMap.dat");
 		m_bTerrainInit = true;
 
-		//Load_Object_Info(L"../../Data/Object/Object2.dat");
-		//Load_Object_Info(L"../../Data/Object/Test3.dat");
-		Load_Object_Info(L"../../Data/Object/SizeTest.dat");
+		//Load_Object_Info(L"../../Data/Object/SizeTest.dat");
+		Load_Object_Info(L"../../Data/Object/BossDowoleMapObj.dat");
 	}
 
 	return __super::Update_Scene(fTimeDelta);
@@ -332,7 +331,7 @@ HRESULT CStage::Load_Object_Info(const _tchar* pPath)
 
 		if (0 == dwByte)
 		{
-			delete[] pObjKey;
+			Safe_Delete_Array(pObjKey);
 			break;
 		}
 
@@ -340,6 +339,25 @@ HRESULT CStage::Load_Object_Info(const _tchar* pPath)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 
 		dynamic_cast<CStaticObject*>(pGameObject)->Set_ObjKey(pObjKey, dwStrByte);
+
+		wstring strComponentKey = pObjKey;
+
+		if (string::npos != strComponentKey.find('|'))	// 클론인경우
+		{	
+			size_t startPos = strComponentKey.find('|');
+			strComponentKey = strComponentKey.substr(0, startPos);
+		}
+
+		int iNum = strComponentKey.length() - 1;
+		for (; iNum >= 0; --iNum)
+		{
+			if (0 == isdigit(pObjKey[iNum]))	// 숫자가 아닌 경우
+				break;
+		}
+
+		strComponentKey = strComponentKey.substr(0, iNum+1);
+
+		dynamic_cast<CStaticObject*>(pGameObject)->Set_StaticObj_ID(dynamic_cast<CStaticObject*>(pGameObject)->CompareID(strComponentKey));
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(dynamic_cast<CStaticObject*>(pGameObject)->Get_ObjKey(), pGameObject, OBJ_LANDSCAPE), E_FAIL);
 		// dynamic은 Dynamic으로 따로 빼기
 		Safe_Delete_Array<_tchar*>(pObjKey);
