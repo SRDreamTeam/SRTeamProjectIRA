@@ -45,6 +45,7 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 	if (!m_bTerrainInit)
 	{
 		Load_Terrain_Info(L"../../Data/Terrain/TestMap.dat");
+		//Load_Terrain_Info(L"../../Data/Terrain/TestTerrain7.dat");
 		m_bTerrainInit = true;
 
 		//Load_Object_Info(L"../../Data/Object/Object2.dat");

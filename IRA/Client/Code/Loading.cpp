@@ -183,6 +183,7 @@ _uint CLoading::Loading_ForStage(void)
 _uint CLoading::Loading_TerrainData(void)
 {
 	HANDLE hFile = CreateFile(L"../../Data/Terrain/TestMap.dat", GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	//HANDLE hFile = CreateFile(L"../../Data/Terrain/TestTerrain7.dat", GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 		return E_FAIL;
