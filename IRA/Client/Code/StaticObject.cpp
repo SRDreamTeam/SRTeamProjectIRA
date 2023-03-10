@@ -46,11 +46,21 @@ void CStaticObject::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	if (-1 != m_byDrawID)
-		m_pTextureCom->Set_Texture(m_byDrawID);
+		m_pTextureCom[m_eID]->Set_Texture(m_byDrawID);
 
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+STATIC_OBJECT_ID CStaticObject::CompareID(wstring strObjKey)
+{
+	if (strObjKey == L"MainLobby")
+		return MAIN_LOBBY;
+	else if (strObjKey == L"BossDowoleObj")
+		return BOSS_DOWOLE_OBJ;
+
+	return STATIC_OBJ_END;
 }
 
 HRESULT CStaticObject::Add_Component(void)
@@ -65,9 +75,13 @@ HRESULT CStaticObject::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_ObjMainLobby"));
+	pComponent = m_pTextureCom[MAIN_LOBBY] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"MainLobby"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_ObjMainLobby", pComponent });
+	m_uMapComponent[ID_STATIC].insert({ L"MainLobby", pComponent });
+
+	pComponent = m_pTextureCom[BOSS_DOWOLE_OBJ] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"BossDowoleObj"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"BossDowoleObj", pComponent });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_ProtoComponent(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
