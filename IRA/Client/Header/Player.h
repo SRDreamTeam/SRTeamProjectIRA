@@ -161,7 +161,7 @@ private:
 	
 public:
 	bool            m_bHit = false;
-	float           m_Critical_Rate = 50.f;
+	float           m_Critical_Rate = 38.f;
 
 
 private:

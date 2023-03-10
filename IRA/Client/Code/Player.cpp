@@ -463,6 +463,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 		m_Is_Fire_Arrow = true;
 
+		CSylphBow* pObject1 = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
+		CSylphBowPair* pObject2 = dynamic_cast<CSylphBowPair*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBowPair"));
+
+		pObject1->m_bCharge = false;
+		pObject2->m_bCharge = false;
+
 		POINT ptCursor;
 
 		GetCursorPos(&ptCursor);
@@ -533,6 +539,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	}
 	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_RBUTTON)) {
+
+		CSylphBow* pObject1 = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
+		CSylphBowPair* pObject2 = dynamic_cast<CSylphBowPair*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBowPair"));
+
+		pObject1->m_bCharge = true;
+		pObject2->m_bCharge = true;
 
 		m_Is_Effect_Charge_Arrow = true;
 		

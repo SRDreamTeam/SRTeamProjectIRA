@@ -49,7 +49,7 @@ private:
 	float m_AccTime = 0.f;
 	float m_AccMaxTime = 1.f;
 
-	float m_fPower = 1217.f;
+	float m_fPower = 12170.f;
 	int   m_fAttack_Num = 1;
 	float m_fRandom_Value = 0.f;
 	float m_fDamage = 0.f;

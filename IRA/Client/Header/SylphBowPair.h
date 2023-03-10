@@ -48,10 +48,12 @@ private:
 	bool   m_bRender = false;
 	bool   m_bRealRender = false;
 	float  m_Time = 3.f;
+	float  m_fFrame = 0.f;
+	
 
 public:
 	_matrix m_MatWorld;
 	_vec3   m_vPos;
-
+	bool   m_bCharge;
 };
 
