@@ -49,6 +49,9 @@ private:
 	bool   m_bRealRender = false;
 	float  m_Time = 3.f;
 
+public:
+	_matrix m_MatWorld;
+	_vec3   m_vPos;
 
 };
 

@@ -27,6 +27,7 @@ protected:
 	CRcTex*			m_pBufferCom;
 	CTransform*		m_pTransformCom;
 	CTexture*		m_pTextureCom;
+	CTexture*		m_pTextureCom_Sub;
 
 	_float			m_fFrame = 0.f;
 	_float			m_fMaxFrame = 0.f;
