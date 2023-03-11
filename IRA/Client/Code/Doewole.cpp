@@ -233,7 +233,7 @@ void CDoewole::OutStretch_Attack(const _float& fTimeDelta)
 
 	if (m_fAccTime > 4.f)
 	{
-		m_bAttackToIdle = true;
+		m_bAttackToIdle = true;														  
 
 		if (m_fAccTime > 5.f)
 		{
@@ -244,7 +244,7 @@ void CDoewole::OutStretch_Attack(const _float& fTimeDelta)
 		}
 	}
 
-	if (m_fAccTime2 > 0.5f)
+	if (m_fAccTime2 > 0.3f)
 	{
 		Create_CircleBullet();
 		m_fAccTime2 = 0.f;
@@ -355,18 +355,21 @@ void CDoewole::Create_StandardBullet()
 
 void CDoewole::Create_CircleBullet()
 {
-	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
-	vMonster_Pos.y += 1.f;
-
 	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 	CGameObject* pBulletObject = nullptr;
 
-	for (size_t i = 0; i < 8; i++)
+	for (size_t i = 0; i < 6; i++)
 	{
-		pBulletObject = CDoewoleBullet_Circle::Create(m_pGraphicDev, vMonster_Pos, (i + 1));
+		_float cosTheta = cos(D3DXToRadian(360.f / 6.f) * i);
+		_float sinTheta = sin(D3DXToRadian(360.f / 6.f) * i);
+
+		_vec3 vPos = { m_pTransformCom->m_vInfo[INFO_POS].x + cosTheta , 3.f ,  m_pTransformCom->m_vInfo[INFO_POS].z + sinTheta };
+
+		pBulletObject = CDoewoleBullet_Circle::Create(m_pGraphicDev, vPos);
 		NULL_CHECK(pBulletObject);
-		pLayer->Add_BulletObject(  pBulletObject);
+		pLayer->Add_BulletObject(pBulletObject);
 	}
+
 }
 
 void CDoewole::AreaAtaackPattern(const _float& fTimeDelta)

@@ -23,6 +23,10 @@ protected:
 
 public:
 	static CDoewoleBullet_Standard* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	_bool			m_bHit = false;
+
+private:
+	void	Create_DeathEffect();
 
 private:
 	_float		m_fMaxframe = 0.f;

@@ -23,12 +23,9 @@ HRESULT CEffect_Player_Damage_Font::Ready_GameObject(void)
 
 	m_pTransformCom->m_vScale = { 2.f,2.f,1.f };
 	
-	
 	m_pTransformCom->m_vInfo[INFO_POS] = m_vPos;
 
 	m_vOriginPos = m_vPos;
-
-	
 
 	return S_OK;
 }
