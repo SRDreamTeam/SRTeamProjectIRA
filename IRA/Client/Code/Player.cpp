@@ -9,6 +9,8 @@
 #include "Effect_Player_Bow_Pulse.h"
 #include "Effect_Player_Bow_Charge.h"
 #include "KeyMgr.h"
+#include "CollisionMgr.h"
+
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -104,8 +106,8 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 
     Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_PLAYER, this);
 	
-
 	_vec3 v = m_pColliderCom->Get_SpherePos();
 
 	return 0;

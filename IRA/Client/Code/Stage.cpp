@@ -71,7 +71,6 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 		}
 	}
 
-
 	return __super::Update_Scene(fTimeDelta);
 }
 
@@ -143,7 +142,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
-	//CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_PLAYER, pGameObject);
 
 	pGameObject = CSylphBow::Create(m_pGraphicDev,{0.f,0.f,0.f},0.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

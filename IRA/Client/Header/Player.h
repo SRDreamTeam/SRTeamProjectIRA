@@ -109,6 +109,7 @@ private:
 
 	CTexture*		m_pDeathTextureCom;
 
+	CCollider*		m_pColliderCom;
 	CCalculator*	m_pCalculatorCom;
 
 private:	
@@ -149,7 +150,7 @@ private:
 	bool            m_Is_Effect_Charge_Arrow = false;
 	int             m_Charge_Effect_Cnt = 0;
 
-	CCollider*		m_pColliderCom;
+
 	CSphereTex*		m_pSphereBufferCom;
 
 	_vec3           m_Mouse_Dir;
@@ -162,7 +163,6 @@ private:
 public:
 	bool            m_bHit = false;
 	float           m_Critical_Rate = 50.f;
-
 
 private:
 	// UI Á¤º¸

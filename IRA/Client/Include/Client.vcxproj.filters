@@ -310,6 +310,9 @@
     <Filter Include="02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death">
       <UniqueIdentifier>{6057cd16-cf2e-47ae-b05d-bfaa9df18e5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death">
+      <UniqueIdentifier>{359f3898-2b70-4a82-8f07-56dbee77f984}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -570,6 +573,9 @@
     <ClInclude Include="..\Header\Effect_CircleBullet_Death.h">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_StandardBullet_Death.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -820,6 +826,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect_CircleBullet_Death.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_StandardBullet_Death.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

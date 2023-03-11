@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\DoewoleBullet_Standard.h"
 #include "Export_Function.h"
+#include <Effect_StandardBullet_Death.h>
 
 CDoewoleBullet_Standard::CDoewoleBullet_Standard(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -49,7 +50,10 @@ HRESULT CDoewoleBullet_Standard::Ready_GameObject(void)
 _int CDoewoleBullet_Standard::Update_GameObject(const _float& fTimeDelta)
 {
 	if (m_bDead)
+	{
+		Create_DeathEffect();
 		return OBJ_DEAD;
+	}
 
 	Frame_Check(fTimeDelta);
 
@@ -123,6 +127,20 @@ CDoewoleBullet_Standard* CDoewoleBullet_Standard::Create(LPDIRECT3DDEVICE9 pGrap
 	}
 
 	return pInstance;
+}
+
+void CDoewoleBullet_Standard::Create_DeathEffect()
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject;
+
+	pGameObject = CEffect_StandardBullet_Death::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS]);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(pGameObject);
 }
 
 
