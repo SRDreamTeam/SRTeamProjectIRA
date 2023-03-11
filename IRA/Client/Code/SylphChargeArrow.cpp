@@ -187,7 +187,7 @@ void CSylphChargeArrow::Create_Hit_Effect(void)
 	if (pGameObject == nullptr)
 		return;
 
-	pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
+	pGameLogicLayer->Add_BulletObject( pGameObject);
 }
 
 void CSylphChargeArrow::Free(void)

@@ -76,8 +76,6 @@ HRESULT CSphereTex::Ready_Buffer(void)
 		}
 	}
 	
-
-
 	m_pIB->Unlock();
 
 	return S_OK;

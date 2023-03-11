@@ -102,6 +102,16 @@ void CKeyMgr::Update(void)
         m_iKeyState |= KEY_H;
     }
 
+    if (GetAsyncKeyState('C') & 0x8000)
+    {
+        m_iKeyState |= KEY_C;
+    }
+
+    if (GetAsyncKeyState('V') & 0x8000)
+    {
+        m_iKeyState |= KEY_V;
+    }
+
 }
 
 bool CKeyMgr::Key_Pressing(unsigned int iCurrentKey)

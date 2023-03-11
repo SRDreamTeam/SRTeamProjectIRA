@@ -300,7 +300,7 @@ void CPlayer::Create_Basic_Bow(void)
 
 	m_Bow_List[BOW_SYLPH] = pGameObject;
 	m_Bow_Active[BOW_SYLPH] = true;
-	pGameLogicLayer->Add_GameObject(L"SylphBow", pGameObject, OBJ_BOW);    /// ?? ¿Ö ÅÍÁü
+	pGameLogicLayer->Add_GameObject(L"SylphBow", pGameObject);    /// ?? ¿Ö ÅÍÁü
 
 }
 
@@ -805,7 +805,7 @@ void CPlayer::Fire_Arrow(void)
 		return;
 
 
-	pGameLogicLayer->Add_BulletObject(OBJ_ARROW, pGameObject);
+	pGameLogicLayer->Add_BulletObject(  pGameObject);
 
 
 
@@ -814,7 +814,7 @@ void CPlayer::Fire_Arrow(void)
 	if (pGameObject == nullptr)
 		return;
 
-	pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
+	pGameLogicLayer->Add_BulletObject( pGameObject);
 
 
 
@@ -868,7 +868,7 @@ void CPlayer::Fire_Charge_Arrow(void)
 		return;
 
 
-	pGameLogicLayer->Add_BulletObject(OBJ_ARROW, pGameObject);
+	pGameLogicLayer->Add_BulletObject(  pGameObject);
 
 
 }
@@ -887,7 +887,7 @@ void CPlayer::Effect_Charge_Arrow(void)
 		if (pGameObject == nullptr)
 			return;
 
-		pGameLogicLayer->Add_GameObject(L"Bow_Charge_Effect", pGameObject, OBJ_EFFECT);
+		pGameLogicLayer->Add_GameObject(L"Bow_Charge_Effect", pGameObject);
 
 		m_Charge_Effect_Cnt++;
 	}

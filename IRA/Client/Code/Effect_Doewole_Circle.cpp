@@ -1,40 +1,36 @@
 #include "stdafx.h"
-#include "..\Header\Effect_Doewole_ChargeCircle.h"
+#include "..\Header\Effect_Doewole_Circle.h"
 #include "Export_Function.h"
 
-CEffect_Doewole_ChargeCircle::CEffect_Doewole_ChargeCircle(LPDIRECT3DDEVICE9 pGraphicDev)
+CEffect_Doewole_Circle::CEffect_Doewole_Circle(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CEffect(pGraphicDev)
 {
 }
 
-CEffect_Doewole_ChargeCircle::CEffect_Doewole_ChargeCircle(const CEffect_Doewole_ChargeCircle & rhs)
+CEffect_Doewole_Circle::CEffect_Doewole_Circle(const CEffect_Doewole_Circle & rhs)
 	: CEffect(rhs)
 {
 }
 
-CEffect_Doewole_ChargeCircle::~CEffect_Doewole_ChargeCircle()
+CEffect_Doewole_Circle::~CEffect_Doewole_Circle()
 {
 	Free();
 }
 
-HRESULT CEffect_Doewole_ChargeCircle::Ready_GameObject(const _vec3& vPos)
+HRESULT CEffect_Doewole_Circle::Ready_GameObject(const _vec3& vPos)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 30.f , 30.f, 30.f };
+	m_pTransformCom->m_vScale = { 8.f , 8.f, 8.f };
 
 	m_fMaxFrame = 12.f;
 
-	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(90.f));
-
-	CTransform* pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole_Body", L"Proto_Transform", ID_DYNAMIC));
-
-	m_pTransformCom->m_vInfo[INFO_POS] = vPos;
+	m_pTransformCom->m_vInfo[INFO_POS] = { vPos.x , vPos.y - 11.f , vPos.z };
 
 	return S_OK;
 }
 
-_int CEffect_Doewole_ChargeCircle::Update_GameObject(const _float& fTimeDelta)
+_int CEffect_Doewole_Circle::Update_GameObject(const _float& fTimeDelta)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
@@ -43,12 +39,12 @@ _int CEffect_Doewole_ChargeCircle::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-	m_fFrame += m_fMaxFrame * fTimeDelta;
+	m_fFrame += m_fMaxFrame * fTimeDelta * 2;
 
 	return 0;
 }
 
-void CEffect_Doewole_ChargeCircle::LateUpdate_GameObject()
+void CEffect_Doewole_Circle::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
@@ -59,12 +55,12 @@ void CEffect_Doewole_ChargeCircle::LateUpdate_GameObject()
 	}
 }
 
-void CEffect_Doewole_ChargeCircle::Render_GameObject()
+void CEffect_Doewole_Circle::Render_GameObject()
 {
 	__super::Render_GameObject();
 }
 
-HRESULT CEffect_Doewole_ChargeCircle::Add_Component(void)
+HRESULT CEffect_Doewole_Circle::Add_Component(void)
 {
 	Engine::CComponent* pComponent = nullptr;
 
@@ -83,9 +79,9 @@ HRESULT CEffect_Doewole_ChargeCircle::Add_Component(void)
 	return S_OK;
 }
 
-CEffect_Doewole_ChargeCircle* CEffect_Doewole_ChargeCircle::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
+CEffect_Doewole_Circle* CEffect_Doewole_Circle::Create(LPDIRECT3DDEVICE9 pGraphicDev , const _vec3& vPos)
 {
-	CEffect_Doewole_ChargeCircle* pInstance = new CEffect_Doewole_ChargeCircle(pGraphicDev);
+	CEffect_Doewole_Circle* pInstance = new CEffect_Doewole_Circle(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
@@ -96,7 +92,7 @@ CEffect_Doewole_ChargeCircle* CEffect_Doewole_ChargeCircle::Create(LPDIRECT3DDEV
 	return pInstance;
 }
 
-void CEffect_Doewole_ChargeCircle::Free(void)
+void CEffect_Doewole_Circle::Free(void)
 {
 	__super::Free();
 }

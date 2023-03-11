@@ -268,6 +268,21 @@
     <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt">
       <UniqueIdentifier>{cb173f2c-300c-4ed6-90c3-56a7aeceac1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Doewole_Circle">
+      <UniqueIdentifier>{5138b53b-51fb-4eb6-8365-fba3e0558e98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo">
+      <UniqueIdentifier>{77df69cc-af6c-4471-a118-db767bda2224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\11. CollisionSphere">
+      <UniqueIdentifier>{92687e8b-f982-483b-8926-3e15dda00587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\01. KeyMgr">
+      <UniqueIdentifier>{8021c305-8146-4d62-9a89-900ab19a63e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\02. CollisionMgr">
+      <UniqueIdentifier>{e188f84f-3b2a-4005-b57c-49e3cf4f83a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -480,9 +495,6 @@
     <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KeyMgr.h">
-      <Filter>03. Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SylphChargeArrow.h">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
     </ClInclude>
@@ -509,6 +521,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_Circle.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_StopGo.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CollisionSphere.h">
+      <Filter>02. GameObject\Stage\11. CollisionSphere</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KeyMgr.h">
+      <Filter>03. Manager\01. KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CollisionMgr.h">
+      <Filter>03. Manager\02. CollisionMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -713,9 +740,6 @@
     <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\01. Bow_Charge</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KeyMgr.cpp">
-      <Filter>03. Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SylphChargeArrow.cpp">
       <Filter>02. GameObject\Stage\00. Player\02. Arrow\Sylph%27s Charge Arrow</Filter>
     </ClCompile>
@@ -742,6 +766,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_Circle.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_StopGo.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CollsionSphere.cpp">
+      <Filter>02. GameObject\Stage\11. CollisionSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KeyMgr.cpp">
+      <Filter>03. Manager\01. KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CollisionMgr.cpp">
+      <Filter>03. Manager\02. CollisionMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

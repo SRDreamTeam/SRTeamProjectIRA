@@ -1,6 +1,5 @@
 #include "..\..\Header\Layer.h"
 #include "Collider.h"
-#include "CollisionMgr.h"
 
 CLayer::CLayer()
 {
@@ -12,51 +11,41 @@ CLayer::~CLayer()
 
 CComponent * CLayer::Get_Component(const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
 {
-	for (int i = 0; i < OBJ_END; ++i)
-	{
-		auto	iter = find_if(m_uMapObject[i].begin(), m_uMapObject[i].end(), CTag_Finder(pObjTag));
+	auto	iter = find_if(m_uMapObject.begin(), m_uMapObject.end(), CTag_Finder(pObjTag));
 
-		if (iter == m_uMapObject[i].end())
-			continue;
+	if (iter == m_uMapObject.end())
+		return nullptr;
 
-		return iter->second->Get_Component(pComponentTag, eID);
-	}
-
-	return nullptr;
+	return iter->second->Get_Component(pComponentTag, eID);
 }
 
 CGameObject * CLayer::Get_GameObject(const _tchar * pObjTag)
 {
-	for (int i = 0; i < OBJ_END; ++i)
-	{
-		auto	iter = find_if(m_uMapObject[i].begin(), m_uMapObject[i].end(), CTag_Finder(pObjTag));
+	auto	iter = find_if(m_uMapObject.begin(), m_uMapObject.end(), CTag_Finder(pObjTag));
 
-		if (iter == m_uMapObject[i].end())
-			continue;
+	if (iter == m_uMapObject.end())
+		return nullptr;
 
-		return iter->second;
-	}
-
-	return nullptr;
+	return iter->second;
 }
 
 
-HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject , OBJ_TYPE eID)
+HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject)
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
 
-	m_uMapObject[eID].insert({pObjTag, pGameObject});
+	m_uMapObject.insert({pObjTag, pGameObject});
 
 	return S_OK;
 }
 
-void CLayer::Add_BulletObject(OBJ_TYPE _eType, CGameObject* pGameObject)
+void CLayer::Add_BulletObject(CGameObject* pGameObject)
 {
-	if (pGameObject == nullptr || OBJ_TYPE::OBJ_END <= _eType)
+	if (pGameObject == nullptr)
 		return;
 
-	m_vecBulletObject[_eType].push_back(pGameObject);
+	m_vecBulletObject.push_back(pGameObject);
 }
 
 HRESULT CLayer::Ready_Layer(void)
@@ -68,57 +57,42 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 {
 	int iResult = 0;
 
-	for (int i = 0; i < OBJ_END; ++i)
+	for (auto iter = m_uMapObject.begin(); iter != m_uMapObject.end();)
 	{
-		for (auto iter = m_uMapObject[i].begin(); iter != m_uMapObject[i].end();)
+		iResult = iter->second->Update_GameObject(fTimeDelta);
+
+		if (OBJ_DEAD == iResult)
 		{
-			iResult = iter->second->Update_GameObject(fTimeDelta);
-
-			if (OBJ_DEAD == iResult)
-			{
-				Safe_Delete <CGameObject*>(iter->second);
-				m_uMapObject[i].erase(iter++);
-			}
-			else
-				++iter;
+			Safe_Delete <CGameObject*>(iter->second);
+			m_uMapObject.erase(iter++);
 		}
-
-		for (auto iter = m_vecBulletObject[i].begin(); iter != m_vecBulletObject[i].end();)
-		{
-			iResult = (*iter)->Update_GameObject(fTimeDelta);
-
-			if (OBJ_DEAD == iResult)
-			{
-				Safe_Delete <CGameObject*>(*iter);
-				iter = m_vecBulletObject[i].erase(iter);
-			}
-			else
-				++iter;
-		}
+		else
+			++iter;
 	}
 
-	
+	for (auto iter = m_vecBulletObject.begin(); iter != m_vecBulletObject.end();)
+	{
+		iResult = (*iter)->Update_GameObject(fTimeDelta);
+
+		if (OBJ_DEAD == iResult)
+		{
+			Safe_Delete <CGameObject*>(*iter);
+			iter = m_vecBulletObject.erase(iter);
+		}
+		else
+			++iter;
+	}
 
 	return iResult;
 }
 
 void CLayer::LateUpdate_Layer(void)
 {
-	_int iResult = 0;
+	for (auto iter = m_uMapObject.begin(); iter != m_uMapObject.end(); ++iter)
+		iter->second->LateUpdate_GameObject();
 
-	for (int i = 0; i < OBJ_END; ++i)
-	{
-		for (auto iter = m_uMapObject[i].begin(); iter != m_uMapObject[i].end(); ++iter)
-			iter->second->LateUpdate_GameObject();
-
-		for (auto iter = m_vecBulletObject[i].begin(); iter != m_vecBulletObject[i].end(); ++iter)
-			(*iter)->LateUpdate_GameObject();
-	}
-
-	//Engine::CCollisionMgr::Collision_Sphere(m_uMapObject[OBJ_PLAYER], m_uMapObject[OBJ_MONSTER]);
-
-
-
+	for (auto iter = m_vecBulletObject.begin(); iter != m_vecBulletObject.end(); ++iter)
+		(*iter)->LateUpdate_GameObject();
 }
 
 CLayer* CLayer::Create(void)
@@ -133,12 +107,9 @@ CLayer* CLayer::Create(void)
 
 void CLayer::Free(void)
 {
-	for (int i = 0; i < OBJ_END; ++i)
-	{
-		for_each(m_uMapObject[i].begin(), m_uMapObject[i].end(), CDeleteMap());
-		m_uMapObject[i].clear();
+	for_each(m_uMapObject.begin(), m_uMapObject.end(), CDeleteMap());
+	m_uMapObject.clear();
 
-		for_each(m_vecBulletObject[i].begin(), m_vecBulletObject[i].end(), CDeleteObj());
-		m_vecBulletObject[i].clear();
-	}
+	for_each(m_vecBulletObject.begin(), m_vecBulletObject.end(), CDeleteObj());
+	m_vecBulletObject.clear();
 }

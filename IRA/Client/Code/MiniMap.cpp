@@ -81,22 +81,22 @@ HRESULT CMiniMap::Create_StatusUi(void)
 
 	pBulletObject = CMiniMap_Back::Create(m_pGraphicDev, 1);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 
 	pBulletObject = CMiniMap_Gage::Create(m_pGraphicDev, 2);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 
 	//for (size_t i = 0; i < 3; i++)
 	//{
 	//	pBulletObject = CMiniMap_Count::Create(m_pGraphicDev, (i + 1));
 	//	NULL_CHECK_RETURN(pBulletObject, -1);
-	//	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	//	pLayer->Add_BulletObject(  pBulletObject);
 	//}
 
 	//pBulletObject = CMiniMap_Key_Q::Create(m_pGraphicDev, 0);
 	//NULL_CHECK_RETURN(pBulletObject, -1);
-	//pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	//pLayer->Add_BulletObject(  pBulletObject);
 
 	return S_OK;
 }

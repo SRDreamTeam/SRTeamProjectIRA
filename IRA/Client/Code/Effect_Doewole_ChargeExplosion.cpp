@@ -43,7 +43,7 @@ _int CEffect_Doewole_ChargeExplosion::Update_GameObject(const _float& fTimeDelta
 	
 	__super::Update_GameObject(fTimeDelta);
 
-	return OBJ_NONE;
+	return 0;
 }
 
 void CEffect_Doewole_ChargeExplosion::LateUpdate_GameObject()

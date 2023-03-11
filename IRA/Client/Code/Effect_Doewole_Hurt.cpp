@@ -42,7 +42,7 @@ _int CEffect_Doewole_Hurt::Update_GameObject(const _float& fTimeDelta)
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 
-	return OBJ_NONE;
+	return 0;
 }
 
 void CEffect_Doewole_Hurt::LateUpdate_GameObject()

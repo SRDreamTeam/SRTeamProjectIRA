@@ -123,8 +123,6 @@ HRESULT CSylphArrow::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	
-
 	pComponent = m_pTextureCom[ARROW_IDLE] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Idle"));
 	NULL_CHECK_RETURN(m_pTextureCom[ARROW_IDLE], E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player_Arrow_Sylph_Idle", pComponent });
@@ -212,7 +210,7 @@ void CSylphArrow::Create_Hit_Effect(void)
 	if (pGameObject == nullptr)
 		return;
 
-	pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
+	pGameLogicLayer->Add_BulletObject(pGameObject);
 
 
 }

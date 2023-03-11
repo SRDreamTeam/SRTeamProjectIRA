@@ -80,3 +80,4 @@
 				m_pInstance = NULL;						\
 			}											\
 		}
+

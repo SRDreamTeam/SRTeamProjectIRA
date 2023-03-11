@@ -31,7 +31,6 @@ _int CGameObject::Update_GameObject(const _float & fTimeDelta)
 	for (auto& iter : m_uMapComponent[ID_DYNAMIC])
 		iter.second->Update_Component(fTimeDelta);
 
-
 	return _int();
 }
 

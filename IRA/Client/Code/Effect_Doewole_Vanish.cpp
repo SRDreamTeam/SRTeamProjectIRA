@@ -44,7 +44,7 @@ _int CEffect_Doewole_Vanish::Update_GameObject(const _float& fTimeDelta)
 	m_fFrame += m_fMaxFrame * fTimeDelta;
 
 
-	return OBJ_NONE;
+	return 0;
 }
 
 void CEffect_Doewole_Vanish::LateUpdate_GameObject()

@@ -3,6 +3,8 @@
 #include "Export_Function.h"
 #include "Doewole_RightClaw.h"
 #include "Doewole_LeftClaw.h"
+#include "CollisionSphere.h"
+#include <KeyMgr.h>
 
 CDoewole_Body::CDoewole_Body(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CDoewole(pGraphicDev)
@@ -26,13 +28,27 @@ HRESULT CDoewole_Body::Ready_GameObject(void)
 
 	m_pTransformCom->m_vScale = { 18.f , 18.f  , 1.f };
 
-	//m_pTransformCom->Rotation(ROT_X, D3DXToRadian(45.f));
+	m_pColliderCom->Set_Radius(5.f);
+	m_pColliderCom->Set_Offset(_vec3(0.f, -5.f, 0.f));
 
 	return S_OK;
 }
 
 _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 {
+	if (g_bSphereMake)
+	{
+		if (!m_bSphereMake)
+		{
+			CGameObject* pCollisionSphere = CCollisionSphere::Create(m_pGraphicDev, this);
+			NULL_CHECK(pCollisionSphere);
+			CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+			pLayer->Add_BulletObject(  pCollisionSphere);
+			m_bSphereMake = true;
+		}
+	}
+	
+
 	State_Update(fTimeDelta);
 
 	CBoss::Update_GameObject(fTimeDelta);
@@ -54,11 +70,6 @@ void CDoewole_Body::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	/*m_fAlpha -= 0.01f;
-
-	if (m_fAlpha < 0.f)
-		m_fAlpha = 0.f;*/
 
 	if (m_eCurState == CDoewole::IDLE)
 		m_pTextureCom[STAND]->Set_Texture((_uint)m_fFrame);
@@ -89,9 +100,12 @@ void CDoewole_Body::Render_GameObject()
 			m_pTextureCom[POWERSLAM_FACEOFF]->Set_Texture((_uint)m_fFrame);
 	}
 
+	else if (m_eCurState == CDoewole::UPGRADE_SMASH_ATTACK)
+	{
+		m_pTextureCom[DIPPING]->Set_Texture((_uint)m_fFrame);
+	}
 
 	m_pBufferCom->Render_Buffer();
-	//m_pSphereBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
@@ -131,15 +145,14 @@ HRESULT CDoewole_Body::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body_Scratch", pComponent });
 
+	pComponent = m_pTextureCom[DIPPING] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Doewole_Body_Dipping"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body_Dipping", pComponent });
+
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
-	m_pColliderCom->Set_Radius(10.f);
 	m_pColliderCom->Set_TransformCom(m_pTransformCom);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
-
-	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Engine::Clone_ProtoComponent(L"Proto_SphereTex"));
-	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_SphereTex", pComponent });
 
 	return S_OK;
 }
@@ -171,6 +184,9 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 		break;
 	case CDoewole::AREA_ATTACK:
 		Area_Attack(fTimeDelta);
+		break;
+	case CDoewole::UPGRADE_SMASH_ATTACK:
+		Upgrade_Smash_Attack(fTimeDelta);
 		break;
 	case CDoewole::STATE_END:
 		break;
@@ -375,6 +391,46 @@ void CDoewole_Body::Area_Attack(const _float& fTimeDelta)
 	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
 											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 15.f,
 											pDoewoleTransformCom->m_vInfo[INFO_POS].z + 0.1f };
+}
+
+void CDoewole_Body::Upgrade_Smash_Attack(const _float& fTimeDelta)
+{
+	m_bRender = dynamic_cast<CDoewole*>(m_pOwner)->Get_Disappear();
+
+	m_fFrame += m_fMaxFrame * fTimeDelta * 0.5f;
+
+	m_fMaxFrame = 10.f;
+
+	// ´«¸¸ ²­»¶ÀÎ´Ù
+	if (!m_bReturn)
+	{
+		m_fAccTime += fTimeDelta;
+
+		if (m_fFrame > 4.f)
+		{
+			m_fFrame = 3.f;
+
+			if (m_fAccTime > 2.7f)
+			{
+				m_bReturn = true;
+				m_fAccTime = 0.f;
+			}
+		}
+	}
+	else
+	{
+		if (m_fFrame > 10.f)
+		{
+			m_fFrame = 0.f;
+			m_bReturn = false;
+			++m_iSmashCnt;
+		}
+	}
+
+	if (m_iSmashCnt == 2)
+	{
+		m_fFrame = 10.f;
+	}
 }
 
 CDoewole_Body * CDoewole_Body::Create(LPDIRECT3DDEVICE9 pGraphicDev)
