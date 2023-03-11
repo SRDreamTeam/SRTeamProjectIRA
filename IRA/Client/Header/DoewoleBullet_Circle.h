@@ -9,27 +9,29 @@ protected:
 	virtual ~CDoewoleBullet_Circle();
 
 public:
-	virtual HRESULT Ready_GameObject(void) override;
+	virtual HRESULT Ready_GameObject(const _vec3& vPos);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
 
 protected:
 	virtual HRESULT	Add_Component(void) override;
-	virtual void SetUp_OnTerrain(void) override;
-	virtual void Change_State(void) override;
+	virtual void SetUp_OnTerrain(void) {};
+	virtual void Change_State(void) {};
+	virtual void Distance_Dead_Check(void) {};
 	virtual void Frame_Check(const _float& fTimeDelta)override;
-	virtual void Distance_Dead_Check(void) override;
 
 public:
-	static CDoewoleBullet_Circle* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _int _Dir_Count);
+	static CDoewoleBullet_Circle* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	void Create_DeathEffect();
 
-private:
-	void Set_FireInfo(_vec3 _Monster_Pos, _int _Dir_Count);
-
-private:
-	_int	m_iDirCount;
 private:
 	virtual void Free(void) override;
+
+private:
+	_float				m_fMaxFrame = 0.f;
+	_vec3				m_vDir;
+	_float				m_fAccTime = 0.f;
+	_bool				m_bChangeDir = false;
 };
 

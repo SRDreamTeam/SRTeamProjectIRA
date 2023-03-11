@@ -196,6 +196,7 @@
     <ClInclude Include="..\Header\Effect_Doewole_Loof.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Slam.h" />
     <ClInclude Include="..\Header\Effect_Doewole_StandardAttack.h" />
+    <ClInclude Include="..\Header\Effect_CircleBullet_Death.h" />
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h" />
     <ClInclude Include="..\Header\Effect_Player_Arrow_Hit.h" />
     <ClInclude Include="..\Header\Effect_Player_Bow_Charge.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="..\Code\Effect_Doewole_Loof.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Slam.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_StandardAttack.cpp" />
+    <ClCompile Include="..\Code\Effect_CircleBullet_Death.cpp" />
     <ClCompile Include="..\Code\Effect_Player_Arrow_Hit.cpp" />
     <ClCompile Include="..\Code\Effect_Player_Bow_Charge.cpp" />
     <ClCompile Include="..\Code\Effect_Player_Bow_Pulse.cpp" />

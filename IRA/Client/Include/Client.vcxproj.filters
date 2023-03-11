@@ -307,6 +307,9 @@
     <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\03. Damage_Font">
       <UniqueIdentifier>{b46888c1-a758-40cf-9433-79c1d06c7810}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death">
+      <UniqueIdentifier>{6057cd16-cf2e-47ae-b05d-bfaa9df18e5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -564,6 +567,9 @@
     <ClInclude Include="..\Header\DoewoleBullet_StopGo.h">
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_CircleBullet_Death.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -811,6 +817,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DoewoleBullet_StopGo.cpp">
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_CircleBullet_Death.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,6 @@ CCollisionMgr::~CCollisionMgr()
 
 void CCollisionMgr::Collision_Update()
 {
-	//Collision_Sphere(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
 	//Collision_Sphere(m_ObjList[OBJ_ARROW], m_ObjList[OBJ_MONSTER]);
 }
 

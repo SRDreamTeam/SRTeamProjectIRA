@@ -87,7 +87,5 @@ private:
 	_float					m_fThronX = 128.f;
 
 	_bool					m_bBulletGo = false;
-
-
 };
 

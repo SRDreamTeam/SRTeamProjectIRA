@@ -1,14 +1,15 @@
 #include "stdafx.h"
 #include "..\Header\DoewoleBullet_Circle.h"
 #include "Export_Function.h"
+#include <Effect_CircleBullet_Death.h>
 
 CDoewoleBullet_Circle::CDoewoleBullet_Circle(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CBullet(pGraphicDev), m_iDirCount(0)
+	: CBullet(pGraphicDev)
 {
 }
 
 CDoewoleBullet_Circle::CDoewoleBullet_Circle(const CDoewoleBullet_Circle& rhs)
-	: CBullet(rhs), m_iDirCount(0)
+	: CBullet(rhs)
 {
 }
 
@@ -17,11 +18,22 @@ CDoewoleBullet_Circle::~CDoewoleBullet_Circle()
 }
 
 
-HRESULT CDoewoleBullet_Circle::Ready_GameObject(void)
+HRESULT CDoewoleBullet_Circle::Ready_GameObject(const _vec3& vPos)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fSpeed = 30.f;
+	m_fSpeed = 40.f;
+	m_fMaxFrame = 5.f;
+
+	m_pTransformCom->m_vScale = { 2.f , 2.f , 2.f };
+	m_pTransformCom->m_vInfo[INFO_POS] = vPos;
+
+	CTransform* pTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK_RETURN(pTransformCom, -1);
+
+	m_vDir = { vPos.x - pTransformCom->m_vInfo[INFO_POS].x , 0.f , vPos.z - pTransformCom->m_vInfo[INFO_POS].z };
+
+	D3DXVec3Normalize(&m_vDir, &m_vDir);
 
 	return S_OK;
 }
@@ -29,29 +41,36 @@ HRESULT CDoewoleBullet_Circle::Ready_GameObject(void)
 _int CDoewoleBullet_Circle::Update_GameObject(const _float& fTimeDelta)
 {
 	if (m_bDead)
-		return OBJ_DEAD;
-
-	Frame_Check(fTimeDelta);
-	__super::Update_GameObject(fTimeDelta);
-
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
-	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
-	_vec3	vPlayerPos;
-	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-
-	_vec3	vDir = vPlayerPos - m_pTransformCom->m_vInfo[INFO_POS];
-
-	if ((((vDir.x > -1.0f) && (vDir.x < 1.0f)) && ((vDir.z > -1.0f) && (vDir.z < 1.0f))))
 	{
-		m_bDead = true;
+		Create_DeathEffect();
+		return OBJ_DEAD;
 	}
 
-	m_pTransformCom->Bullet_Move_Boss(vDir, m_fSpeed, fTimeDelta, m_iDirCount);
+	Frame_Check(fTimeDelta);
 
-	SetUp_OnTerrain();
-	Distance_Dead_Check();
+	m_fAccTime += fTimeDelta;
+
+	if (!m_bChangeDir)
+	{
+		if (m_fAccTime > 0.5f)
+		{
+			_matrix matRot;
+
+			_float fAngle = _float(40 - rand() % 80);
+
+			D3DXMatrixRotationY(&matRot, D3DXToRadian(fAngle));
+			
+			D3DXVec3TransformNormal(&m_vDir, &m_vDir, &matRot);
+
+			m_bChangeDir = true;
+		}
+	}
+
+	m_pTransformCom->m_vInfo[INFO_POS] += m_vDir * m_fSpeed * fTimeDelta;
+
+	CGameObject::Update_GameObject(fTimeDelta);
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return OBJ_NOEVENT;
 }
@@ -84,7 +103,7 @@ HRESULT CDoewoleBullet_Circle::Add_Component(void)
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Circle"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -93,66 +112,42 @@ HRESULT CDoewoleBullet_Circle::Add_Component(void)
 	return S_OK;
 }
 
-void CDoewoleBullet_Circle::SetUp_OnTerrain(void)
-{
-	_vec3		vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTex", ID_STATIC));
-	NULL_CHECK(pTerrainBufferCom);
-	m_pTransformCom->Set_Pos(vPos.x, 3.f, vPos.z);
-}
-
-void CDoewoleBullet_Circle::Change_State(void)
-{
-}
-
 void CDoewoleBullet_Circle::Frame_Check(const _float& fTimeDelta)
 {
-	if (m_eState == BULLET_IDLE)
-	{
-		m_fFrame += 5.f * fTimeDelta;
+	m_fFrame += m_fMaxFrame * fTimeDelta;
 
-		if (5.f < m_fFrame)
-		{
-			m_fFrame = 0.f;
-			m_bCheck = false;
-		}
+	if (m_fMaxFrame < m_fFrame)
+	{
+		m_fFrame = 0.f;
 	}
 }
 
-void CDoewoleBullet_Circle::Distance_Dead_Check(void)
-{
-	_vec3		vPosCheck;
 
-	vPosCheck = m_vOriginPos - m_pTransformCom->m_vInfo[INFO_POS];
-
-	if (((40 <= vPosCheck.x) || (-40 >= vPosCheck.x)) || ((40 <= vPosCheck.z) || (-40 >= vPosCheck.z)) || (-40 >= ((-vPosCheck.x) + (-vPosCheck.z))))
-	{
-		m_bDead = true;
-	}
-}
-
-CDoewoleBullet_Circle* CDoewoleBullet_Circle::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _int _Dir_Count)
+CDoewoleBullet_Circle* CDoewoleBullet_Circle::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 {
 	CDoewoleBullet_Circle* pInstance = new CDoewoleBullet_Circle(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
 	}
 
-	pInstance->Set_FireInfo(_Monster_Pos, _Dir_Count);
-
 	return pInstance;
 }
 
-void CDoewoleBullet_Circle::Set_FireInfo(_vec3 _Monster_Pos, _int _Dir_Count)
+void CDoewoleBullet_Circle::Create_DeathEffect()
 {
-	m_pTransformCom->m_vInfo[INFO_POS] = _Monster_Pos;
-	m_vOriginPos = _Monster_Pos;
-	m_iDirCount = _Dir_Count;
-	m_pTransformCom->UpdatePos_OnWorld();
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject;
+
+	pGameObject = CEffect_CircleBullet_Death::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS]);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(pGameObject);
 }
 
 void CDoewoleBullet_Circle::Free(void)
