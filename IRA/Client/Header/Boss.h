@@ -31,7 +31,6 @@ protected:
 	CTransform*		m_pTransformCom;
 	CCalculator*	m_pCalculatorCom;
 	CCollider*		m_pColliderCom;
-	CSphereTex*		m_pSphereBufferCom;
 
 protected:
 	_float			m_fFrame = 0.f;

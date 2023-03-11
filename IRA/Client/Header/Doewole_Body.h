@@ -4,7 +4,7 @@
 
 class CDoewole_Body : public CDoewole
 {
-	enum {STAND, STAND_FACEON ,POWERSLAM ,POWERSLAM_AFTER, POWERSLAM_FACEOFF, SCRATCH, TEX_END};
+	enum {STAND, STAND_FACEON ,POWERSLAM ,POWERSLAM_AFTER, POWERSLAM_FACEOFF, SCRATCH, DIPPING ,TEX_END};
 
 
 private:
@@ -39,6 +39,7 @@ private:
 	void			Smash_Attack(const _float& fTimeDelta);
 	void			Scratch_Attack(const _float& fTimeDelta);
 	void			Area_Attack(const _float& fTimeDelta);
+	void			Upgrade_Smash_Attack(const _float& fTimeDelta);
 
 private:
 	CGameObject*					m_pOwner = nullptr;
@@ -52,6 +53,9 @@ private:
 	int								m_iScratchCnt = 0;
 
 	_bool							m_bArea = false;
+
+	_bool							m_bReturn = false;
+	int								m_iSmashCnt = 0;
 
 };
 

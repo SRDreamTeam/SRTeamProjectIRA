@@ -82,34 +82,34 @@ HRESULT CStatus::Create_StatusUi(void)
 	{
 		pBulletObject = CStatus_Back::Create(m_pGraphicDev, (i + 1));
 		NULL_CHECK_RETURN(pBulletObject, -1);
-		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+		pLayer->Add_BulletObject(  pBulletObject);
 	}
 
 	for (size_t i = 0; i < 5; i++)
 	{
 		pBulletObject = CStatus_Hp::Create(m_pGraphicDev,(i + 1));
 		NULL_CHECK_RETURN(pBulletObject, -1);
-		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+		pLayer->Add_BulletObject(  pBulletObject);
 	}
 
 	for (size_t i = 0; i < 5; i++)
 	{
 		pBulletObject = CStatus_Energy::Create(m_pGraphicDev, (i + 1));
 		NULL_CHECK_RETURN(pBulletObject, -1);
-		pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+		pLayer->Add_BulletObject(  pBulletObject);
 	}
 
 	pBulletObject = CStatus_Key::Create(m_pGraphicDev, 1);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 
 	pBulletObject = CStatus_Money::Create(m_pGraphicDev, 1);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 
 	pBulletObject = CStatus_Gem::Create(m_pGraphicDev, 1);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 
 	return S_OK;
 }

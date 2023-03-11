@@ -11,9 +11,9 @@ private:
 	virtual ~CCollider();
 
 public:
-	void				Set_SpherePos(const _vec3 vSpherePos) { m_vSpherePos = vSpherePos; }
 	void				Set_Radius(const _float fRadius) {m_fRadius = fRadius;}
 	void				Set_TransformCom(CTransform* pTransformCom) { m_pTransformCom = pTransformCom; }
+	void				Set_Offset(const _vec3& vOffset) { m_vOffset = vOffset; }
 	const _vec3&		Get_SpherePos() { return m_vSpherePos; }
 	const _float&		Get_Radius() { return m_fRadius; }
 
@@ -32,6 +32,7 @@ private:
 private:
 	_vec3					m_vSpherePos = {};
 	_float					m_fRadius = 0.f;
+	_vec3					m_vOffset;
 
 	CTransform*				m_pTransformCom;
 };

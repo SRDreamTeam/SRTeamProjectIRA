@@ -233,7 +233,7 @@ HRESULT CEvilSoul::Create_Bullet(void)
 	CGameObject* pBulletObject = CMonsterBullet::Create(m_pGraphicDev, vMonster_Pos, true);
 	NULL_CHECK_RETURN(pBulletObject, -1);
 	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 
 	return S_OK;
 }
