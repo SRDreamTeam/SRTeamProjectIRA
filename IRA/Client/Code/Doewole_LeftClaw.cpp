@@ -607,7 +607,7 @@ void CDoewole_LeftClaw::Area_Attack(const _float& fTimeDelta)
 
 			m_fFrame += m_fMaxFrame * fTimeDelta * 2;
 
-			if (m_fFrame == 5.f)
+			if (m_fFrame - 5.f < 0.1f)
 			{
 				m_fAccTime = 0.f;
 			}

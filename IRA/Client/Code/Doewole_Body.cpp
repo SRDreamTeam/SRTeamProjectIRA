@@ -162,7 +162,20 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 	m_eCurState = dynamic_cast<CDoewole*>(m_pOwner)->Get_State();
 
 	if (m_eCurState != m_ePreState)
+	{
 		m_fFrame = 0.f;
+		m_bPowerSlam = false;
+		m_bPowerSlamAfter = false;
+		m_bPowerSlamFaceOff = false;
+
+		m_iScratchCnt = 0;
+
+		m_bArea = false;
+
+		m_bReturn = false;
+		m_iSmashCnt = 0;
+		m_fAccTime = 0.f;
+	}
 
 	switch (m_eCurState)
 	{
