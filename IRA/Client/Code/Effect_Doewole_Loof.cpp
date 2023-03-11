@@ -45,7 +45,7 @@ _int CEffect_Doewole_Loof::Update_GameObject(const _float& fTimeDelta)
 	
 	__super::Update_GameObject(fTimeDelta);
 
-	return OBJ_NONE;
+	return 0;
 }
 
 void CEffect_Doewole_Loof::LateUpdate_GameObject()

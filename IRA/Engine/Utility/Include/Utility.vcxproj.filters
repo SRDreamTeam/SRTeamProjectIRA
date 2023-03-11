@@ -70,9 +70,6 @@
     <Filter Include="04. Component\04. Collider">
       <UniqueIdentifier>{d10992d6-c1f0-46bf-a9ac-6dae6d4d7fcc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Etc\03. CollisionMgr">
-      <UniqueIdentifier>{89d9eb40-cc49-4d2b-b18e-e6b39e8091f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Component\00. VIBuffer\05. SphereTex">
       <UniqueIdentifier>{bb669f1a-950e-405b-bbac-bc17b3946733}</UniqueIdentifier>
     </Filter>
@@ -144,9 +141,6 @@
     <ClInclude Include="..\..\Header\Collider.h">
       <Filter>04. Component\04. Collider</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\CollisionMgr.h">
-      <Filter>05. Etc\03. CollisionMgr</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Header\SphereTex.h">
       <Filter>04. Component\00. VIBuffer\05. SphereTex</Filter>
     </ClInclude>
@@ -214,9 +208,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Collider.cpp">
       <Filter>04. Component\04. Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CollisionMgr.cpp">
-      <Filter>05. Etc\03. CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SphereTex.cpp">
       <Filter>04. Component\00. VIBuffer\05. SphereTex</Filter>

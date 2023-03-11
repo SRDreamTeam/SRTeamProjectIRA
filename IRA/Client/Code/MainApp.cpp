@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\MainApp.h"
 #include "Logo.h"
+#include "CollisionMgr.h"
 
 
 CMainApp::CMainApp()
@@ -32,6 +33,8 @@ int CMainApp::Update_MainApp(const _float & fTimeDelta)
 void CMainApp::LateUpdate_MainApp(void)
 {
 	m_pManagementClass->LateUpdate_Management();
+
+	CCollisionMgr::GetInstance()->Collision_Update();
 }
 
 void CMainApp::Render_MainApp(void)
@@ -61,12 +64,15 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 
 	return S_OK;
 }
 
 HRESULT CMainApp::SetUp_Scene(LPDIRECT3DDEVICE9 pGraphicDev, CManagement ** ppManagement)
 {
+	CCollisionMgr::GetInstance()->Clear_ObjectList();
+
 	CScene*		pScene = nullptr;
 	pScene = CLogo::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pScene, E_FAIL);
@@ -97,6 +103,8 @@ CMainApp * CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
+	CCollisionMgr::GetInstance()->DestroyInstance();
+
 	Safe_Release(m_pDeviceClass);
 	Safe_Release(m_pManagementClass);
 	Safe_Release(m_pGraphicDev);

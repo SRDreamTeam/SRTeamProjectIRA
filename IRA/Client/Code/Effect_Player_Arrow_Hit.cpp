@@ -44,7 +44,7 @@ _int CEffect_Player_Arrow_Hit::Update_GameObject(const _float& fTimeDelta)
 	
 	__super::Update_GameObject(fTimeDelta);
 
-	return OBJ_NONE;
+	return 0;
 }
 
 void CEffect_Player_Arrow_Hit::LateUpdate_GameObject()

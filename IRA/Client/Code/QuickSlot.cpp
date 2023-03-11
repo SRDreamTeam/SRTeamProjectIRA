@@ -79,15 +79,15 @@ HRESULT CQuickSlot::Create_QuickSlotUi(void)
 
 	pBulletObject = CQuickSlot_WeaponImg_Back::Create(m_pGraphicDev, 0);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 
 	pBulletObject = CQuickSlot_WeaponImg::Create(m_pGraphicDev, 0);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 
 	pBulletObject = CQuickSlot_ArrowCount_Infi::Create(m_pGraphicDev, 0);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
+	pLayer->Add_BulletObject(  pBulletObject);
 	return S_OK;
 }
 

@@ -192,7 +192,7 @@ void CSylphChargeArrow::Create_Hit_Effect(void)
 	if (pGameObject == nullptr)
 		return;
 
-	pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
+	pGameLogicLayer->Add_BulletObject( pGameObject);
 }
 
 bool CSylphChargeArrow::Final_Damage(void)
@@ -270,7 +270,7 @@ void CSylphChargeArrow::Create_Damage_Font(void)
 			if (pGameObject == nullptr)
 				return;
 
-			pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
+			pGameLogicLayer->Add_BulletObject(pGameObject);
 
 			j++;
 		}

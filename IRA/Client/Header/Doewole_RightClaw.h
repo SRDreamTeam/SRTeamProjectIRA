@@ -14,6 +14,7 @@ private:
 public:
 	void		Set_Owner(CGameObject* pOwner) { m_pOwner = pOwner; }
 	void		Set_Wait(_bool	_b) { m_bWait = _b;  m_fAccTime = 0.f; }
+	void		Set_SmashWait(_bool	_b) { m_bRSmashWait = _b;  m_fAccTime = 0.f; m_fFrame = 0.f; }
 
 
 public:
@@ -34,6 +35,7 @@ private:
 	void			Smash_Attack(const _float& fTimeDelta);
 	void			Scratch_Attack(const _float& fTimeDelta);
 	void			Area_Attack(const _float& fTimeDelta);
+	void			Upgrade_Smash_Attack(const _float& fTimeDelta);
 
 public:
 	static CDoewole_RightClaw*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -55,6 +57,13 @@ private:
 	_bool						m_bHurt = false;
 	
 	_bool						m_bSmash = false;
+	_bool						m_bAlertEffect = false;
+
+	_bool						m_bRSmashWait = true;
+	_bool						m_bCircleEffect = false;
+	_bool						m_bSmashEffect = false;
+
+	_bool						m_bAlert = false;
 
 };
 

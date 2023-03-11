@@ -67,7 +67,7 @@ HRESULT CLogo::Ready_Layer_Environment(const _tchar* pLayerTag)
 	// 오브젝트 
 	pGameObject = CBackGround::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject , OBJ_NONE), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject  ), E_FAIL);
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 
