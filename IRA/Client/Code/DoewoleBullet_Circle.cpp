@@ -2,6 +2,7 @@
 #include "..\Header\DoewoleBullet_Circle.h"
 #include "Export_Function.h"
 #include <Effect_CircleBullet_Death.h>
+#include "CollisionMgr.h"
 
 CDoewoleBullet_Circle::CDoewoleBullet_Circle(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -28,6 +29,8 @@ HRESULT CDoewoleBullet_Circle::Ready_GameObject(const _vec3& vPos)
 	m_pTransformCom->m_vScale = { 2.f , 2.f , 2.f };
 	m_pTransformCom->m_vInfo[INFO_POS] = vPos;
 
+	m_pColliderCom->Set_Radius(10.f);
+
 	CTransform* pTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTransformCom, -1);
 
@@ -40,15 +43,15 @@ HRESULT CDoewoleBullet_Circle::Ready_GameObject(const _vec3& vPos)
 
 _int CDoewoleBullet_Circle::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bDead)
+	if (m_bDead || m_bHit)
 	{
 		Create_DeathEffect();
 		return OBJ_DEAD;
 	}
 
-	Frame_Check(fTimeDelta);
-
 	m_fAccTime += fTimeDelta;
+
+	Frame_Check(fTimeDelta);
 
 	if (!m_bChangeDir)
 	{
@@ -71,6 +74,8 @@ _int CDoewoleBullet_Circle::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_BULLET, this);
+
 
 	return OBJ_NOEVENT;
 }
@@ -78,6 +83,9 @@ _int CDoewoleBullet_Circle::Update_GameObject(const _float& fTimeDelta)
 void CDoewoleBullet_Circle::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	if (m_fAccTime > 2.f)
+		m_bDead = true;
 }
 
 void CDoewoleBullet_Circle::Render_GameObject()
@@ -108,6 +116,11 @@ HRESULT CDoewoleBullet_Circle::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Circle"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Bullet_Doewole_Circle", pComponent });
+
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;
 }

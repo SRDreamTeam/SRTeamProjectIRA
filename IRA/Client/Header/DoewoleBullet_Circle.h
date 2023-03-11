@@ -8,6 +8,7 @@ protected:
 	explicit CDoewoleBullet_Circle(const CDoewoleBullet_Circle& rhs);
 	virtual ~CDoewoleBullet_Circle();
 
+
 public:
 	virtual HRESULT Ready_GameObject(const _vec3& vPos);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
@@ -23,15 +24,19 @@ protected:
 
 public:
 	static CDoewoleBullet_Circle* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
-	void Create_DeathEffect();
+	_bool				m_bHit = false;
 
 private:
 	virtual void Free(void) override;
+	void	Create_DeathEffect();
 
 private:
 	_float				m_fMaxFrame = 0.f;
 	_vec3				m_vDir;
 	_float				m_fAccTime = 0.f;
 	_bool				m_bChangeDir = false;
+
+	
+
 };
 

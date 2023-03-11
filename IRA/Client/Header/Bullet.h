@@ -33,14 +33,11 @@ protected:
 	virtual void Distance_Dead_Check(void)PURE;
 
 protected:
-
 	CRcTex*			m_pBufferCom;
 	CTransform*		m_pTransformCom;
 	CTexture*		m_pTextureCom;
-
-	CCollider*		m_pColliderCom;
 	CCalculator*	m_pCalculatorCom;
-
+	CCollider*		m_pColliderCom;
 	_float			m_fSpeed;
 	_float			m_fFrame;
 	_bool			m_bCheck;
