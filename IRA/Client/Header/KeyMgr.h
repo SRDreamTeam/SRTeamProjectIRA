@@ -17,6 +17,8 @@
 #define KEY_L      0x00004000      /* 1000 0000 0000 */
 #define KEY_P      0x00008000      /* 1000 0000 0000 */
 #define KEY_H      0x00010000      /* 1000 0000 0000 */
+#define KEY_C      0x00020000      /* 1000 0000 0000 */
+#define KEY_V      0x00040000      /* 1000 0000 0000 */
 
 #define VK_MAX 0xff
 

@@ -43,7 +43,7 @@ _int CEffect_AlertRect::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
-	return OBJ_NONE;
+	return 0;
 }
 
 void CEffect_AlertRect::LateUpdate_GameObject()

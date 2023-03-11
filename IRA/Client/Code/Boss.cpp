@@ -7,7 +7,6 @@ CBoss::CBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pBufferCom(nullptr)
 	, m_pTransformCom(nullptr)
 	, m_pColliderCom(nullptr)
-	, m_pSphereBufferCom(nullptr)
 {
 
 }
@@ -17,7 +16,6 @@ CBoss::CBoss(const CBoss & rhs)
 	, m_pBufferCom(rhs.m_pBufferCom)
 	, m_pTransformCom(rhs.m_pTransformCom)
 	, m_pColliderCom(rhs.m_pColliderCom)
-	, m_pSphereBufferCom(rhs.m_pSphereBufferCom)
 {
 
 }

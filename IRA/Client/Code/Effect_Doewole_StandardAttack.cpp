@@ -27,7 +27,7 @@ HRESULT CEffect_Doewole_StandardAttack::Ready_GameObject(void)
 
 	CTransform* pTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole_Body", L"Proto_Transform", ID_DYNAMIC));
 
-	m_pTransformCom->m_vInfo[INFO_POS] = { pTransform->m_vInfo[INFO_POS].x  , pTransform->m_vInfo[INFO_POS].y + 10.f , pTransform->m_vInfo[INFO_POS].z - 1.f };
+	m_pTransformCom->m_vInfo[INFO_POS] = { pTransform->m_vInfo[INFO_POS].x  , pTransform->m_vInfo[INFO_POS].y  , pTransform->m_vInfo[INFO_POS].z - 1.f };
 
 	return S_OK;
 }
@@ -43,7 +43,7 @@ _int CEffect_Doewole_StandardAttack::Update_GameObject(const _float& fTimeDelta)
 	
 	__super::Update_GameObject(fTimeDelta);
 
-	return OBJ_NONE;
+	return 0;
 }
 
 void CEffect_Doewole_StandardAttack::LateUpdate_GameObject()

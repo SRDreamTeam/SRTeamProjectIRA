@@ -11,14 +11,14 @@ CCollider::~CCollider()
 {
 }
 
-HRESULT CCollider::Ready_CCollider(void)
+HRESULT CCollider::Ready_CCollider()
 {
 	return S_OK;
 }
 
 _int CCollider::Update_Component(const _float& fTimeDelta)
 {
-	m_vSpherePos = m_pTransformCom->m_vInfo[INFO_POS];
+	m_vSpherePos = m_pTransformCom->m_vInfo[INFO_POS] + m_vOffset;
 
 	return 0;
 }

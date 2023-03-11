@@ -43,7 +43,7 @@ _int CEffect_Doewole_Slam::Update_GameObject(const _float& fTimeDelta)
 
 	m_fFrame += m_fMaxFrame * fTimeDelta;
 
-	return OBJ_NONE;
+	return 0;
 }
 
 void CEffect_Doewole_Slam::LateUpdate_GameObject()

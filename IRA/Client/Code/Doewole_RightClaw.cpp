@@ -7,6 +7,9 @@
 #include "DoewoleBullet_Standard.h"
 #include <DoewoleBullet_SwordShot.h>
 #include <DoewoleBullet_SwordShot2.h>
+#include <Effect_AlertCircle.h>
+#include <Effect_Doewole_Circle.h>
+#include <DoewoleBullet_StopGo.h>
 
 CDoewole_RightClaw::CDoewole_RightClaw(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CDoewole(pGraphicDev)
@@ -91,6 +94,17 @@ void CDoewole_RightClaw::Render_GameObject()
 		else
 			m_pTextureCom[SMASH]->Set_Texture((_uint)m_fFrame);
 		break;
+	case CDoewole::UPGRADE_SMASH_ATTACK:
+		if (!m_bRSmashWait)
+		{
+			if (!m_bSmash)
+				m_pTextureCom[UP]->Set_Texture((_uint)m_fFrame);
+			else
+				m_pTextureCom[SMASH]->Set_Texture((_uint)m_fFrame);
+		}
+		else
+			m_pTextureCom[STAND]->Set_Texture((_uint)m_fFrame);
+		break;
 	case CDoewole::STATE_END:
 		break;
 	default:
@@ -139,16 +153,6 @@ HRESULT CDoewole_RightClaw::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Claw_Scratch", pComponent });
 
-	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
-	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
-	m_pColliderCom->Set_Radius(10.f);
-	m_pColliderCom->Set_TransformCom(m_pTransformCom);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
-
-	pComponent = m_pSphereBufferCom = dynamic_cast<CSphereTex*>(Engine::Clone_ProtoComponent(L"Proto_SphereTex"));
-	NULL_CHECK_RETURN(m_pSphereBufferCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_SphereTex", pComponent });
-
 	return S_OK;
 
 }
@@ -158,7 +162,22 @@ void CDoewole_RightClaw::State_Update(const _float& fTimeDelta)
 	m_eCurState = dynamic_cast<CDoewole*>(m_pOwner)->Get_State();
 
 	if (m_eCurState != m_ePreState)
+	{
 		m_fFrame = 0.f;
+		m_fAccTime = 0.f;
+
+		m_bUp = false;
+		m_bDown = false;
+		m_iReplayCnt = 0;
+		m_bWait = false;
+		m_bHurt = false;
+		m_bSmash = false;
+		m_bAlertEffect = false;
+		m_bRSmashWait = true;
+		m_bCircleEffect = false;
+		m_bSmashEffect = false;
+		m_bAlert = false;
+	}
 
 	switch (m_eCurState)
 	{
@@ -183,6 +202,8 @@ void CDoewole_RightClaw::State_Update(const _float& fTimeDelta)
 	case CDoewole::AREA_ATTACK:
 		Area_Attack(fTimeDelta);
 		break;
+	case CDoewole::UPGRADE_SMASH_ATTACK:
+		Upgrade_Smash_Attack(fTimeDelta);
 	case CDoewole::STATE_END:
 		break;
 	default:
@@ -445,7 +466,7 @@ void CDoewole_RightClaw::Scratch_Attack(const _float& fTimeDelta)
 					CGameObject* pEffect = CEffect_Doewole_Hurt::Create(m_pGraphicDev , vPos, _vec3(30.f,30.f,30.f));
 					NULL_CHECK(pEffect);
 					CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
-					pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+					pLayer->Add_BulletObject(  pEffect);
 				}
 			}
 		}
@@ -511,6 +532,18 @@ void CDoewole_RightClaw::Area_Attack(const _float& fTimeDelta)
 			m_pTransformCom->m_vInfo[INFO_POS].x += 15.f - m_fFrame * 1.7f;
 			// =====================================================
 
+			if (!m_bAlertEffect)
+			{
+				_vec3 vPos = { pDoewoleTransformCom->m_vInfo[INFO_POS].x , 0.001f , pDoewoleTransformCom->m_vInfo[INFO_POS].z };
+
+				CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos, _vec3(25.f, 25.f, 25.f), 2.f, TRUE);
+				NULL_CHECK(pEffect);
+				CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+				pLayer->Add_BulletObject(  pEffect);
+			
+				m_bAlertEffect = true;
+			}
+
 			if (fabs(m_fFrame - 5.f) < 0.01f)
 				m_fAccTime = 0.f;
 
@@ -525,6 +558,7 @@ void CDoewole_RightClaw::Area_Attack(const _float& fTimeDelta)
 				m_fFrame = 0.f;
 				m_bUp = true;
 				m_fAccTime = 0.f;
+				m_bAlertEffect = false;
 			}
 		}
 		else
@@ -546,16 +580,22 @@ void CDoewole_RightClaw::Area_Attack(const _float& fTimeDelta)
 
 					if (!m_bSmash)
 					{ // ChargeCircle 이펙트 생성
-						CGameObject* pEffect = CEffect_Doewole_ChargeCircle::Create(m_pGraphicDev);
+
+						CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+						NULL_CHECK(pDoewoleTransformCom);
+
+						_vec3 vEffectPos = { pDoewoleTransformCom->m_vInfo[INFO_POS].x , 0.3f , pDoewoleTransformCom->m_vInfo[INFO_POS].z };
+
+						CGameObject* pEffect = CEffect_Doewole_ChargeCircle::Create(m_pGraphicDev , vEffectPos);
 						NULL_CHECK(pEffect);
 						CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
-						pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+						pLayer->Add_BulletObject(  pEffect);
 
-						// Smash 이펙트 생성ssdsawssw
+						// Smash 이펙트 생성
 						pEffect = CEffect_Doewole_Slam::Create(m_pGraphicDev);
 						NULL_CHECK(pEffect);
 						pLayer = Engine::Get_Layer(L"Layer_GameLogic");
-						pLayer->Add_BulletObject(OBJ_NONE, pEffect);
+						pLayer->Add_BulletObject(  pEffect);
 
 						// SwordShot Bullet 생성
 						for (int i = 0; i <360; ++i)
@@ -573,7 +613,7 @@ void CDoewole_RightClaw::Area_Attack(const _float& fTimeDelta)
 
 							CGameObject* pBullet = CDoewoleBullet_SwordShot2::Create(m_pGraphicDev, vPos);
 							NULL_CHECK(pBullet);
-							pLayer->Add_BulletObject(OBJ_BULLET, pBullet);
+							pLayer->Add_BulletObject(  pBullet);
 						}
 
 						m_bSmash = true;
@@ -607,6 +647,136 @@ void CDoewole_RightClaw::Area_Attack(const _float& fTimeDelta)
 				m_fAccTime = 0.f;
 			}
 		}
+	}
+}
+
+void CDoewole_RightClaw::Upgrade_Smash_Attack(const _float& fTimeDelta)
+{
+	m_bRender = true;
+
+	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK(pDoewoleTransformCom);
+
+	if (!m_bRSmashWait)
+	{
+		if (!m_bSmash)
+		{
+			// 들어올린다
+			m_fMaxFrame = 6.f;
+
+			m_fFrame += m_fMaxFrame * fTimeDelta;
+
+			if (!m_bAlert)
+			{
+				m_bAlert = true;
+
+				_vec3 vPos = { m_pTransformCom->m_vInfo[INFO_POS].x , 0.001f , m_pTransformCom->m_vInfo[INFO_POS].z };
+
+				CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos, _vec3(20.f, 20.f, 20.f), 3.f, TRUE);
+				NULL_CHECK(pEffect);
+				CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+				pLayer->Add_BulletObject(  pEffect);
+			}
+
+			if (m_fFrame > m_fMaxFrame)
+			{
+				m_fFrame = m_fMaxFrame;
+				m_fAccTime += fTimeDelta;
+
+				// 이펙트 한번 생성
+				if (!m_bCircleEffect)
+				{
+					m_bCircleEffect = true;
+
+					CGameObject* pEffect = CEffect_Doewole_Circle::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS]);
+					NULL_CHECK(pEffect);
+					CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+					pLayer->Add_BulletObject(  pEffect);
+				}
+
+				if (m_fAccTime > 2.f)
+				{
+					m_bSmash = true;
+					m_fAccTime = 0.f;
+					m_fFrame = 0.f;
+					m_bCircleEffect = false;
+					m_bAlert = false;
+				}
+			}
+
+			m_pTransformCom->m_vInfo[INFO_POS] = pDoewoleTransformCom->m_vInfo[INFO_POS];
+			m_pTransformCom->m_vInfo[INFO_POS].y += 20.f + m_fFrame * 2.2f;
+			m_pTransformCom->m_vInfo[INFO_POS].x += 15.f;
+		}
+		else
+		{
+			// 내려찍는다
+			m_fMaxFrame = 13.f;
+
+			m_fAccTime += fTimeDelta;
+
+			m_fFrame += m_fMaxFrame * fTimeDelta;
+
+			if (fabs(m_fFrame - 5.f) < 0.1f)
+				m_fAccTime = 0.f;
+
+			// 내려 찍힌 상태
+			if (m_fAccTime < 1.f)
+			{
+				m_fFrame = 6.f;
+				if (!m_bSmashEffect)
+				{
+					_vec3 vEffectPos = { m_pTransformCom->m_vInfo[INFO_POS].x , 0.3f , m_pTransformCom->m_vInfo[INFO_POS].z };
+
+					CGameObject* pEffect = CEffect_Doewole_ChargeCircle::Create(m_pGraphicDev, vEffectPos);
+					NULL_CHECK(pEffect);
+					CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+					pLayer->Add_BulletObject(  pEffect);
+
+
+					for (int i = 0; i < 40; ++i)
+					{
+						_vec3 vPos = { m_pTransformCom->m_vInfo[INFO_POS].x , 3.f , m_pTransformCom->m_vInfo[INFO_POS].z };
+						CDoewoleBullet_StopGo* pBullet = CDoewoleBullet_StopGo::Create(m_pGraphicDev, vPos, CLAW_RIGHT);
+						NULL_CHECK(pBullet);
+						pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+						pLayer->Add_BulletObject(  pBullet);
+					}
+
+
+					m_bSmashEffect = true;
+				}
+			}
+
+			if (m_fFrame > m_fMaxFrame)
+			{
+				m_bSmash = false;
+				m_bRSmashWait = true;
+				m_fFrame = 0.f;
+				m_bSmashEffect = false;
+				dynamic_cast<CDoewole*>(m_pOwner)->Set_State(IDLE);
+			}
+
+			m_pTransformCom->m_vInfo[INFO_POS] = pDoewoleTransformCom->m_vInfo[INFO_POS];
+			// 내려가고
+			if (m_fFrame <= 6.f)
+				m_pTransformCom->m_vInfo[INFO_POS].y += 20.f + m_fFrame * -0.3f;
+			// 올라가고
+			else
+				m_pTransformCom->m_vInfo[INFO_POS].y += 20.f + (6.f - m_fFrame) * -0.3f;
+			m_pTransformCom->m_vInfo[INFO_POS].x += 15.f;
+		}
+	}
+	else
+	{
+		m_fAccTime += fTimeDelta;
+
+		m_fMaxFrame = 10.f;
+
+		m_fFrame += m_fMaxFrame * fTimeDelta;
+
+		if (m_fFrame > m_fMaxFrame)
+			m_fFrame = 0.f;
 	}
 }
 

@@ -74,7 +74,7 @@ void CGhost::Show_Ghost(void)
 		return;
 
 
-	pGameLogicLayer->Add_BulletObject(OBJ_GHOST, pGameObject);
+	pGameLogicLayer->Add_BulletObject(pGameObject);
 	
 }
 
