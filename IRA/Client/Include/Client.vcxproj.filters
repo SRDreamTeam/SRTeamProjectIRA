@@ -277,6 +277,12 @@
     <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\03. Damage_Font">
       <UniqueIdentifier>{a347e3d1-cee5-4b2e-87e1-57082f2ecd6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\04.Effect_Foot">
+      <UniqueIdentifier>{7b1b6a15-aad0-4208-a075-fab2ab93cd60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\03. Shadow">
+      <UniqueIdentifier>{03ea0a4a-85df-4497-9a7e-5d487fe22c7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -522,6 +528,12 @@
     <ClInclude Include="..\Header\Effect_Player_Damage_Font.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\03. Damage_Font</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_Player_Foot.h">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\04.Effect_Foot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Player_Shadow.h">
+      <Filter>02. GameObject\Stage\00. Player\03. Shadow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -757,6 +769,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Player_Damage_Font.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\03. Damage_Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Player_Foot.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\04.Effect_Foot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player_Shadow.cpp">
+      <Filter>02. GameObject\Stage\00. Player\03. Shadow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

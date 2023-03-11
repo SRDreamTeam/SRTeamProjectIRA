@@ -53,6 +53,7 @@ private:
 	int   m_fAttack_Num = 1;
 	float m_fRandom_Value = 0.f;
 	float m_fDamage = 0.f;
+	bool  m_Is_Cri = false;
 
 	list<int> m_Font_List;
 

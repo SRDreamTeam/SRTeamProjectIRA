@@ -9,6 +9,7 @@
 #include "Doewole.h"
 #include "Doewole_Body.h"
 #include "Doewole_Shadow.h"
+#include "Player_Shadow.h"
 #include "Doewole_LeftClaw.h"
 #include "Doewole_RightClaw.h"
 #include "Effect_Doewole_Vanish.h"
@@ -120,9 +121,14 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	CGameObject*	pBulletObject = nullptr;
 
 	
-	pGameObject = CPlayer::Create(m_pGraphicDev);
+	CGameObject* pPlayer = CPlayer::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pPlayer, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pPlayer, OBJ_PLAYER), E_FAIL);
+
+	pGameObject = CPlayer_Shadow::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject, OBJ_PLAYER), E_FAIL);
+	dynamic_cast<CPlayer_Shadow*>(pGameObject)->Set_Owner(pPlayer);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Shadow", pGameObject, OBJ_NONE), E_FAIL);
 
 	pGameObject = CSylphBow::Create(m_pGraphicDev,{0.f,0.f,0.f},0.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

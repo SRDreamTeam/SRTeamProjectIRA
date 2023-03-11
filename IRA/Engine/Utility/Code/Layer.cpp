@@ -118,7 +118,6 @@ void CLayer::LateUpdate_Layer(void)
 	//Engine::CCollisionMgr::Collision_Sphere(m_uMapObject[OBJ_PLAYER], m_uMapObject[OBJ_MONSTER]);
 
 
-
 }
 
 CLayer* CLayer::Create(void)

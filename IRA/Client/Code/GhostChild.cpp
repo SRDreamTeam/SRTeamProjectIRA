@@ -68,7 +68,6 @@ _int CGhostChild::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	
-
 	return 0;
 }
 

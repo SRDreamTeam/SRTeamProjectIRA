@@ -82,6 +82,9 @@ private:
 
 	void            Effect_Charge_Arrow(void);
 
+	void            Effect_Foot_Step_Smoke(void);
+	void            Effect_Foot_Step_Water(void);
+
 	void            Frame_Manage(const _float& fTimeDelta);
 
 	void            Hp_Down(void)
@@ -138,6 +141,7 @@ private:
 	_float          m_Dash_Time = 0.f;
 	bool            m_Is_Dash = false;
 	bool            m_Is_Jump = false;
+	bool            m_Is_Run = false;
 	float           jump = 0.f;
 	float           jumpDir = 1.f;
 
@@ -158,6 +162,12 @@ private:
 	CGameObject*    m_Bow_List[BOW_END] = {};
 	bool            m_Bow_Active[BOW_END] = {};
 	bool            m_Bow_Render[BOW_END] = {};
+
+
+	// Foot
+	_float          m_FootFrame = 0.f;
+	bool            m_FootRev = false;
+
 	
 public:
 	bool            m_bHit = false;

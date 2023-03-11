@@ -98,7 +98,6 @@ HRESULT CGhost::Add_Component(void)
 	NULL_CHECK_RETURN(m_pDashTextureCom[DASH_135], E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player_Ghost_Dash_135", pComponent });
 
-
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_ProtoComponent(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
