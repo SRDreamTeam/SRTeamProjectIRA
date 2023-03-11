@@ -152,6 +152,7 @@ HRESULT CDoewole_Body::Add_Component(void)
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
 	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_pColliderCom->Set_Radius(5.f);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;

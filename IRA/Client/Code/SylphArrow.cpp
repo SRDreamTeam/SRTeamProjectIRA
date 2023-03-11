@@ -24,8 +24,9 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_fSpeed = 90.f;
 
-	m_pTransformCom->Set_Scale_Ratio({ 1.f, 1.f, 1.f });
+	m_pTransformCom->Set_Scale_Ratio({ 3.f, 3.f, 1.f });
 
 	m_pTransformCom->Rotation(ROT_Y, m_Arrow_Angle);
 
@@ -40,7 +41,7 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y - 2.f, m_Fire_Pos.z);
 
 	
-
+	m_Is_Cri = Final_Damage();
 	
 	
 	__super::Ready_GameObject();
@@ -50,8 +51,8 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 
 _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bDead)
-		return OBJ_DEAD;
+	//if (m_bDead)
+   //return OBJ_DEAD;
 
 	if (m_bHit) {
 		Create_Hit_Effect();
@@ -59,11 +60,11 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 		return OBJ_DEAD;
 	}
 
-	m_AccTime += m_AccMaxTime * fTimeDelta * 4.f;
+	m_AccTime += m_AccMaxTime * fTimeDelta * 2.f;
 
 	if (m_AccTime > m_AccMaxTime) {
 		m_AccTime = 0.f;
-		m_iState = ARROW_DEATH;
+		m_bHit = true;
 	}
 
 	m_pTransformCom->Move_Pos(&(m_vDir * fTimeDelta * m_fSpeed));
@@ -78,13 +79,11 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 		m_fDeathFrame += 3.f * fTimeDelta * 2.f;
 		if (3.f < m_fDeathFrame) {
 			m_fDeathFrame = 3.f;
-			//m_bDead = true;
-			m_bHit = true;
 		}
 			
 	}
 
-	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 
 	__super::Update_GameObject(fTimeDelta);
@@ -103,18 +102,18 @@ void CSylphArrow::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	
 	if (m_iState == ARROW_IDLE) {
-		m_pTextureCom[ARROW_IDLE]->Set_Texture((_uint)m_fIdleFrame);
-	}
-	else if (m_iState == ARROW_DEATH) {
-		m_pTextureCom[ARROW_DEATH]->Set_Texture((_uint)m_fDeathFrame);
+		m_pTextureCom[ARROW_IDLE]->Set_Texture(0);
 	}
 
 
 	m_pTransformCom->m_vInfo[INFO_POS];
 
 	m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
@@ -137,9 +136,11 @@ HRESULT CSylphArrow::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom[ARROW_IDLE], E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player_Arrow_Sylph_Idle", pComponent });
 
-	pComponent = m_pTextureCom[ARROW_DEATH] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Death"));
-	NULL_CHECK_RETURN(m_pTextureCom[ARROW_DEATH], E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player_Arrow_Sylph_Death", pComponent });
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_Radius(1.f);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 
 	return S_OK;
@@ -203,9 +204,9 @@ bool CSylphArrow::Final_Damage(void)
 		Critical = false;
 	}
 
-	m_fRandom_Value = (float)(rand() % (100 / 8 - 100 / 16 + 1) - (100 / 8 - 100 / 16 + 1));
+	m_fRandom_Value = (float)(rand() % (2 * (587 / 8 - 587 / 16 + 1)) - (587 / 8 - 587 / 16 + 1));
 
-	m_fDamage = (m_fPower * 0.5f + m_fRandom_Value) * (1.f + 1.3f * Critical);
+	m_fDamage = (m_fPower * 0.5f + m_fRandom_Value) * (1.f + 1.35f * Critical);
 
 	int temp = (int)m_fDamage;
 	int cnt = 0;
@@ -253,8 +254,7 @@ void CSylphArrow::Create_Hit_Effect(void)
 void CSylphArrow::Create_Damage_Font(void)
 {
 
-	bool Cri = Final_Damage();
-
+	
 	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
 
 	CGameObject* pGameObject;
@@ -267,9 +267,13 @@ void CSylphArrow::Create_Damage_Font(void)
 		for (auto iter : m_Font_List) {
 			_vec3 pos = m_pTransformCom->m_vInfo[INFO_POS];
 
-			pos.x += 2.2f * j;
+			if (m_Is_Cri == true)
+				pos.x += 1.7f * j;
+			else {
+				pos.x += 1.7f * 0.7 * j;
+			}
 
-			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, Cri);
+			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, m_Is_Cri);
 
 			if (pGameObject == nullptr)
 				return;

@@ -181,8 +181,12 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Ghost_Dash_135", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Dash/Spr_Yeon_Dash_135_0%d.png", 6)), E_FAIL);
 
 
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Damage_Font_Critical", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Damage_Font/Critical/Ira_Font_NumCri_0%d.png", 10)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Damage_Font_Common", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Damage_Font/Common/Ira_Font_NumNom_0%d.png", 10)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Damage_Font_Critical", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Damage_Font/New_Critical/Cri0%d.png", 10)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Damage_Font_Common", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Damage_Font/New_Common/Com0%d.png", 10)), E_FAIL);
+
+
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Water_Wave", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Water_Wave/Spr_Effect_WaterWave_%d.png", 17)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Foot_Step", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Foot_Step/0%d.png", 14)), E_FAIL);
 
 
 
@@ -191,12 +195,11 @@ _uint CLoading::Loading_ForStage(void)
 
 #pragma region Weapon_Texture
 
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Arrow/Sylph/Spr_Weapon_No039_Sylph'sArrow_%d.png", 6)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Death", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Arrow/Sylph/Spr_Weapon_No039_Sylph'sArrow_Death_%d.png", 4)), E_FAIL);
-
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Arrow/Sylph/Spr_Weapon_No039_Sylph'sArrow_%d.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Arrow_Moon", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Charge_Arrow/Moon/Charge_Arrow_Moon.png")), E_FAIL);
 	
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Bow_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Bow/Sylph/Spr_Weapon_No039_Sylph'sBow.png", 1)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Bow_Sylph_Pair", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Bow/Sylph/Spr_Weapon_No039_Sylph'sBow_Pair.png", 1)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Bow_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Bow/Sylph/Spr_Weapon_No039_Sylph'sBow_0%d.png", 3)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Bow_Sylph_Pair", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Weapon/Bow/Sylph/Spr_Weapon_No039_Sylph'sBow_Pair_0%d.png", 3)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Effect_BowPulse_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Bow_Pulse/Sylph/Spr_Effect_No039_Sylph'sBow_Pulse_%d.png", 10)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Player_Effect_BowCharge_Sylph", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Effect/Bow_Charge/Sylph/Spr_Effect_WindSpiritChargeEffect_%d.png", 6)), E_FAIL);

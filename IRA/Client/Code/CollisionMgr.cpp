@@ -18,17 +18,21 @@ void CCollisionMgr::Collision_Update()
 {
 	//Collision_Sphere(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
 	//Collision_Sphere(m_ObjList[OBJ_ARROW], m_ObjList[OBJ_MONSTER]);
+
+
 }
 
 void CCollisionMgr::Collision_Sphere(list<CGameObject*> _Dest, list<CGameObject*> _Src)
 {
+
+
 	for (auto& Dest : _Dest)
 	{
 		for (auto& Src : _Src)
 		{
 			if (Check_Sphere(Dest, Src))
 			{
-				//플레이어 힛트했다
+				
 
 			}
 		}

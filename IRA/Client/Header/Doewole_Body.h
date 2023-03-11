@@ -57,5 +57,7 @@ private:
 	_bool							m_bReturn = false;
 	int								m_iSmashCnt = 0;
 
+
+
 };
 

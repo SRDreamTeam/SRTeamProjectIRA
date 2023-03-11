@@ -8,7 +8,9 @@
 #include "SylphBowPair.h"
 #include "Effect_Player_Bow_Pulse.h"
 #include "Effect_Player_Bow_Charge.h"
+#include "Effect_Player_Foot.h"
 #include "KeyMgr.h"
+#include "CollisionMgr.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -98,6 +100,15 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	if (m_Is_Effect_Charge_Arrow == true) {
 		Effect_Charge_Arrow();
 	}
+
+	if (m_Is_Run == true) {
+		m_FootFrame += 1.f * fTimeDelta * 2.f;
+		if (m_FootFrame > 1.f) {
+			m_FootFrame = 0.f;
+			Effect_Foot_Step_Smoke();
+		}
+	}
+	
 
 
 	__super::Update_GameObject(fTimeDelta);
@@ -463,6 +474,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 		m_Is_Fire_Arrow = true;
 
+		CSylphBow* pObject1 = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
+		CSylphBowPair* pObject2 = dynamic_cast<CSylphBowPair*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBowPair"));
+
+		pObject1->m_bCharge = false;
+		pObject2->m_bCharge = false;
+
 		POINT ptCursor;
 
 		GetCursorPos(&ptCursor);
@@ -487,6 +504,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 
 		if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_W)) {
+			
 
 			if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
 				m_iState = MOVE_ATTACK;
@@ -502,6 +520,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_S)) {
+			
 
 			if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
 				m_iState = MOVE_ATTACK;
@@ -518,11 +537,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 		}
 		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
+			
 			m_iState = MOVE_ATTACK;
 			m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed));
 
 		}
 		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
+			
 			m_iState = MOVE_ATTACK;
 			m_pTransformCom->Move_Pos(&(vRight * fTimeDelta * m_fSpeed));
 
@@ -533,6 +554,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	}
 	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_RBUTTON)) {
+
+		CSylphBow* pObject1 = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
+		CSylphBowPair* pObject2 = dynamic_cast<CSylphBowPair*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBowPair"));
+
+		pObject1->m_bCharge = true;
+		pObject2->m_bCharge = true;
 
 		m_Is_Effect_Charge_Arrow = true;
 		
@@ -561,6 +588,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 		
 		if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_W)) {
+			
 			if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vLU * fTimeDelta * m_fSpeed));
@@ -575,7 +603,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_S)) {
-
+			
 			if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
 				m_iState = MOVE_ATTACK;
 				m_pTransformCom->Move_Pos(&(vLD * fTimeDelta * m_fSpeed));
@@ -591,11 +619,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 		}
 		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_A)) {
+			
 			m_iState = MOVE_ATTACK;
 			m_pTransformCom->Move_Pos(&(-vRight * fTimeDelta * m_fSpeed));
 
 		}
 		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
+			
 			m_iState = MOVE_ATTACK;
 			m_pTransformCom->Move_Pos(&(vRight * fTimeDelta * m_fSpeed));
 
@@ -606,6 +636,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	}
 	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_W)) {
+	    
 		m_Is_Fire_Arrow = false;
 		m_Fire_Frame = m_Fire_Init;
 
@@ -624,6 +655,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 		else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_D)) {
+			
 
 			if (CKeyMgr::Get_Instance()->Key_Down(KEY_SPACE)) {
 				pGhost->Is_Dash = true;
@@ -805,8 +837,8 @@ void CPlayer::Fire_Arrow(void)
 		return;
 
 
-	pGameLogicLayer->Add_BulletObject(  pGameObject);
-
+	pGameLogicLayer->Add_BulletObject(pGameObject);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_ARROW, pGameObject);
 
 
 	pGameObject = CEffect_Player_Bow_Pulse::Create(m_pGraphicDev);
@@ -869,7 +901,7 @@ void CPlayer::Fire_Charge_Arrow(void)
 
 
 	pGameLogicLayer->Add_BulletObject(  pGameObject);
-
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_ARROW, pGameObject);
 
 }
 
@@ -895,6 +927,47 @@ void CPlayer::Effect_Charge_Arrow(void)
 
 }
 
+void CPlayer::Effect_Foot_Step_Smoke(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject = nullptr;
+
+	if (m_bReverse)
+		m_FootRev = false;
+	else
+		m_FootRev = true;
+	
+	pGameObject = CEffect_Player_Foot::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS],FOOT_TYPE_SMOKE, m_FootRev);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(pGameObject);
+
+
+}
+
+void CPlayer::Effect_Foot_Step_Water(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject = nullptr;
+
+	if (m_bReverse)
+		m_FootRev = false;
+	else
+		m_FootRev = true;
+
+	pGameObject = CEffect_Player_Foot::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS], FOOT_TYPE_WATER, m_FootRev);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(pGameObject);
+
+}
+
 void CPlayer::Frame_Manage(const _float& fTimeDelta)
 {
 
@@ -905,12 +978,15 @@ void CPlayer::Frame_Manage(const _float& fTimeDelta)
 	}
 
 	if (m_iState == RUN) {
+
+		
 		m_fRunFrame += 7.f * fTimeDelta * 1.5f;
 		if (7.f < m_fRunFrame)
 			m_fRunFrame = 0.f;
 	}
 
 	if (m_iState == MOVE_ATTACK || m_iState == STAND_ATTACK) {
+
 		m_fAttackFrame += 9.f * fTimeDelta;
 		if (9.f < m_fAttackFrame)
 			m_fAttackFrame = 0.f;
@@ -965,7 +1041,7 @@ void CPlayer::SetUp_OnTerrain(void)
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos(), VTXCNTX, VTXCNTZ);
 
-	m_pTransformCom->Set_Pos(vPos.x, fHeight + 5.4f + jump, vPos.z);
+	m_pTransformCom->Set_Pos(vPos.x, fHeight + 5.f + jump, vPos.z);
 }
 
 _vec3 CPlayer::Picking_OnTerrain(void)
@@ -988,7 +1064,7 @@ void CPlayer::Update_State()
 	CSylphBowPair* pObject2 = dynamic_cast<CSylphBowPair*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBowPair"));
 
 	if (m_iState == STAND) {
-		
+		m_Is_Run = false;
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(false);
 			pObject2->Set_Render(false);
@@ -1042,6 +1118,8 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == RUN) {
+
+		m_Is_Run = true;
 
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(false);
@@ -1097,6 +1175,8 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == MOVE_ATTACK) {
+		m_Is_Run = true;
+
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(true);
 			pObject2->Set_Render(true);
@@ -1131,7 +1211,7 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == STAND_ATTACK) {
-
+	    m_Is_Run = false;
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(true);
 			pObject2->Set_Render(true);
@@ -1168,6 +1248,7 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == DASH) {
+		m_Is_Run = false;
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(false);
 			pObject2->Set_Render(false);
@@ -1235,7 +1316,7 @@ void CPlayer::Dash(const _float& fTimeDelta)
 		jumpDir = -1.f;
 	}
 
-	if (jump < 0.f) {
+	if (jump <= 0.f) {
 		jump = 0.f;
 		jumpDir = 1.f;
 	}

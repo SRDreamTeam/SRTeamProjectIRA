@@ -9,6 +9,7 @@
 #include "Doewole.h"
 #include "Doewole_Body.h"
 #include "Doewole_Shadow.h"
+#include "Player_Shadow.h"
 #include "Doewole_LeftClaw.h"
 #include "Doewole_RightClaw.h"
 #include "Effect_Doewole_Vanish.h"
@@ -140,10 +141,15 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	CGameObject*	pBulletObject = nullptr;
 
 	
-	pGameObject = CPlayer::Create(m_pGraphicDev);
+	CGameObject* pPlayer = CPlayer::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pPlayer, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pPlayer),E_FAIL);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_PLAYER, pPlayer);
+
+	pGameObject = CPlayer_Shadow::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
-	//CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_PLAYER, pGameObject);
+	dynamic_cast<CPlayer_Shadow*>(pGameObject)->Set_Owner(pPlayer);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player_Shadow", pGameObject), E_FAIL);
 
 	pGameObject = CSylphBow::Create(m_pGraphicDev,{0.f,0.f,0.f},0.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -165,7 +171,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject), E_FAIL);
-	//CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, pGameObject);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, pGameObject);
 
 	pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

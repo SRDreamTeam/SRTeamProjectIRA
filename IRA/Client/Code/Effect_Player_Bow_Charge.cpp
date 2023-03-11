@@ -24,7 +24,7 @@ HRESULT CEffect_Player_Bow_Charge::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 
-	_vec3 Scale = { 3.f , 3.f, 1.f };
+	_vec3 Scale = { 6.f , 6.f, 1.f };
 
 	m_pTransformCom->m_vScale = Scale;
 
