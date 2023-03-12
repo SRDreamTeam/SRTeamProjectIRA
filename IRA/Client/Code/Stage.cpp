@@ -144,7 +144,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	CGameObject* pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pPlayer, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pPlayer),E_FAIL);
-	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_PLAYER, pPlayer);
+	
 
 	pGameObject = CPlayer_Shadow::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -171,7 +171,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject), E_FAIL);
-	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, pGameObject);
 
 	pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

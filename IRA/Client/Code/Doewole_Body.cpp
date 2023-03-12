@@ -4,6 +4,7 @@
 #include "Doewole_RightClaw.h"
 #include "Doewole_LeftClaw.h"
 #include "CollisionSphere.h"
+#include "CollisionMgr.h"
 #include <KeyMgr.h>
 
 CDoewole_Body::CDoewole_Body(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -54,6 +55,7 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 	CBoss::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, this);
 
 	return 0;
 }
@@ -61,6 +63,11 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 void CDoewole_Body::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	/*_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);*/
 }
 
 void CDoewole_Body::Render_GameObject()
@@ -152,7 +159,7 @@ HRESULT CDoewole_Body::Add_Component(void)
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
 	m_pColliderCom->Set_TransformCom(m_pTransformCom);
-	m_pColliderCom->Set_Radius(5.f);
+	m_pColliderCom->Set_Radius(8.f);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;

@@ -4,6 +4,7 @@
 #include "Effect_Player_Arrow_Hit.h"
 #include "Player.h"
 #include "Effect_Player_Damage_Font.h"
+#include "CollisionMgr.h"
 
 CSylphChargeArrow::CSylphChargeArrow(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CArrow(pGraphicDev)
@@ -23,9 +24,9 @@ HRESULT CSylphChargeArrow::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fSpeed = 70.f;
+	m_fSpeed = 85.f;
 
-	m_pTransformCom->Set_Scale_Ratio({ -6.f, 6.f, 1.f });
+	m_pTransformCom->Set_Scale_Ratio({ 6.f, 6.f, 1.f });
 
 	m_pTransformCom->Rotation(ROT_Y, m_Arrow_Angle);
 
@@ -39,7 +40,6 @@ HRESULT CSylphChargeArrow::Ready_GameObject(void)
 
 	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y - 2.f, m_Fire_Pos.z);
 
-	m_Is_Cri = Final_Damage();
 	
 	
 	__super::Ready_GameObject();
@@ -58,10 +58,10 @@ _int CSylphChargeArrow::Update_GameObject(const _float& fTimeDelta)
 		return OBJ_DEAD;
 	}
 
-	m_AccTime += m_AccMaxTime * fTimeDelta * 1.f;
+	m_AccTime += m_AccMaxTime * fTimeDelta * 0.5f;
 	if (m_AccTime > m_AccMaxTime) {
 		m_AccTime = 0.f;
-		m_bHit = true;
+		m_bDead = true;
 	}
 
 	m_pTransformCom->Move_Pos(&(m_vDir * fTimeDelta * m_fSpeed));
@@ -83,7 +83,7 @@ _int CSylphChargeArrow::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_ARROW, this);
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -93,6 +93,11 @@ _int CSylphChargeArrow::Update_GameObject(const _float& fTimeDelta)
 void CSylphChargeArrow::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CSylphChargeArrow::Render_GameObject()
@@ -133,11 +138,15 @@ HRESULT CSylphChargeArrow::Add_Component(void)
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	
-	pComponent = m_pTextureCom[ARROW_IDLE] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Player_Arrow_Moon"));
+	pComponent = m_pTextureCom[ARROW_IDLE] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Player_Arrow_Sylph_Idle"));
 	NULL_CHECK_RETURN(m_pTextureCom[ARROW_IDLE], E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player_Arrow_Moon", pComponent });
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Player_Arrow_Sylph_Idle", pComponent });
 
-	
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_Radius(6.f);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;
 }
@@ -252,18 +261,23 @@ void CSylphChargeArrow::Create_Damage_Font(void)
 
 	CGameObject* pGameObject;
 
+	int k = 0;
 
 	for (int i = 0; i < m_fAttack_Num; i++) {
 
 		int j = 0;
+		m_Is_Cri = Final_Damage();
 
 		for (auto iter : m_Font_List) {
 			_vec3 pos = m_pTransformCom->m_vInfo[INFO_POS];
 
-			if (m_Is_Cri == true)
+			if (m_Is_Cri == true) {
 				pos.x += 1.7f * j;
+				pos.y += 2.f * k;
+			}
 			else {
 				pos.x += 1.7f * 0.7 * j;
+				pos.y += 2.f * k;
 			}
 
 			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, m_Is_Cri);
@@ -276,6 +290,10 @@ void CSylphChargeArrow::Create_Damage_Font(void)
 			j++;
 		}
 
+		m_Font_List.clear();
+		m_Font_List.resize(0);
+
+		k++;
 	}
 }
 

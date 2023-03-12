@@ -86,7 +86,10 @@ void CEffect_Player_Bow_Charge::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
+	Compute_ViewZ(&vPos);
 }
 
 void CEffect_Player_Bow_Charge::Render_GameObject()

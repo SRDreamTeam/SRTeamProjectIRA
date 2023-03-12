@@ -49,6 +49,11 @@ _int CDoewole_Shadow::Update_GameObject(const _float& fTimeDelta)
 void CDoewole_Shadow::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CDoewole_Shadow::Render_GameObject()

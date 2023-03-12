@@ -85,6 +85,11 @@ void CEffect_Player_Bow_Pulse::LateUpdate_GameObject()
 		m_bDead = true;
 		m_fFrame = m_fMaxFrame;
 	}
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CEffect_Player_Bow_Pulse::Render_GameObject()

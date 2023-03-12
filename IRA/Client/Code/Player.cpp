@@ -43,6 +43,9 @@ HRESULT CPlayer::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+
+	m_fSpeed = 25.f;
+
 	m_pTransformCom->Set_Scale_Ratio({ 5.f, 5.f, 1.f });
 
 	m_tInfo.Maxhp = 5;
@@ -52,6 +55,9 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_tInfo.Gem = 0;
 	m_tInfo.Key = 0;
 	m_tInfo.Money = 1000;
+
+
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_PLAYER, this);
 
 	return S_OK;
 }
@@ -89,7 +95,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		Dash(fTimeDelta);
 	}
 
-	if (m_Is_Fire_Arrow == true) {
+	if (m_Is_Fire_Arrow == true && m_Is_Effect_Charge_Arrow == false) {
 		m_Fire_Frame += m_Fire_Init * fTimeDelta * m_Fire_Speed;
 		if (m_Fire_Frame > m_Fire_Init){
 			Fire_Arrow();
@@ -125,6 +131,11 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	/*_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);*/
 }
 
 void CPlayer::Render_GameObject()
@@ -411,7 +422,7 @@ HRESULT CPlayer::Add_Component(void)
 
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
-	m_pColliderCom->Set_Radius(1.f);
+	m_pColliderCom->Set_Radius(5.f);
 	m_pColliderCom->Set_TransformCom(m_pTransformCom);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
@@ -477,8 +488,11 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		CSylphBow* pObject1 = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
 		CSylphBowPair* pObject2 = dynamic_cast<CSylphBowPair*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBowPair"));
 
-		pObject1->m_bCharge = false;
-		pObject2->m_bCharge = false;
+		if (m_Is_Effect_Charge_Arrow == false) {
+			pObject1->m_bCharge = false;
+			pObject2->m_bCharge = false;
+		}
+		
 
 		POINT ptCursor;
 
@@ -554,7 +568,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	}
 	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_RBUTTON)) {
-
+		
 		CSylphBow* pObject1 = dynamic_cast<CSylphBow*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBow"));
 		CSylphBowPair* pObject2 = dynamic_cast<CSylphBowPair*>(Engine::Get_GameObject(L"Layer_GameLogic", L"SylphBowPair"));
 
@@ -562,6 +576,11 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		pObject2->m_bCharge = true;
 
 		m_Is_Effect_Charge_Arrow = true;
+
+		m_fChargeFrame += 1.f * fTimeDelta * 0.8f;
+		if (m_fChargeFrame > 1.f) {
+			m_Is_Charge_Arrow = true;
+		}
 		
 		POINT ptCursor;
 
@@ -784,14 +803,25 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (CKeyMgr::Get_Instance()->Key_Up(KEY_RBUTTON)) {
 
+		CEffect_Player_Bow_Charge* pObject = dynamic_cast<CEffect_Player_Bow_Charge*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Bow_Charge_Effect"));
+
+		if (pObject != nullptr) {
+			pObject->Set_Dead();
+			m_Charge_Effect_Cnt = 0;
+		}
+			
+
 		m_Is_Fire_Arrow = false;
 		m_Fire_Frame = m_Fire_Init;
 
-		if (m_Is_Effect_Charge_Arrow == true) {
+		if (m_Is_Charge_Arrow == true) {
 			Fire_Charge_Arrow();
 		}
 
 		m_Is_Effect_Charge_Arrow = false;
+		m_fChargeFrame = 0.f;
+		m_Is_Charge_Arrow = false;
+		
 	}
 
 
@@ -855,12 +885,7 @@ void CPlayer::Fire_Arrow(void)
 void CPlayer::Fire_Charge_Arrow(void)
 {
 
-	CEffect_Player_Bow_Charge* pObject = dynamic_cast<CEffect_Player_Bow_Charge*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Bow_Charge_Effect"));
-
-	if (pObject != nullptr)
-		pObject->Set_Dead();
-	
-	m_Charge_Effect_Cnt--;
+	//m_Charge_Effect_Cnt--;
 
 
 	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
@@ -1175,7 +1200,7 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == MOVE_ATTACK) {
-		m_Is_Run = true;
+		m_Is_Run = false;
 
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(true);
@@ -1211,7 +1236,7 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == STAND_ATTACK) {
-	    m_Is_Run = false;
+		m_Is_Run = false;
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(true);
 			pObject2->Set_Render(true);

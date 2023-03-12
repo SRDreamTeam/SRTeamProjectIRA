@@ -85,6 +85,8 @@ _int CSylphBowPair::Update_GameObject(const _float& fTimeDelta)
 void CSylphBowPair::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	//Compute_ViewZ(&m_vPos);
 }
 
 void CSylphBowPair::Render_GameObject()
@@ -146,6 +148,8 @@ void CSylphBowPair::Update_Bow_State()
 	D3DXMatrixTranslation(&matTrans_Pre, 3.f, 0.f, 0.f);
 	D3DXMatrixTranslation(&matTrans, m_Bow_Pos.x - 0.1f, m_Bow_Pos.y - 2.4f, m_Bow_Pos.z);
 
+
+	m_vPos = { m_Bow_Pos.x , m_Bow_Pos.y - 2.0f, m_Bow_Pos.z };
 
 	Axis = { 1.f,0.f,0.f };
 

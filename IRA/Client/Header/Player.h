@@ -124,6 +124,7 @@ private:
 	_float			m_fDashFrame = 0.f;
 	_float			m_fDeathFrame = 0.f;
 
+
 	_int            m_iState = STAND;
 	_int            m_iPreState = STAND;
 
@@ -152,6 +153,8 @@ private:
 
 	bool            m_Is_Effect_Charge_Arrow = false;
 	int             m_Charge_Effect_Cnt = 0;
+	bool            m_Is_Charge_Arrow = false;
+	_float			m_fChargeFrame = 0.f;
 
 	CCollider*		m_pColliderCom;
 	CSphereTex*		m_pSphereBufferCom;

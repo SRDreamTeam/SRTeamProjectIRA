@@ -4,6 +4,8 @@
 #include "Effect_Player_Arrow_Hit.h"
 #include "Effect_Player_Damage_Font.h"
 #include "Player.h"
+#include "CollisionMgr.h"
+
 
 CSylphArrow::CSylphArrow(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CArrow(pGraphicDev)
@@ -51,8 +53,8 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 
 _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 {
-	//if (m_bDead)
-   //return OBJ_DEAD;
+	if (m_bDead)
+		return OBJ_DEAD;
 
 	if (m_bHit) {
 		Create_Hit_Effect();
@@ -60,11 +62,11 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 		return OBJ_DEAD;
 	}
 
-	m_AccTime += m_AccMaxTime * fTimeDelta * 2.f;
+	m_AccTime += m_AccMaxTime * fTimeDelta * 0.5f;
 
 	if (m_AccTime > m_AccMaxTime) {
 		m_AccTime = 0.f;
-		m_bHit = true;
+		m_bDead = true;
 	}
 
 	m_pTransformCom->Move_Pos(&(m_vDir * fTimeDelta * m_fSpeed));
@@ -84,7 +86,7 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_ARROW, this);
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -94,6 +96,11 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 void CSylphArrow::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CSylphArrow::Render_GameObject()
@@ -138,7 +145,7 @@ HRESULT CSylphArrow::Add_Component(void)
 
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
-	m_pColliderCom->Set_Radius(1.f);
+	m_pColliderCom->Set_Radius(3.f);
 	m_pColliderCom->Set_TransformCom(m_pTransformCom);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 

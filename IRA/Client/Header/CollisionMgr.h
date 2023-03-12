@@ -18,6 +18,7 @@ public:
 
 private:
 	static void	Collision_Sphere(list<CGameObject*> _Dest, list<CGameObject*> _Src);
+	static void	Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src);
 	static bool Check_Sphere(CGameObject* pDest, CGameObject* pSrc);
 
 private:

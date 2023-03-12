@@ -76,6 +76,9 @@ _int CSylphBow::Update_GameObject(const _float& fTimeDelta)
 void CSylphBow::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+
+	//Compute_ViewZ(&m_vPos);
 }
 
 void CSylphBow::Render_GameObject()
@@ -143,7 +146,7 @@ void CSylphBow::Update_Bow_State()
 	if (WINCY * 0.5 < ptCursor.y)
 		m_Bow_Angle = 2.f * D3DX_PI - m_Bow_Angle;
 
-	D3DXMatrixRotationAxis(&matRev, &Player_Axis, -m_Bow_Angle);
+	D3DXMatrixRotationAxis(&matRev, &Player_Axis, - m_Bow_Angle);
 	
 
 	m_MatWorld = matScale * matRot * matTrans_Pre * matRev * matTrans;

@@ -30,7 +30,7 @@ _int CStaticObject::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	return 0;
 }
@@ -38,6 +38,11 @@ _int CStaticObject::Update_GameObject(const _float& fTimeDelta)
 void CStaticObject::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	/*_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);*/
 }
 
 void CStaticObject::Render_GameObject()

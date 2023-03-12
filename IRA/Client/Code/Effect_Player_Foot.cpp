@@ -46,7 +46,7 @@ HRESULT CEffect_Player_Foot::Ready_GameObject(void)
 		m_iAlpha = 150;
 		m_pTransformCom->m_vScale = Scale * 1.3f;
 		m_fMaxFrame = 13.f;
-		m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y - 4.5f, m_vPos.z);
+		m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y - 4.0f, m_vPos.z);
 	}
 	
 
@@ -79,6 +79,11 @@ void CEffect_Player_Foot::LateUpdate_GameObject()
 		m_bDead = true;
 		m_fFrame = m_fMaxFrame;
 	}
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CEffect_Player_Foot::Render_GameObject()
@@ -86,8 +91,8 @@ void CEffect_Player_Foot::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+	/*m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, false);*/
 	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
@@ -114,8 +119,8 @@ void CEffect_Player_Foot::Render_GameObject()
 
 
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, true);
+	/*m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, true);*/
 	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTOP_SELECTARG1);
 	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTOP_SELECTARG1);
 	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);

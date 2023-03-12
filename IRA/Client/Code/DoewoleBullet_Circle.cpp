@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\DoewoleBullet_Circle.h"
 #include "Export_Function.h"
+#include "CollisionMgr.h"
 
 CDoewoleBullet_Circle::CDoewoleBullet_Circle(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev), m_iDirCount(0)
@@ -53,6 +54,8 @@ _int CDoewoleBullet_Circle::Update_GameObject(const _float& fTimeDelta)
 	SetUp_OnTerrain();
 	Distance_Dead_Check();
 
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_BULLET, this);
+
 	return OBJ_NOEVENT;
 }
 
@@ -89,6 +92,12 @@ HRESULT CDoewoleBullet_Circle::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Circle"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Bullet_Doewole_Circle", pComponent });
+
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_Radius(5.f);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;
 }
