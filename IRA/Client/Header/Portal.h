@@ -1,5 +1,5 @@
 #pragma once
-#include "Landscape.h"
+#include "DynamicObject.h"
 #include "Base.h"
 
 BEGIN(Engine)
@@ -12,12 +12,12 @@ class CCalculator;
 
 END
 
-class CDynamicObject : public CLandscape
+class CPortal : public CDynamicObject
 {
-protected:
-	explicit CDynamicObject(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CDynamicObject(const CDynamicObject& rhs);
-	virtual ~CDynamicObject();
+private:
+	explicit CPortal(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CPortal(const CPortal& rhs);
+	virtual ~CPortal();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -26,21 +26,19 @@ public:
 	virtual void Render_GameObject() override;
 
 public:
-	static DYNAMIC_OBJECT_ID	CompareID(wstring strObjKey);
-	DYNAMIC_OBJECT_ID	Get_DynamicObj_ID(void) { return m_eID; }
-	void				Set_DynamicObj_ID(DYNAMIC_OBJECT_ID id) { m_eID = id; }
 
-protected:
+
+private:
 	virtual HRESULT	Add_Component(void)override;
 	virtual void SetUp_OnTerrain(void)override;
 	//virtual void Change_State(void)PURE;					
 	//virtual void Frame_Check(const _float& fTimeDelta)PURE;
 
-protected:
-	CTexture*		m_pTextureCom[DYNAMIC_OBJ_END];
-	DYNAMIC_OBJECT_ID	m_eID;
 
-protected:
+public:
+	static CPortal* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
 	virtual void Free(void) override;
 
 };
