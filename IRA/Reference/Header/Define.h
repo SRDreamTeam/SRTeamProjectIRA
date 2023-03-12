@@ -7,6 +7,9 @@
 #define		VTXCNTZ		257
 #define		VTXITV		1
 
+#define		MIN_STR			64
+#define		MAX_STR			256
+
 #define		OBJ_NOEVENT	 0
 #define		OBJ_DEAD	 1 
 

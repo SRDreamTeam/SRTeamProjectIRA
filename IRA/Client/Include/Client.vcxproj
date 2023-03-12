@@ -170,6 +170,7 @@
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\Boss.h" />
     <ClInclude Include="..\Header\Bow.h" />
+    <ClInclude Include="..\Header\DestructibleObj.h" />
     <ClInclude Include="..\Header\Doewole.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Circle.h" />
     <ClInclude Include="..\Header\DoewoleBullet_Standard.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="..\Header\Doewole_RightClaw.h" />
     <ClInclude Include="..\Header\Doewole_Shadow.h" />
     <ClInclude Include="..\Header\Bullet.h" />
+    <ClInclude Include="..\Header\Door.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\DynamicObject.h" />
     <ClInclude Include="..\Header\Effect.h" />
@@ -201,8 +203,10 @@
     <ClInclude Include="..\Header\GreenEvilSlime.h" />
     <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\GhostChild.h" />
+    <ClInclude Include="..\Header\Jar.h" />
     <ClInclude Include="..\Header\KeyMgr.h" />
     <ClInclude Include="..\Header\Landscape.h" />
+    <ClInclude Include="..\Header\Lever.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
@@ -212,13 +216,16 @@
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterBullet.h" />
     <ClInclude Include="..\Header\MonsterBullet_2.h" />
+    <ClInclude Include="..\Header\MovingObj.h" />
     <ClInclude Include="..\Header\MutationEvilSoul.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\Portal.h" />
     <ClInclude Include="..\Header\QuickSlot.h" />
     <ClInclude Include="..\Header\QuickSlot_ArrowCount_Infi.h" />
     <ClInclude Include="..\Header\QuickSlot_WeaponImg.h" />
     <ClInclude Include="..\Header\QuickSlot_WeaponImg_Back.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
+    <ClInclude Include="..\Header\SpriteObj.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\StaticCamera.h" />
     <ClInclude Include="..\Header\Status_Back.h" />
@@ -251,6 +258,7 @@
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\Boss.cpp" />
     <ClCompile Include="..\Code\Bow.cpp" />
+    <ClCompile Include="..\Code\DestructibleObj.cpp" />
     <ClCompile Include="..\Code\Doewole.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Circle.cpp" />
     <ClCompile Include="..\Code\DoewoleBullet_Standard.cpp" />
@@ -262,6 +270,7 @@
     <ClCompile Include="..\Code\Doewole_RightClaw.cpp" />
     <ClCompile Include="..\Code\Doewole_Shadow.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\Door.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\DynamicObject.cpp" />
     <ClCompile Include="..\Code\Effect_AlertCircle.cpp" />
@@ -282,8 +291,10 @@
     <ClCompile Include="..\Code\GhostChild.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp" />
+    <ClCompile Include="..\Code\Jar.cpp" />
     <ClCompile Include="..\Code\KeyMgr.cpp" />
     <ClCompile Include="..\Code\Landscape.cpp" />
+    <ClCompile Include="..\Code\Lever.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
@@ -293,13 +304,16 @@
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\MonsterBullet.cpp" />
     <ClCompile Include="..\Code\MonsterBullet_2.cpp" />
+    <ClCompile Include="..\Code\MovingObj.cpp" />
     <ClCompile Include="..\Code\MutationEvilSoul.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\Portal.cpp" />
     <ClCompile Include="..\Code\QuickSlot.cpp" />
     <ClCompile Include="..\Code\QuickSlot_ArrowCount_Infi.cpp" />
     <ClCompile Include="..\Code\QuickSlot_WeaponImg.cpp" />
     <ClCompile Include="..\Code\QuickSlot_WeaponImg_Back.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
+    <ClCompile Include="..\Code\SpriteObj.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\StaticCamera.cpp" />
     <ClCompile Include="..\Code\Status_Back.cpp" />

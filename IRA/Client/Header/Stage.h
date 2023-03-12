@@ -38,6 +38,7 @@ private:
 	HRESULT			Ready_LightInfo();
 	HRESULT			Load_Terrain_Info(const _tchar* pPath);
 	HRESULT			Load_Object_Info(const _tchar* pPath);
+	HRESULT			Load_Dynamic_Object_Info(const _tchar* pPath);
 
 public:
 	static	CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
