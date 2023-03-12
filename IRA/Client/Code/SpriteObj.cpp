@@ -48,6 +48,11 @@ _int CSpriteObj::Update_GameObject(const _float& fTimeDelta)
 void CSpriteObj::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	__super::Compute_ViewZ(&vPos);
 }
 
 void CSpriteObj::Render_GameObject()

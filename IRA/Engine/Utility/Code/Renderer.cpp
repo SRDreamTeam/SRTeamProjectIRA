@@ -64,7 +64,10 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9 & pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	
+	m_RenderGroup[RENDER_ALPHA].sort([](CGameObject* pDest, CGameObject* pSrc)->bool {
+		return pDest->Get_ViewZ() > pSrc->Get_ViewZ();
+		});
+
 	for (auto& iter : m_RenderGroup[RENDER_ALPHA])
 		iter->Render_GameObject();
 

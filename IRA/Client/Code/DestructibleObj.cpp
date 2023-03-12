@@ -40,7 +40,7 @@ _int CDestructibleObj::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -48,6 +48,11 @@ _int CDestructibleObj::Update_GameObject(const _float& fTimeDelta)
 void CDestructibleObj::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	__super::Compute_ViewZ(&vPos);
 }
 
 void CDestructibleObj::Render_GameObject()
