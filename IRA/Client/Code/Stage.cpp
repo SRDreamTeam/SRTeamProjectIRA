@@ -16,6 +16,14 @@
 #include "SylphBow.h"
 #include "SylphBowPair.h"
 #include "StaticObject.h"
+#include "DynamicObject.h"
+#include "SpriteObj.h"
+#include "DestructibleObj.h"
+#include "Portal.h"
+#include "Door.h"
+#include "MovingObj.h"
+#include "Jar.h"
+#include "Lever.h"
 #include <KeyMgr.h>
 #include "CollisionMgr.h"
 
@@ -50,8 +58,11 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 		Load_Terrain_Info(L"../../Data/Terrain/BossDowoleMap.dat");
 		m_bTerrainInit = true;
 
-		//Load_Object_Info(L"../../Data/Object/SizeTest.dat");
-		Load_Object_Info(L"../../Data/Object/BossDowoleMapObj.dat");
+
+		Load_Object_Info(L"../../Data/Object/BossDowoleMapObjStatic1.dat");	// 개구리밥
+		Load_Object_Info(L"../../Data/Object/BossDowoleObjStatic203120717.dat");	// 나무
+		Load_Dynamic_Object_Info(L"../../Data/Object/BossDowoleObjDynamic1.dat");	// 풀
+		Load_Dynamic_Object_Info(L"../../Data/Object/BossDowoleObjDynamic2.dat");	// 가시
 	}
 
 	if (!g_bSphereMake)
@@ -155,26 +166,45 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Ghost", pGameObject), E_FAIL);
 
+	//CGameObject* pDoewole = CDoewole::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pDoewole, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole", pDoewole, OBJ_NONE), E_FAIL);
 	CGameObject* pDoewole = CDoewole::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pDoewole, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole", pDoewole), E_FAIL);
 
+	//pGameObject = CDoewole_Body::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject, OBJ_MONSTER), E_FAIL);
 	pGameObject = CDoewole_Body::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject), E_FAIL);
 	//CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, pGameObject);
 
+	//pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CDoewole_LeftClaw*>(pGameObject)->Set_Owner(pDoewole);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_LeftClaw", pGameObject, OBJ_MONSTER), E_FAIL);
 	pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_LeftClaw*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_LeftClaw", pGameObject), E_FAIL);
 
+	//pGameObject = CDoewole_RightClaw::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CDoewole_RightClaw*>(pGameObject)->Set_Owner(pDoewole);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_RightClaw", pGameObject, OBJ_MONSTER), E_FAIL);
 	pGameObject = CDoewole_RightClaw::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_RightClaw*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_RightClaw", pGameObject), E_FAIL);
 
+	//pGameObject = CDoewole_Shadow::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//dynamic_cast<CDoewole_Shadow*>(pGameObject)->Set_Owner(pDoewole);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Shadow", pGameObject, OBJ_NONE), E_FAIL);
 	pGameObject = CDoewole_Shadow::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_Shadow*>(pGameObject)->Set_Owner(pDoewole);
@@ -253,7 +283,7 @@ HRESULT CStage::Ready_LightInfo()
 HRESULT CStage::Load_Terrain_Info(const _tchar* pPath)
 {
 	CLayer* pLayer = dynamic_cast<CLayer*>(Engine::Get_Layer(L"Layer_Environment"));
-
+	
 	CGameObject* pGameObject = nullptr;
 	pGameObject = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -400,6 +430,125 @@ HRESULT CStage::Load_Object_Info(const _tchar* pPath)
 		dynamic_cast<CStaticObject*>(pGameObject)->Set_ColliderPos(&tStaticObjData.vColliderPos);
 		dynamic_cast<CStaticObject*>(pGameObject)->Set_ColliderRadius(tStaticObjData.fColliderRadius);
 
+	}
+
+	CloseHandle(hFile);
+
+	return 0;
+}
+
+HRESULT CStage::Load_Dynamic_Object_Info(const _tchar* pPath)
+{
+	HANDLE hFile = CreateFile(pPath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD dwByte = 0;
+	DWORD dwStrByte = 0;
+
+	STATICOBJDATA tStaticObjData;
+
+	CLayer* pLayer = dynamic_cast<CLayer*>(Engine::Get_Layer(L"Layer_GameLogic"));
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	CGameObject* pGameObject = nullptr;
+
+	while (true)
+	{
+		ZeroMemory(&tStaticObjData, sizeof(STATICOBJDATA));
+
+		ReadFile(hFile, &tStaticObjData, sizeof(STATICOBJDATA), &dwByte, nullptr);
+
+		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+
+		_tchar* pObjKey = nullptr;
+		pObjKey = new TCHAR[dwStrByte];
+
+		ReadFile(hFile, pObjKey, dwStrByte, &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete_Array(pObjKey);
+			break;
+		}
+
+		wstring strComponentKey = pObjKey;
+		_bool	bIsClone = false;
+
+		if (string::npos != strComponentKey.find('|'))	// 클론인경우
+		{
+			size_t startPos = strComponentKey.find('|');
+			strComponentKey = strComponentKey.substr(0, startPos);
+			bIsClone = true;
+		}
+
+		int iNum = strComponentKey.length() - 1;
+		for (; iNum >= 0; --iNum)
+		{
+			if (0 == isdigit(pObjKey[iNum]))	// 숫자가 아닌 경우
+				break;
+		}
+
+		strComponentKey = strComponentKey.substr(0, iNum + 1);
+
+		CTransform* pTransformCom = nullptr;
+		size_t tempSize = 0;
+		_tchar szComponentKey[MAX_STR];
+
+
+		DYNAMIC_OBJECT_ID eID = CDynamicObject::CompareID(strComponentKey);
+		switch (eID)
+		{
+		case BUSH1: case BUSH2: case BUSH3: case BUSH4: case BUSH5: case BUSH_FLOWER1: case BUSH_FLOWER2:
+		{
+			pGameObject = CSpriteObj::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			tempSize = strComponentKey.length();
+			lstrcpy(szComponentKey, strComponentKey.c_str());
+			//dynamic_cast<CSpriteObj*>(pGameObject)->Set_ObjKey(szComponentKey, dwStrByte);
+			dynamic_cast<CSpriteObj*>(pGameObject)->Set_ObjKey(pObjKey, dwStrByte);
+			dynamic_cast<CSpriteObj*>(pGameObject)->Set_DynamicObj_ID(dynamic_cast<CSpriteObj*>(pGameObject)->CompareID(strComponentKey));
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(dynamic_cast<CSpriteObj*>(pGameObject)->Get_ObjKey(), pGameObject), E_FAIL);
+			Safe_Delete_Array<_tchar*>(pObjKey);
+
+			pTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", dynamic_cast<CSpriteObj*>(pGameObject)->Get_ObjKey(), L"Proto_Transform", ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTransformCom, E_FAIL);
+			pTransformCom->Set_Scale(tStaticObjData.vScale.x, tStaticObjData.vScale.y, tStaticObjData.vScale.z);
+			pTransformCom->Set_Angle(tStaticObjData.vAngle.x, tStaticObjData.vAngle.y, tStaticObjData.vAngle.z);
+			pTransformCom->Set_Pos(tStaticObjData.vPos.x, tStaticObjData.vPos.y, tStaticObjData.vPos.z);
+
+			dynamic_cast<CSpriteObj*>(pGameObject)->Set_DrawID(tStaticObjData.byDrawID);
+			dynamic_cast<CSpriteObj*>(pGameObject)->Set_DrawOption(tStaticObjData.byDrawOption);
+			dynamic_cast<CSpriteObj*>(pGameObject)->Set_ColliderPos(&tStaticObjData.vColliderPos);
+			dynamic_cast<CSpriteObj*>(pGameObject)->Set_ColliderRadius(tStaticObjData.fColliderRadius);
+		}
+			break;
+
+		case THORN1: case THORN2: case THORN3: case THORN4: case THORN5: case THORN6:
+		{
+			pGameObject = CDestructibleObj::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			tempSize = strComponentKey.length();
+			lstrcpy(szComponentKey, strComponentKey.c_str());
+			dynamic_cast<CDestructibleObj*>(pGameObject)->Set_ObjKey(pObjKey, dwStrByte);
+			dynamic_cast<CDestructibleObj*>(pGameObject)->Set_DynamicObj_ID(dynamic_cast<CDestructibleObj*>(pGameObject)->CompareID(strComponentKey));
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(dynamic_cast<CDestructibleObj*>(pGameObject)->Get_ObjKey(), pGameObject), E_FAIL);
+			Safe_Delete_Array<_tchar*>(pObjKey);
+
+			pTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", dynamic_cast<CDestructibleObj*>(pGameObject)->Get_ObjKey(), L"Proto_Transform", ID_DYNAMIC));
+			NULL_CHECK_RETURN(pTransformCom, E_FAIL);
+			pTransformCom->Set_Scale(tStaticObjData.vScale.x, tStaticObjData.vScale.y, tStaticObjData.vScale.z);
+			pTransformCom->Set_Angle(tStaticObjData.vAngle.x, tStaticObjData.vAngle.y, tStaticObjData.vAngle.z);
+			pTransformCom->Set_Pos(tStaticObjData.vPos.x, tStaticObjData.vPos.y, tStaticObjData.vPos.z);
+
+			dynamic_cast<CDestructibleObj*>(pGameObject)->Set_DrawID(tStaticObjData.byDrawID);
+			dynamic_cast<CDestructibleObj*>(pGameObject)->Set_DrawOption(tStaticObjData.byDrawOption);
+			dynamic_cast<CDestructibleObj*>(pGameObject)->Set_ColliderPos(&tStaticObjData.vColliderPos);
+			dynamic_cast<CDestructibleObj*>(pGameObject)->Set_ColliderRadius(tStaticObjData.fColliderRadius);
+		}
+			break;
+		}
 	}
 
 	CloseHandle(hFile);

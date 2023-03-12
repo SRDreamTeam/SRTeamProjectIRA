@@ -50,7 +50,7 @@ _float CCalculator::Compute_HeightOnTerrain(_vec3 * pPos, const _vec3 * pTerrain
 	//	y = (-ax - cz - d) / b
 
 	
-	pPos->y = (-Plane.a * pPos->x - Plane.c * pPos->z - Plane.d) / Plane.b;
+ 	pPos->y = (-Plane.a * pPos->x - Plane.c * pPos->z - Plane.d) / Plane.b;
 
 	return pPos->y;
 }

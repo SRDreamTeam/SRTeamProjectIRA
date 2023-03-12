@@ -46,7 +46,6 @@ protected:
 protected:
 	CRcTex*			m_pBufferCom;
 	CTransform*		m_pTransformCom;
-	//CTexture*		m_pTextureCom;
 	//CCollider*		m_pColliderCom;
 	CCalculator*	m_pCalculatorCom;
 

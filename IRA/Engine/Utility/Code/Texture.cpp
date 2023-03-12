@@ -3,11 +3,13 @@
 
 CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)
+	, m_fMaxFrameCnt(0.f)
 {
 }
 
 CTexture::CTexture(const CTexture & rhs)
 	: CComponent(rhs)
+	, m_fMaxFrameCnt(rhs.m_fMaxFrameCnt)
 {
 	_uint	iSize = rhs.m_vecTexture.size();
 	m_vecTexture.reserve(iSize);
@@ -28,6 +30,8 @@ HRESULT CTexture::Ready_Texture(TEXTYPE eType, const _tchar * pPath, const _uint
 	m_vecTexture.reserve(iCnt);
 
 	IDirect3DBaseTexture9*		pTexture = nullptr;
+
+	m_fMaxFrameCnt = (_float)iCnt;
 
 	for (_uint i = 0; i < iCnt; ++i)
 	{
@@ -76,6 +80,8 @@ CComponent * CTexture::Clone(void)
 CTexture * CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTYPE eType, const _tchar* pPath, const _uint& iCnt)
 {
 	CTexture *		pInstance = new CTexture(pGraphicDev);
+
+	
 
 	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt)))
 	{
