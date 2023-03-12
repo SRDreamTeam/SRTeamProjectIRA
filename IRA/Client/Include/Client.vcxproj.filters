@@ -289,6 +289,27 @@
     <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject\06. Lever">
       <UniqueIdentifier>{12c49654-a446-43c2-a5a2-eaf2e2929552}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject\00. SpriteObj">
+      <UniqueIdentifier>{b8c9171d-bf2b-4ce4-b699-eeadc475a0b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject\01. DestructibleObj">
+      <UniqueIdentifier>{3fa7aea3-33a8-41f9-a81d-f137f9c8f07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject\02. Portal">
+      <UniqueIdentifier>{56f64d9b-9538-4098-a76e-9d7b93435d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject\03. Door">
+      <UniqueIdentifier>{05a1ade6-c43e-41ad-b1ba-4bae65419ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject\04. MovingObj">
+      <UniqueIdentifier>{df7b6776-1e63-4f99-b7a9-0a298aa9c44a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject\05. Jar">
+      <UniqueIdentifier>{cf4f53a9-a40f-4a70-832a-3a6fed33243f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\10. LandScape\01. DynamicObject\06. Lever">
+      <UniqueIdentifier>{12c49654-a446-43c2-a5a2-eaf2e2929552}</UniqueIdentifier>
+    </Filter>
     <Filter Include="03. Manager\01. KeyMgr">
       <UniqueIdentifier>{7719b4e1-8403-4e85-8f53-e3b89195b118}</UniqueIdentifier>
     </Filter>
@@ -306,6 +327,12 @@
     </Filter>
     <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\03. Damage_Font">
       <UniqueIdentifier>{b46888c1-a758-40cf-9433-79c1d06c7810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death">
+      <UniqueIdentifier>{6057cd16-cf2e-47ae-b05d-bfaa9df18e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death">
+      <UniqueIdentifier>{359f3898-2b70-4a82-8f07-56dbee77f984}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\04. Foot_Step">
       <UniqueIdentifier>{2680390a-06da-47b0-97de-59898eeeac17}</UniqueIdentifier>
@@ -552,6 +579,27 @@
     <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\SpriteObj.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\00. SpriteObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DestructibleObj.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\01. DestructibleObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Portal.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\02. Portal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Door.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\03. Door</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MovingObj.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\04. MovingObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Jar.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\05. Jar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Lever.h">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\06. Lever</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\KeyMgr.h">
       <Filter>03. Manager\01. KeyMgr</Filter>
     </ClInclude>
@@ -569,6 +617,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\DoewoleBullet_StopGo.h">
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_CircleBullet_Death.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_StandardBullet_Death.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect_Player_Foot.h">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\04. Foot_Step</Filter>
@@ -806,6 +860,27 @@
     <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\SpriteObj.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\00. SpriteObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DestructibleObj.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\01. DestructibleObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Portal.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\02. Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Door.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\03. Door</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MovingObj.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\04. MovingObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Jar.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\05. Jar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Lever.cpp">
+      <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\06. Lever</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\KeyMgr.cpp">
       <Filter>03. Manager\01. KeyMgr</Filter>
     </ClCompile>
@@ -823,6 +898,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\DoewoleBullet_StopGo.cpp">
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_CircleBullet_Death.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_StandardBullet_Death.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Player_Foot.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Player_Effect\04. Foot_Step</Filter>

@@ -71,8 +71,6 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 HRESULT CMainApp::SetUp_Scene(LPDIRECT3DDEVICE9 pGraphicDev, CManagement ** ppManagement)
 {
-	CCollisionMgr::GetInstance()->Clear_ObjectList();
-
 	CScene*		pScene = nullptr;
 	pScene = CLogo::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pScene, E_FAIL);

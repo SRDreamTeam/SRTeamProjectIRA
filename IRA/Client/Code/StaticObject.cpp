@@ -38,19 +38,27 @@ _int CStaticObject::Update_GameObject(const _float& fTimeDelta)
 void CStaticObject::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	__super::Compute_ViewZ(&vPos);
 }
 
 void CStaticObject::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	// ***
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);		// 나중에 지워라 
 
 	if (-1 != m_byDrawID)
 		m_pTextureCom[m_eID]->Set_Texture(m_byDrawID);
 
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	// ***
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);		// 나중에 지워라
 }
 
 STATIC_OBJECT_ID CStaticObject::CompareID(wstring strObjKey)

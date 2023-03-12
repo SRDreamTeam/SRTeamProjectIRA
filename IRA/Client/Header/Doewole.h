@@ -62,7 +62,7 @@ private:
 	_float			CalculateZ(_float fX); 
 
 private:
-	_uint					m_iPattern = 1;
+	_uint					m_iPattern = 6;
 	const _uint				m_iMaxPattern = 8;
 
 	_uint					m_iStandardAttackCnt = 0;
@@ -87,7 +87,5 @@ private:
 	_float					m_fThronX = 128.f;
 
 	_bool					m_bBulletGo = false;
-
-
 };
 

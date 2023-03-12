@@ -40,6 +40,19 @@ void CGameObject::LateUpdate_GameObject()
 		iter.second->LateUpdate_Component ();
 }
 
+void CGameObject::Compute_ViewZ(const _vec3* pPos)
+{
+	_matrix		matCamWorld;
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+	D3DXMatrixInverse(&matCamWorld, 0, &matCamWorld);
+
+	_vec3		vCamPos;
+	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
+
+	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
+}
+
 Engine::CComponent* Engine::CGameObject::Find_Component(const _tchar* pComponentTag, COMPONENTID eID)
 {
 	auto	iter = find_if(m_uMapComponent[eID].begin(), m_uMapComponent[eID].end(), CTag_Finder(pComponentTag));
