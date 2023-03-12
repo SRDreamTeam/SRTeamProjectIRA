@@ -64,6 +64,10 @@ void CEffect_Player_Damage_Font::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 
 }
 

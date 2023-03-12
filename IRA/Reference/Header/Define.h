@@ -3,6 +3,9 @@
 #define		WINCX		1600
 #define		WINCY		900
 
+
+#define		PUBLIC_SCALE  1.7f
+
 #define		VTXCNTX		257
 #define		VTXCNTZ		257
 #define		VTXITV		1

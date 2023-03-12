@@ -41,7 +41,6 @@ public:
 
 
 public:
-	bool  m_bHit = false;
 	void Create_Hit_Effect(void);
 	void Create_Damage_Font(void);
 
@@ -50,7 +49,7 @@ private:
 
 	bool  m_bDisappear = false;
 	float m_AccTime = 0.f;
-	float m_AccMaxTime = 2.f;
+	float m_AccMaxTime = 10.f;
 
 	float m_fPower = 4197.f;
 	int   m_fAttack_Num = 1;

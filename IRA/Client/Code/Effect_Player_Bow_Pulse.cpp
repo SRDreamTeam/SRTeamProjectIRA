@@ -26,7 +26,7 @@ HRESULT CEffect_Player_Bow_Pulse::Ready_GameObject(void)
 
 	_vec3 Scale = { 0.95f , 1.98f, 1.f };
 
-	m_pTransformCom->m_vScale = Scale * 1.2f;
+	m_pTransformCom->m_vScale = Scale * 1.2f * PUBLIC_SCALE;
 
 	m_fMaxFrame = 9.f;
 ;
@@ -59,7 +59,7 @@ _int CEffect_Player_Bow_Pulse::Update_GameObject(const _float& fTimeDelta)
 
 	_vec3 vPos = pSylphBow->m_vPos;
 
-	vPos += EffectDir * 5.f;
+	vPos += EffectDir * 5.f * PUBLIC_SCALE;
 
 	m_pTransformCom->Set_Pos(vPos.x, vPos.y - 2.f, vPos.z);
 
@@ -85,6 +85,11 @@ void CEffect_Player_Bow_Pulse::LateUpdate_GameObject()
 		m_bDead = true;
 		m_fFrame = m_fMaxFrame;
 	}
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CEffect_Player_Bow_Pulse::Render_GameObject()

@@ -7,6 +7,8 @@ enum OBJ_TYPE {  OBJ_PLAYER, OBJ_MONSTER, OBJ_ARROW, OBJ_BULLET , OBJ_LANDSCAPE,
 
 enum ClAWDIR { CLAW_LEFT, CLAW_RIGHT }; // 원 혼자 씀 쏘리
 
+enum SPEC_OBJ_TYPE { SOBJ_PLAYER, SOBJ_BOSS, SOBJ_MONSTER, SOBJ_ARROW, SOBJ_END };
+
 namespace Engine
 {
 	// ID_DYNAMIC : 매 프레임마다 갱신을 해야하는 컴포넌트 집단

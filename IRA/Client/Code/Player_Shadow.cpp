@@ -21,7 +21,7 @@ HRESULT CPlayer_Shadow::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 4.f , 4.f , 1.f };
+	m_pTransformCom->m_vScale = { 4.f * PUBLIC_SCALE  , 4.f * PUBLIC_SCALE  , 1.f };
 
 	_vec3	vRight;
 	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
@@ -49,6 +49,11 @@ _int CPlayer_Shadow::Update_GameObject(const _float& fTimeDelta)
 void CPlayer_Shadow::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CPlayer_Shadow::Render_GameObject()
