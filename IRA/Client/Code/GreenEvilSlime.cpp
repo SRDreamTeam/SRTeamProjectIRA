@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "..\Header\GreenEvilSlime.h"
 #include "Export_Function.h"
+#include "MonsterBullet.h"
+
+#include "Effect_Monster_Dead_1.h"
+#include "Effect_Monster_Dead_2.h"
+
+
 
 CGreenEvilSlime::CGreenEvilSlime(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
@@ -14,6 +20,7 @@ CGreenEvilSlime::CGreenEvilSlime(const CGreenEvilSlime& rhs)
 
 CGreenEvilSlime::~CGreenEvilSlime()
 {
+	Free();
 }
 
 HRESULT CGreenEvilSlime::Ready_GameObject(void)
@@ -21,27 +28,32 @@ HRESULT CGreenEvilSlime::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eName = NAME_SLIME;
 
-	m_pTransformCom->Set_Pos(_float(rand() % 100), 1.f, _float(rand() % 100));
+	m_pTransformCom->Set_Pos(_float(rand() % 200), 5.f, _float(rand() % 200));
 	m_pTransformCom->UpdatePos_OnWorld();
+	m_pTransformCom->m_vScale = { 3.f, 3.f, 1.f };
 	m_fSpeed = 3.f;
 
 	return S_OK;
 }
 
 _int CGreenEvilSlime::Update_GameObject(const _float& fTimeDelta)
-{
+{	
+	if (m_bDead)
+	{	
+		Create_Dead_Effect();
+		return OBJ_DEAD;
+	}
+
 	Frame_Check(fTimeDelta);
+
 	SetUp_OnTerrain();
 	__super::Update_GameObject(fTimeDelta);
-	
-	// 준석 수정 (23.03.02) : Layer_Environment 에서 Layer_GameLogic 으로 정정
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
 	_vec3	vPlayerPos;
 	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 
-	if (MONSTER_IDLE == m_eState)
-		m_pTransformCom->Chase_Target(&vPlayerPos, m_fSpeed, fTimeDelta, m_eName);
+	m_pTransformCom->Chase_Target(&vPlayerPos, m_fSpeed, fTimeDelta, m_eName);
 
 	_vec3	vDir = vPlayerPos - m_pTransformCom->m_vInfo[INFO_POS];
 
@@ -49,12 +61,28 @@ _int CGreenEvilSlime::Update_GameObject(const _float& fTimeDelta)
 		Change_State();
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, this);
 
-	return 0;
+	return OBJ_NOEVENT;
 }
 
 void CGreenEvilSlime::LateUpdate_GameObject()
-{
+{	
+	if (m_bHit)
+	{
+		m_iMonsterHp -= 1;
+
+		if (m_iMonsterHp)
+		{	
+			m_HitCount = 1;
+			m_bHit = false;
+		}
+		else
+		{
+			m_bDead = true;
+		}
+	}
+
 	__super::LateUpdate_GameObject();
 }
 
@@ -64,23 +92,17 @@ void CGreenEvilSlime::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
-	if (5 == (_uint)m_fFrame || 6 == (_uint)m_fFrame)
+	if (m_HitCount && (m_HitCount < 8))
 	{
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, false);
-		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(190, 255, 0, 0));
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(100, 255, 255, 255));
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TFACTOR);
 
-		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
-		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
-
-		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+		m_HitCount += 1;
 	}
+
 	switch (m_eState)
 	{
 	case MONSTER_IDLE:
@@ -100,12 +122,8 @@ void CGreenEvilSlime::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, true);
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTOP_SELECTARG1);
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTOP_SELECTARG1);
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
-	//m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -121,7 +139,7 @@ HRESULT CGreenEvilSlime::Add_Component(void)
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_GreenEvilSlime_Move"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -130,6 +148,12 @@ HRESULT CGreenEvilSlime::Add_Component(void)
 	pComponent = m_pTextureCom_2 = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_GreenEvilSlime_Attack"));
 	NULL_CHECK_RETURN(m_pTextureCom_2, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_GreenEvilSlime_Attack", pComponent });
+
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_pColliderCom->Set_Radius(5.f);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;
 }
@@ -141,7 +165,7 @@ void CGreenEvilSlime::SetUp_OnTerrain(void)
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTex", ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
-	m_pTransformCom->Set_Pos(vPos.x, 1.f, vPos.z);
+	m_pTransformCom->Set_Pos(vPos.x, 0.f, vPos.z);
 }
 
 void CGreenEvilSlime::Change_State(void)
@@ -187,6 +211,20 @@ CGreenEvilSlime* CGreenEvilSlime::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return pInstance;
+}
+
+void CGreenEvilSlime::Create_Dead_Effect(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject = nullptr;
+
+	pGameObject = CEffect_Monster_Dead_1::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS]);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(pGameObject);
 }
 
 void CGreenEvilSlime::Free(void)

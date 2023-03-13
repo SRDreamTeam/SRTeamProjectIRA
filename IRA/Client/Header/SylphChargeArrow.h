@@ -39,6 +39,7 @@ public:
 	void Create_Hit_Effect(void);
 	bool Final_Damage(void);
 	void Create_Damage_Font(void);
+	void Create_Font_List(int damage);
 
 
 private:

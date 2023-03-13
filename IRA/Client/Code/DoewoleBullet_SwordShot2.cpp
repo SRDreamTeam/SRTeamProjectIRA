@@ -32,6 +32,7 @@ HRESULT CDoewoleBullet_SwordShot2::Ready_GameObject(const _vec3& vPos, const _fl
 	m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(-fAngle));
 
 	m_pTransformCom->m_vInfo[INFO_POS] = vPos;
+	m_pTransformCom->UpdatePos_OnWorld();
 
 	CTransform* pTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTransformCom, -1);
@@ -46,7 +47,7 @@ HRESULT CDoewoleBullet_SwordShot2::Ready_GameObject(const _vec3& vPos, const _fl
 _int CDoewoleBullet_SwordShot2::Update_GameObject(const _float& fTimeDelta )
 {
 	if (m_bDead || m_bHit)
-	{
+{
 		Create_DeathEffect();
 		return OBJ_DEAD;
 	}

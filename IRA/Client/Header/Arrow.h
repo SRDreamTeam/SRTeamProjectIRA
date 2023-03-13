@@ -72,6 +72,7 @@ protected:
 public:
 	bool  m_bHit = false;
 	list<int> m_Damage_List;
+	list<bool> m_Cri_List;
 
 };
 

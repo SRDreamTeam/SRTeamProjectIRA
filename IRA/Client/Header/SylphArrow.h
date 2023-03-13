@@ -43,6 +43,7 @@ public:
 public:
 	void Create_Hit_Effect(void);
 	void Create_Damage_Font(void);
+	void Create_Font_List(int damage);
 
 private:
 	virtual void Free(void) override;

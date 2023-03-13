@@ -70,7 +70,6 @@ private:
 
 	void			AreaAtaackPattern(const _float& fTimeDelta);
 	void			Bullet_ActivePattern(const _float& fTimeDelta);
-
 private:
 	HRESULT			Add_Component(void);
 	void			State_Update(const _float& fTimeDelta);
