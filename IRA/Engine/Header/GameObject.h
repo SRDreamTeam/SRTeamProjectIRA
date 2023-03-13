@@ -17,6 +17,7 @@ public:
 public:
 	CComponent*				Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	void					Set_Dead() { m_bDead = true; }
+	_bool					Get_Dead() { return m_bDead; }
 	_float					Get_ViewZ(void) { return m_fViewZ; }
 
 public:

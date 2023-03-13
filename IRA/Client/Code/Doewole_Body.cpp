@@ -30,6 +30,9 @@ HRESULT CDoewole_Body::Ready_GameObject(void)
 
 	m_pTransformCom->m_vScale = { 18.f , 18.f  , 1.f };
 
+	m_iBossMaxHP = 400000.f;
+	m_iBossCurHP = 400000.f;
+
 	m_pColliderCom->Set_Radius(5.f);
 	m_pColliderCom->Set_Offset(_vec3(0.f, -7.f, 0.f));
 
@@ -38,6 +41,15 @@ HRESULT CDoewole_Body::Ready_GameObject(void)
 
 _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_bDead)
+	{
+		m_pOwner->Set_Dead();
+		return OBJ_DEAD;
+	}
+
+	if (m_iBossCurHP < 0)
+		dynamic_cast<CDoewole*> (m_pOwner)->Set_State(BOSS_DEAD);
+
 	if (g_bSphereMake)
 	{
 		if (!m_bSphereMake)
@@ -57,15 +69,6 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	GetDamage_Update(fTimeDelta);
-
-	if (GetAsyncKeyState('1'))
-	{
-		m_bHit = true;
-		m_Damage_List.push_back(1);
-		m_Damage_List.push_back(2);
-		m_Damage_List.push_back(3);
-	}
-
 
 	Frame_Manage(fTimeDelta);
 
@@ -122,9 +125,7 @@ void CDoewole_Body::Render_GameObject()
 	}
 
 	else if (m_eCurState == CDoewole::SCRATCH_ATTACK || m_eCurState == CDoewole::UPGRADE_SCRATCH_ATTACK)
-	{
 		m_pTextureCom[SCRATCH]->Set_Texture((_uint)m_fFrame);
-	}
 
 	else if (m_eCurState == CDoewole::AREA_ATTACK)
 	{
@@ -135,16 +136,13 @@ void CDoewole_Body::Render_GameObject()
 	}
 
 	else if (m_eCurState == CDoewole::UPGRADE_SMASH_ATTACK)
-	{
 		m_pTextureCom[DIPPING]->Set_Texture((_uint)m_fFrame);
-	}
 
 	else if (m_eCurState == CDoewole::BULLET_ACTIVATE_ATTACK)
-	{
 		m_pTextureCom[STAND_FACEON]->Set_Texture((_uint)m_fFrame);
-	}
 
-
+	else if(m_eCurState == CDoewole::BOSS_DEAD)
+		m_pTextureCom[DEAD]->Set_Texture((_uint)m_fFrame);
 
 	m_pBufferCom->Render_Buffer();
 
@@ -197,6 +195,10 @@ HRESULT CDoewole_Body::Add_Component(void)
 	pComponent = m_pTextureCom[DIPPING] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Doewole_Body_Dipping"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body_Dipping", pComponent });
+
+	pComponent = m_pTextureCom[DEAD] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Doewole_Body_Death"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body_Death", pComponent });
 
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
@@ -256,6 +258,9 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 		break;
 	case CDoewole::BULLET_ACTIVATE_ATTACK:
 		Bullet_Activate_Attack(fTimeDelta);
+		break;
+	case CDoewole::BOSS_DEAD:
+		Boss_Dead(fTimeDelta);
 		break;
 	case CDoewole::STATE_END:
 		break;
@@ -588,6 +593,35 @@ void CDoewole_Body::Upgrade_Scratch_Attack(const _float& fTimeDelta)
 void CDoewole_Body::Bullet_Activate_Attack(const _float& fTimeDelta)
 {
 	m_bRender = dynamic_cast<CDoewole*>(m_pOwner)->Get_Disappear();
+
+	if (m_bRender)
+	{
+		m_fMaxFrame = 5.f;
+
+		m_fAccTime += fTimeDelta;
+
+		m_fFrame += m_fMaxFrame * fTimeDelta;
+
+		if (m_fMaxFrame < m_fFrame)
+			m_fFrame = 0.f;
+	}
+
+	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK(pDoewoleTransformCom);
+
+	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 15.f,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].z + 0.1f };
+}
+
+void CDoewole_Body::Boss_Dead(const _float& fTimeDelta)
+{
+	m_fMaxFrame = 17.f;
+
+	m_fFrame += m_fMaxFrame * fTimeDelta;
+
+	if (m_fFrame > m_fMaxFrame)
+		m_bDead = true;
 }
 
 void CDoewole_Body::GetDamage_Update(const _float& fTimeDelta)

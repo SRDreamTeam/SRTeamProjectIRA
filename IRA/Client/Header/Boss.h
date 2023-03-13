@@ -29,6 +29,8 @@ public:
 public:
 	_bool					m_bHit = false;
 	list<int>				m_Damage_List;
+	CGameObject*			m_pArrow = nullptr;
+	_bool					m_bRender = true;
 
 protected:
 	CRcTex*			m_pBufferCom;

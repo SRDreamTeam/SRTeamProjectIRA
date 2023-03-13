@@ -66,6 +66,7 @@ protected:
 	int             m_iState = ARROW_IDLE;
 	int             m_iPreState = ARROW_IDLE;
 
+
 protected:
 	virtual void Free(void) override;
 

@@ -33,14 +33,14 @@ HRESULT CDoewole::Ready_GameObject(void)
 
 	m_pTransformCom->m_vInfo[INFO_POS] = { 100.f , 0.f , 100.f };
 
-	m_iBossMaxHP = 400000.f;
-	m_iBossCurHP = 400000.f;
-
 	return S_OK;
 }
 
 _int CDoewole::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	State_Update(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);
@@ -155,15 +155,15 @@ void CDoewole::Idle(const _float& fTimeDelta)
 		}
 	}
 
-	//else if (10 == m_iPattern)
-	//{
-	//	if (m_fAccTime > 2.f)
-	//	{
-	//		m_fAccTime = 0.f;
-	//		m_eCurState = BULLET_ACTIVATE_ATTACK;
-	//		++m_iPattern;
-	//	}
-	//}
+	else if (10 == m_iPattern)
+	{
+		if (m_fAccTime > 2.f)
+		{
+			m_fAccTime = 0.f;
+			m_eCurState = BULLET_ACTIVATE_ATTACK;
+			++m_iPattern;
+		}
+	}
 }
 
 void CDoewole::Move(const _float& fTimeDelta)
@@ -437,7 +437,6 @@ void CDoewole::Bullet_Activate_Attack(const _float& fTimeDelta)
 	m_fAccTime += fTimeDelta;
 	m_fAccTime2 += fTimeDelta;
 	
-
 	_vec3	vDestPos = { 128.f , 0.f, 128.f };
 	_vec3 vDir;
 
@@ -465,6 +464,13 @@ void CDoewole::Bullet_Activate_Attack(const _float& fTimeDelta)
 		m_bDisappear = true;
 		Bullet_ActivePattern(fTimeDelta);
 	}
+}
+
+void CDoewole::Boss_Dead(const _float& fTimeDelta)
+{
+
+
+
 }
 
 void CDoewole::Create_SwordBullet()
@@ -701,7 +707,6 @@ void CDoewole::AreaAtaackPattern(const _float& fTimeDelta)
 void CDoewole::Bullet_ActivePattern(const _float& fTimeDelta)
 {
 
-
 }
 
 HRESULT CDoewole::Add_Component(void)
@@ -739,7 +744,6 @@ void CDoewole::State_Update(const _float& fTimeDelta)
 		m_iThornCnt = 0;
 		m_bCrossTron = false;
 		m_fThronX = 128.f;
-		m_bBulletGo = false;
 
 		m_iScratchCnt = 0;
 		m_bBullet_Active_Attack = false;
@@ -778,6 +782,9 @@ void CDoewole::State_Update(const _float& fTimeDelta)
 		break;
 	case CDoewole::BULLET_ACTIVATE_ATTACK:
 		Bullet_Activate_Attack(fTimeDelta);
+		break;
+	case CDoewole::BOSS_DEAD:
+		Boss_Dead(fTimeDelta);
 		break;
 	case CDoewole::STATE_END:
 		break;

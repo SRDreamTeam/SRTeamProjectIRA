@@ -216,6 +216,8 @@ bool CSylphArrow::Final_Damage(void)
 
 	m_Damage_List.emplace_back((int)m_fDamage);
 
+
+
 	int temp = (int)m_fDamage;
 	int cnt = 0;
 
@@ -300,6 +302,7 @@ void CSylphArrow::Create_Damage_Font(void)
 		k++;
 	}
 
+	
 
 }
 

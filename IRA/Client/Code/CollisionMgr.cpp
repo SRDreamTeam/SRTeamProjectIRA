@@ -59,9 +59,13 @@ void CCollisionMgr::Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, lis
 		{
 			if (Check_Sphere(Dest, Src))
 			{
+				if (!dynamic_cast<CBoss*>(Dest)->m_bRender)
+					continue;
+
 				dynamic_cast<CArrow*>(Src)->m_bHit = true;
 
 				dynamic_cast<CBoss*>(Dest)->m_bHit = true;
+
 				dynamic_cast<CBoss*>(Dest)->m_Damage_List = dynamic_cast<CArrow*>(Src)->m_Damage_List;
 			}
 		}
