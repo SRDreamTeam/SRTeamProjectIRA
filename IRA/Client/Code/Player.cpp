@@ -8,6 +8,7 @@
 #include "SylphBowPair.h"
 #include "Effect_Player_Bow_Pulse.h"
 #include "Effect_Player_Bow_Charge.h"
+#include "Effect_Player_Charge_Gauge.h"
 #include "Effect_Player_Foot.h"
 #include "KeyMgr.h"
 #include "CollisionMgr.h"
@@ -106,8 +107,10 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	if (m_Is_Effect_Charge_Arrow == true) {
+		m_fSpeed = 10.f * PUBLIC_SCALE;
 		Effect_Charge_Arrow();
 	}
+	
 
 	if (m_Is_Run == true) {
 		m_FootFrame += 1.f * fTimeDelta * 2.f;
@@ -580,7 +583,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 		m_Is_Effect_Charge_Arrow = true;
 
-		m_fChargeFrame += 1.f * fTimeDelta * 0.8f;
+		m_fChargeFrame += 1.f * fTimeDelta * 0.8f * 1.5f;
 		if (m_fChargeFrame > 1.f) {
 			m_Is_Charge_Arrow = true;
 		}
@@ -808,9 +811,11 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (CKeyMgr::Get_Instance()->Key_Up(KEY_RBUTTON)) {
 
 		CEffect_Player_Bow_Charge* pObject = dynamic_cast<CEffect_Player_Bow_Charge*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Bow_Charge_Effect"));
+		CEffect_Player_Charge_Gauge* pObject2 = dynamic_cast<CEffect_Player_Charge_Gauge*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Bow_Gauge_Effect"));
 
 		if (pObject != nullptr) {
 			pObject->Set_Dead();
+			pObject2->Set_Dead();
 			m_Charge_Effect_Cnt = 0;
 		}
 			
@@ -949,6 +954,16 @@ void CPlayer::Effect_Charge_Arrow(void)
 			return;
 
 		pGameLogicLayer->Add_GameObject(L"Bow_Charge_Effect", pGameObject);
+
+
+		pGameObject = CEffect_Player_Charge_Gauge::Create(m_pGraphicDev);
+
+		if (pGameObject == nullptr)
+			return;
+
+		pGameLogicLayer->Add_GameObject(L"Bow_Gauge_Effect", pGameObject);
+
+
 
 		m_Charge_Effect_Cnt++;
 	}
@@ -1094,6 +1109,7 @@ void CPlayer::Update_State()
 
 	if (m_iState == STAND) {
 		m_Is_Run = false;
+		m_fSpeed = 25.f * PUBLIC_SCALE;
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(false);
 			pObject2->Set_Render(false);
@@ -1147,7 +1163,7 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == RUN) {
-
+		m_fSpeed = 25.f * PUBLIC_SCALE;
 		m_Is_Run = true;
 
 		if (pObject1 != nullptr && pObject2 != nullptr) {
@@ -1204,6 +1220,7 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == MOVE_ATTACK) {
+	    m_fSpeed = 20.f * PUBLIC_SCALE;
 		m_Is_Run = false;
 
 		if (pObject1 != nullptr && pObject2 != nullptr) {
@@ -1277,6 +1294,7 @@ void CPlayer::Update_State()
 		}
 	}
 	else if (m_iState == DASH) {
+	    m_fSpeed = 25.f * PUBLIC_SCALE;
 		m_Is_Run = false;
 		if (pObject1 != nullptr && pObject2 != nullptr) {
 			pObject1->Set_Render(false);

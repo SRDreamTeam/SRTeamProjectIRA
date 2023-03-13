@@ -17,6 +17,7 @@ CMonsterBullet::CMonsterBullet(const CMonsterBullet& rhs)
 
 CMonsterBullet::~CMonsterBullet()
 {
+	Free();
 }
 
 HRESULT CMonsterBullet::Ready_GameObject(void)

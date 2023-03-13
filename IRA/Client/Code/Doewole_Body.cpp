@@ -5,6 +5,7 @@
 #include "Doewole_LeftClaw.h"
 #include "CollisionSphere.h"
 #include "CollisionMgr.h"
+#include "Arrow.h"
 #include <KeyMgr.h>
 
 CDoewole_Body::CDoewole_Body(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -68,7 +69,7 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 	CBoss::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
-	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_BOSS, this);
 
 	return 0;
 }
@@ -76,6 +77,9 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 void CDoewole_Body::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	
+	
 
 	/*_vec3	vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);

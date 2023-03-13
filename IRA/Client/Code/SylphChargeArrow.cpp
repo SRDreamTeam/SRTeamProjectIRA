@@ -40,9 +40,10 @@ HRESULT CSylphChargeArrow::Ready_GameObject(void)
 
 	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y - 2.f, m_Fire_Pos.z);
 
+
 	for (int i = 0; i < m_fAttack_Num; i++) {
 
-		m_Cri_List.emplace_back(Final_Damage());
+		m_Cri_List.push_back(Final_Damage());
 	}
 	
 	__super::Ready_GameObject();
@@ -230,7 +231,7 @@ bool CSylphChargeArrow::Final_Damage(void)
 
 	m_fDamage = (m_fPower * 0.5f + m_fRandom_Value) * (1.f + 1.35f * Critical);
 
-	m_Damage_List.emplace_back((int)m_fDamage);
+	m_Damage_List.push_back((int)m_fDamage);
 
 	
 	return Critical;
@@ -245,10 +246,13 @@ void CSylphChargeArrow::Create_Damage_Font(void)
 
 	int k = 0;
 
+
+	
+
+
 	for (int i = 0; i < m_fAttack_Num; i++) {
 
 		int j = 0;
-
 
 		Create_Font_List(m_Damage_List.front());
 
@@ -286,7 +290,7 @@ void CSylphChargeArrow::Create_Damage_Font(void)
 
 void CSylphChargeArrow::Create_Font_List(int damage)
 {
-	int temp = (int)damage;
+	int temp = damage;
 	int cnt = 0;
 
 	while (temp > 0) {
@@ -294,7 +298,7 @@ void CSylphChargeArrow::Create_Font_List(int damage)
 		cnt++;
 	}
 
-	temp = (int)m_fDamage;
+	temp = damage;
 
 	for (int i = 0; i < cnt; i++) {
 

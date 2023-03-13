@@ -46,7 +46,7 @@ _int CSylphBow::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bRender == true) {
 		if (m_bCharge == true) {
-			m_fFrame += 2.f * fTimeDelta * 1.f;
+			m_fFrame += 2.f * fTimeDelta * 1.f * 1.5f;
 			if (m_fFrame > 2.f) {
 				m_fFrame = 2.f;
 			}

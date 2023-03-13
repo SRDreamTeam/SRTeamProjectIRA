@@ -30,6 +30,7 @@ CCollisionMgr::~CCollisionMgr()
 void CCollisionMgr::Collision_Update()
 {
 	Collision_Sphere_Player_Bullet(m_CollisionGroup[OBJ_PLAYER], m_CollisionGroup[OBJ_BULLET]);
+	Collision_Sphere_Boss_Arrow(m_CollisionGroup[OBJ_BOSS], m_CollisionGroup[OBJ_ARROW]);
 	Collision_Sphere_Monster_Arrow(m_CollisionGroup[OBJ_MONSTER], m_CollisionGroup[OBJ_ARROW]);
 
 	Clear_CollisionGroup();
@@ -51,8 +52,6 @@ void CCollisionMgr::Collision_Sphere_Player_Bullet(list<CGameObject*> _Dest, lis
 						dynamic_cast<CBullet*>(Src)->m_bHit = true;
 					}
 						
-
-					
 				}
 			}
 
@@ -61,7 +60,7 @@ void CCollisionMgr::Collision_Sphere_Player_Bullet(list<CGameObject*> _Dest, lis
 }
 
 
-void CCollisionMgr::Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src)
+void CCollisionMgr::Collision_Sphere_Boss_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src)
 {
 	for (auto& Dest : _Dest)
 	{
@@ -76,6 +75,24 @@ void CCollisionMgr::Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, lis
 					dynamic_cast<CBoss*>(Dest)->m_bHit = true;
 					dynamic_cast<CBoss*>(Dest)->m_Damage_List = dynamic_cast<CArrow*>(Src)->m_Damage_List;
 				}
+				
+			}
+		}
+
+	}
+
+}
+
+
+void CCollisionMgr::Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src)
+{
+	for (auto& Dest : _Dest)
+	{
+		for (auto& Src : _Src)
+		{
+			if (Check_Sphere(Dest, Src))
+			{
+				
 				if (dynamic_cast<CMonster*>(Dest) && dynamic_cast<CArrow*>(Src))
 				{
 					dynamic_cast<CArrow*>(Src)->m_bHit = true;
@@ -87,6 +104,9 @@ void CCollisionMgr::Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, lis
 	}
 
 }
+
+
+
 
 bool CCollisionMgr::Check_Sphere(CGameObject* pDest, CGameObject* pSrc)
 {

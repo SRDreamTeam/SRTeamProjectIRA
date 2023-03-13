@@ -33,6 +33,7 @@ public:
 public:
 	_bool					m_bHit = false;
 	list<int>				m_Damage_List;
+	
 
 protected:
 	CRcTex*			m_pBufferCom;
