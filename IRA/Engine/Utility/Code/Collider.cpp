@@ -13,6 +13,8 @@ CCollider::~CCollider()
 
 HRESULT CCollider::Ready_CCollider()
 {
+
+
 	return S_OK;
 }
 

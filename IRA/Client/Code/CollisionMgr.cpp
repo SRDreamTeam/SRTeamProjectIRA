@@ -4,6 +4,8 @@
 #include "DoewoleBullet_Standard.h"
 #include "DoewoleBullet_Circle.h"
 #include "Player.h"
+#include "Arrow.h"
+#include "DestructibleObj.h"
 
 IMPLEMENT_SINGLETON(CCollisionMgr)
 
@@ -20,6 +22,7 @@ CCollisionMgr::~CCollisionMgr()
 void CCollisionMgr::Collision_Update()
 {
 	Collision_Sphere(m_CollisionGroup[OBJ_PLAYER], m_CollisionGroup[OBJ_BULLET]);
+	Collision_Sphere(m_CollisionGroup[OBJ_ARROW], m_CollisionGroup[OBJ_LANDSCAPE]);
 
 	Clear_CollisionGroup();
 }
@@ -36,6 +39,10 @@ void CCollisionMgr::Collision_Sphere(list<CGameObject*> _Dest, list<CGameObject*
 				{
 					dynamic_cast<CPlayer*>(Dest)->m_bHit = true;
 					dynamic_cast<CDoewoleBullet_Circle*>(Src)->m_bHit = true;
+				}
+				else if (dynamic_cast<CArrow*>(Dest) && dynamic_cast<CLandscape*>(Src))
+				{
+					dynamic_cast<CDestructibleObj*>(Src)->Set_IsHit(true);
 				}
 
 			}

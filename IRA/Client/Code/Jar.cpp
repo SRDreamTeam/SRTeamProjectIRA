@@ -14,6 +14,7 @@ CJar::CJar(const CJar& rhs)
 
 CJar::~CJar()
 {
+	Free();
 }
 
 HRESULT CJar::Ready_GameObject(void)
@@ -25,7 +26,7 @@ HRESULT CJar::Ready_GameObject(void)
 
 _int CJar::Update_GameObject(const _float& fTimeDelta)
 {	
-	//SetUp_OnTerrain();
+	m_pTransformCom->Set_Pos(300.f, 0.2f, 300.f);
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -41,15 +42,15 @@ void CJar::LateUpdate_GameObject()
 
 void CJar::Render_GameObject()
 {
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	//if (-1 != m_byDrawID)
-	//	m_pTextureCom->Set_Texture(m_byDrawID);
+	if (-1 != m_byDrawID)
+		m_pTextureCom->Set_Texture(m_byDrawID);
 
-	//m_pBufferCom->Render_Buffer();
+	m_pBufferCom->Render_Buffer();
 
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 CJar* CJar::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -72,9 +73,19 @@ void CJar::Free(void)
 
 HRESULT CJar::Add_Component(void)
 {
-	return E_NOTIMPL;
-}
+	Engine::CComponent* pComponent = nullptr;
 
-void CJar::SetUp_OnTerrain(void)
-{
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_ProtoComponent(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
+	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+	pComponent = m_pTextureCom[JAR] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Spr_HistoricSites_DecoObject_"));
+	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Spr_HistoricSites_DecoObject_", pComponent });
+
+	return S_OK;
 }

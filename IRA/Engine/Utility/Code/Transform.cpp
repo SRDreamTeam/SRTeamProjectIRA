@@ -664,7 +664,6 @@ _int Engine::CTransform::Update_Component(const _float& fTimeDelta)
 			D3DXVec3TransformNormal(&m_vInfo[i], &m_vInfo[i], &matRot[j]);
 		}
 	}
-
 	
 
 	for (size_t i = 0; i < INFO_END; ++i)

@@ -1,14 +1,23 @@
 #include "stdafx.h"
 #include "..\Header\DestructibleObj.h"
 #include "Export_Function.h"
+#include "Effect_Thorn_Hit.h"
+#include "Effect_Thorn_Destruction.h"
+#include "KeyMgr.h"
+#include "CollisionSphere.h"
 
 CDestructibleObj::CDestructibleObj(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CDynamicObject(pGraphicDev)
+	, m_pColliderCom(nullptr)
 {
 }
 
 CDestructibleObj::CDestructibleObj(const CDestructibleObj& rhs)
 	: CDynamicObject(rhs)
+	, m_pColliderCom(rhs.m_pColliderCom)
+	, m_iHitCnt(rhs.m_iHitCnt)
+	, m_bHit(rhs.m_bHit)
+	, m_fFrame(rhs.m_fFrame)
 {
 }
 
@@ -18,12 +27,10 @@ CDestructibleObj::~CDestructibleObj()
 
 HRESULT CDestructibleObj::Ready_GameObject(void)
 {
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
-	//m_pColliderCom->Set_Radius()
-
 
 
 	return S_OK;
@@ -31,16 +38,46 @@ HRESULT CDestructibleObj::Ready_GameObject(void)
 
 _int CDestructibleObj::Update_GameObject(const _float& fTimeDelta)
 {	
-	//SetUp_OnTerrain();
-	if (4 < m_iHitCnt)
-		m_fFrame = 0.f;
+	CKeyMgr::Get_Instance()->Update();
+
+	if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_1)) {
+		m_bHit = true;
+	}
+
+
+	if (m_bSetCollider)
+	{
+		m_pColliderCom->Set_Radius(m_fColliderRadius);
+		m_pColliderCom->Set_SpherePos(m_vColliderPos);
+
+		m_bSetCollider = false;
+	}
+
+
+	if (g_bSphereMake)
+	{
+		if (!m_bSphereMake)
+		{
+			CGameObject* pCollisionSphere = CCollisionSphere::Create(m_pGraphicDev, this,COLLIDER_STATIC);
+			NULL_CHECK(pCollisionSphere);
+			CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+			pLayer->Add_BulletObject(pCollisionSphere);
+			m_bSphereMake = true;
+		}
+	}
 
 	if (m_bHit)
 	{
 		++m_iHitCnt;
 		++m_fFrame;
+		Create_Hit_Effect();
 		m_bHit = false;
+
+		if(m_pTextureCom[m_eID]->Get_MaxFrameCnt() - 1 < m_fFrame)		// 서순!!! ++하고 검사하기
+			m_fFrame = m_pTextureCom[m_eID]->Get_MaxFrameCnt() - 1;
 	}
+
+
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -115,7 +152,7 @@ HRESULT CDestructibleObj::Add_Component(void)
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
 	m_pColliderCom->Set_TransformCom(m_pTransformCom);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Collider", pComponent });
 
 	pComponent = m_pTextureCom[THORN1] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Spr_DestructibleObject_Infectionthorn01_"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -141,18 +178,45 @@ HRESULT CDestructibleObj::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Spr_DestructibleObject_Infectionthorn06_", pComponent });
 
-	pComponent = m_pTextureCom[THORN_DEST_EFFECT] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Spr_InfectionThorns_Effect_"));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Spr_InfectionThorns_Effect_", pComponent });
-
-	pComponent = m_pTextureCom[THORN_HIT_EFFECT] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Spr_InfectionThorns_HitEffect_"));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Spr_InfectionThorns_HitEffect_", pComponent });
-
-
 	return S_OK;
 }
 
-void CDestructibleObj::SetUp_OnTerrain(void)
+void CDestructibleObj::Create_Hit_Effect()
 {
+	switch (m_eID)
+	{
+	case THORN1: case THORN2: case THORN3: case THORN4: case THORN5: case THORN6:
+	{
+		CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+		_vec3 vPos = m_pTransformCom->m_vInfo[INFO_POS];
+		_vec3 vLocal;
+
+		if (1 == m_iHitCnt)
+		{
+			_vec3 vTemp = { 0.f, 0.5f, 0.f };
+			vLocal = vTemp;
+		}
+		else if( 2 == m_iHitCnt)
+		{
+			_vec3 vTemp = { 0.f, 0.0f, 0.f };
+			vLocal = vTemp;
+		}
+		else
+		{
+			_vec3 vTemp = { 0.f, -0.5f, 0.f };
+			vLocal = vTemp;
+		}
+
+		_matrix matWorld = *(m_pTransformCom->Get_WorldMatrixPointer());
+
+		D3DXVec3TransformCoord(&vLocal, &vLocal, &matWorld);
+		vPos.y = vLocal.y;
+		CGameObject* pGameObject = CEffect_Thorn_Hit::Create(m_pGraphicDev, vPos);
+		NULL_CHECK(pGameObject);
+		pGameLogicLayer->Add_BulletObject(pGameObject);
+
+	}
+	break;
+	}
+
 }

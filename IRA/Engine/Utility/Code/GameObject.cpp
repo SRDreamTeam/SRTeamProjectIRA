@@ -1,4 +1,5 @@
 #include "..\..\Header\GameObject.h"
+#include "Transform.h"
 
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -48,9 +49,11 @@ void CGameObject::Compute_ViewZ(const _vec3* pPos)
 	D3DXMatrixInverse(&matCamWorld, 0, &matCamWorld);
 
 	_vec3		vCamPos;
-	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
+    memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
 
+	vCamPos.x = pPos->x;
 	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
+
 }
 
 Engine::CComponent* Engine::CGameObject::Find_Component(const _tchar* pComponentTag, COMPONENTID eID)

@@ -38,13 +38,10 @@ public:
 protected:
 	virtual HRESULT	Add_Component(void)PURE;				
 	virtual void SetUp_OnTerrain(void)PURE;					
-	//virtual void Change_State(void)PURE;					
-	//virtual void Frame_Check(const _float& fTimeDelta)PURE;
 
 protected:
 	CRcTex*			m_pBufferCom;
 	CTransform*		m_pTransformCom;
-	//CCollider*		m_pColliderCom;
 	CCalculator*	m_pCalculatorCom;
 
 	_byte			m_byDrawID;
@@ -54,8 +51,6 @@ protected:
 
 	_vec3			m_vColliderPos;
 	_float			m_fColliderRadius;
-
-	//_float			m_fFrame;
 
 protected:
 	virtual void Free(void) override;

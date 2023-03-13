@@ -32,7 +32,7 @@ public:
 
 protected:
 	virtual HRESULT	Add_Component(void)override;
-	virtual void SetUp_OnTerrain(void)override;
+	virtual void SetUp_OnTerrain(void) {}
 	//virtual void Change_State(void)PURE;					
 	//virtual void Frame_Check(const _float& fTimeDelta)PURE;
 

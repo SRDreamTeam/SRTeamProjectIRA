@@ -4,18 +4,20 @@
 
 CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
-	, m_pBufferCom(nullptr)
 	, m_pTextureCom(nullptr)
 	, m_pTransformCom(nullptr)
 {
+	for (int i = 0; i < 4; ++i)
+		m_pBufferCom[i] = nullptr;
 }
 
 CTerrain::CTerrain(const CTerrain & rhs)
 	: Engine::CGameObject(rhs)
-	, m_pBufferCom(rhs.m_pBufferCom)
 	, m_pTextureCom(rhs.m_pTextureCom)
 	, m_pTransformCom(rhs.m_pTransformCom)
 {
+	for (int i = 0; i < 4; ++i)
+		m_pBufferCom[i] = rhs.m_pBufferCom[i];
 }
 
 CTerrain::~CTerrain()
@@ -65,7 +67,11 @@ void CTerrain::Render_GameObject()
 		m_pTextureCom->Set_Texture(m_byDrawID);
 
 	FAILED_CHECK_RETURN(SetUp_Material(), );
-	m_pBufferCom->Render_Buffer();
+
+	//for(int i = 0; i < 4; ++i)
+	//	m_pBufferCom[i]->Render_Buffer();
+
+	m_pBufferCom[0]->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
@@ -74,9 +80,21 @@ HRESULT CTerrain::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(Engine::Clone_ProtoComponent(L"Proto_TerrainTex"));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	pComponent = m_pBufferCom[0] = dynamic_cast<CTerrainTex*>(Engine::Clone_ProtoComponent(L"Proto_TerrainTex"));
+	NULL_CHECK_RETURN(m_pBufferCom[0], E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
+
+	//pComponent = m_pBufferCom[1] = dynamic_cast<CTerrainTex*>(Engine::Clone_ProtoComponent(L"Proto_TerrainTex_Add_Vert"));
+	//NULL_CHECK_RETURN(m_pBufferCom[1], E_FAIL);
+	//m_uMapComponent[ID_STATIC].insert({ L"Proto_TerrainTex_Add_Vert", pComponent });
+
+	//pComponent = m_pBufferCom[2] = dynamic_cast<CTerrainTex*>(Engine::Clone_ProtoComponent(L"Proto_TerrainTex_Add_Horz"));
+	//NULL_CHECK_RETURN(m_pBufferCom[2], E_FAIL);
+	//m_uMapComponent[ID_STATIC].insert({ L"Proto_TerrainTex_Add_Horz", pComponent });
+
+	//pComponent = m_pBufferCom[3] = dynamic_cast<CTerrainTex*>(Engine::Clone_ProtoComponent(L"Proto_TerrainTex_Add_Horz"));
+	//NULL_CHECK_RETURN(m_pBufferCom[3], E_FAIL);
+	//m_uMapComponent[ID_STATIC].insert({ L"Proto_TerrainTex_Add_Horz", pComponent });
 
  	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
  	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
@@ -85,12 +103,6 @@ HRESULT CTerrain::Add_Component(void)
  	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Terrain"));
  	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
  	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Terrain", pComponent });
-
-// 
-// 	pComponent = m_pBufferCom = Engine::CTriCol::Create(m_pGraphicDev);
-// 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-// 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Buffer", pComponent });
-
 
 	return S_OK;
 }
