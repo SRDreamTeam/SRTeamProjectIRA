@@ -18,6 +18,7 @@ CMonsterBullet_2::CMonsterBullet_2(const CMonsterBullet_2& rhs)
 
 CMonsterBullet_2::~CMonsterBullet_2()
 {
+	Free();
 }
 
 

@@ -17,6 +17,7 @@ CEvilSoul::CEvilSoul(const CEvilSoul& rhs)
 
 CEvilSoul::~CEvilSoul()
 {
+	Free();
 }
 
 

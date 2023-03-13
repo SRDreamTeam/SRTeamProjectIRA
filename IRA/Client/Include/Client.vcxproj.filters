@@ -346,6 +346,9 @@
     <Filter Include="02. GameObject\Stage\00. Player\03. Shadow">
       <UniqueIdentifier>{9b35ddb3-ff4e-46b9-a61c-ce310575b735}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\05. Effect_Player_Charge_Gauge">
+      <UniqueIdentifier>{ce9d5a77-209e-49ef-b7ea-d7283b6ef65e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\Stage\09. FrontUi\06. Boss_Bar">
       <UniqueIdentifier>{57835574-bd38-42ab-a538-d8aca296dc9a}</UniqueIdentifier>
     </Filter>
@@ -665,6 +668,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\Player_Shadow.h">
       <Filter>02. GameObject\Stage\00. Player\03. Shadow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Player_Charge_Gauge.h">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\05. Effect_Player_Charge_Gauge</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
       <Filter>02. GameObject\Stage\05. Effect</Filter>
@@ -997,6 +1003,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player_Shadow.cpp">
       <Filter>02. GameObject\Stage\00. Player\03. Shadow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Player_Charge_Gauge.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\05. Effect_Player_Charge_Gauge</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
       <Filter>02. GameObject\Stage\05. Effect</Filter>
