@@ -8,7 +8,7 @@ class CRcTex;
 class CTransform;
 class CTexture;
 class CCalculator;
-//class CCollider;
+class CCollider;
 
 END
 
@@ -39,6 +39,7 @@ private:
 	_int	m_iHitCnt = 0;
 	_bool	m_bHit = false;
 	_float	m_fFrame = 0.f;
+	CCollider*		m_pColliderCom;
 
 public:
 	static CDestructibleObj* Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -8,8 +8,6 @@ class CRcTex;
 class CTransform;
 class CTexture;
 class CCalculator;
-//class CCollider;
-
 END
 
 class CLandscape : public Engine::CGameObject

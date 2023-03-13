@@ -22,6 +22,10 @@ HRESULT CDestructibleObj::Ready_GameObject(void)
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
+	//m_pColliderCom->Set_Radius()
+
+
+
 	return S_OK;
 }
 
@@ -107,6 +111,11 @@ HRESULT CDestructibleObj::Add_Component(void)
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_ProtoComponent(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(m_pCalculatorCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	pComponent = m_pTextureCom[THORN1] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Spr_DestructibleObject_Infectionthorn01_"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
