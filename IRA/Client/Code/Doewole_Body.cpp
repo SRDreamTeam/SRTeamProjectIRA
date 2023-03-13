@@ -61,9 +61,9 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 	if (GetAsyncKeyState('1'))
 	{
 		m_bHit = true;
-		m_DamageList.push_back(1);
-		m_DamageList.push_back(2);
-		m_DamageList.push_back(3);
+		m_Damage_List.push_back(1);
+		m_Damage_List.push_back(2);
+		m_Damage_List.push_back(3);
 	}
 
 
@@ -594,12 +594,12 @@ void CDoewole_Body::GetDamage_Update(const _float& fTimeDelta)
 {
 	m_fDamageTimeDelta += fTimeDelta;
 
-	if (!m_DamageList.empty())
+	if (!m_Damage_List.empty())
 	{
 		if (m_fDamageTimeDelta > 0.1f)
 		{
-			m_iBossCurHP -= m_DamageList.front();
-			m_DamageList.pop_front();
+			m_iBossCurHP -= m_Damage_List.front();
+			m_Damage_List.pop_front();
 
 			m_fDamageTimeDelta = 0.f;
 		}

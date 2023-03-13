@@ -43,7 +43,7 @@ _int CLandscape::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
 }

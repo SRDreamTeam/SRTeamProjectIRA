@@ -227,6 +227,8 @@ bool CSylphChargeArrow::Final_Damage(void)
 
 	m_fDamage = (m_fPower * 0.5f + m_fRandom_Value) * (1.f + 1.35f * Critical);
 
+	m_Damage_List.emplace_back((int)m_fDamage);
+
 	int temp = (int)m_fDamage;
 	int cnt = 0;
 
