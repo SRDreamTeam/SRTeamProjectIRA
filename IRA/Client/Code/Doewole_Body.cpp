@@ -30,6 +30,9 @@ HRESULT CDoewole_Body::Ready_GameObject(void)
 
 	m_pTransformCom->m_vScale = { 18.f , 18.f  , 1.f };
 
+	m_iBossMaxHP = 400000.f;
+	m_iBossCurHP = 400000.f;
+
 	m_pColliderCom->Set_Radius(5.f);
 	m_pColliderCom->Set_Offset(_vec3(0.f, -7.f, 0.f));
 
