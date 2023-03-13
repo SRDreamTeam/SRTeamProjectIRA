@@ -191,6 +191,7 @@
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\Effect_AlertCircle.h" />
     <ClInclude Include="..\Header\Effect_AlertRect.h" />
+    <ClInclude Include="..\Header\Effect_Player_Charge_Gauge.h" />
     <ClInclude Include="..\Header\Effect_SwordShot_Death.h" />
     <ClInclude Include="..\Header\Effect_StandardBullet_Death.h" />
     <ClInclude Include="..\Header\Effect_Doewole_ChargeCircle.h" />
@@ -288,6 +289,7 @@
     <ClCompile Include="..\Code\CollsionSphere.cpp" />
     <ClCompile Include="..\Code\Effect_AlertCircle.cpp" />
     <ClCompile Include="..\Code\Effect_AlertRect.cpp" />
+    <ClCompile Include="..\Code\Effect_Player_Charge_Gauge.cpp" />
     <ClCompile Include="..\Code\Effect_SwordShot_Death.cpp" />
     <ClCompile Include="..\Code\Effect_StandardBullet_Death.cpp" />
     <ClCompile Include="..\Code\Effect_Doewole_ChargeCircle.cpp" />

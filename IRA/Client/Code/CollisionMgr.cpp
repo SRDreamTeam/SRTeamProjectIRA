@@ -46,8 +46,6 @@ void CCollisionMgr::Collision_Sphere_Player_Bullet(list<CGameObject*> _Dest, lis
 						dynamic_cast<CBullet*>(Src)->m_bHit = true;
 					}
 						
-
-					
 				}
 			}
 

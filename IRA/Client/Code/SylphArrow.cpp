@@ -304,7 +304,7 @@ void CSylphArrow::Create_Font_List(int damage)
 		cnt++;
 	}
 
-	temp = (int)m_fDamage;
+	temp = (int)damage;
 
 	for (int i = 0; i < cnt; i++) {
 
