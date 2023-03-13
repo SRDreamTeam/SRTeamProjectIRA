@@ -26,6 +26,7 @@ public:
 
 private:
 	void	Create_DeathEffect();
+	void	Check_Boss_Dead();
 
 private:
 	_float		m_fMaxframe = 0.f;

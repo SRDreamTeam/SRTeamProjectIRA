@@ -38,6 +38,9 @@ HRESULT CDoewole::Ready_GameObject(void)
 
 _int CDoewole::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	State_Update(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);
@@ -463,6 +466,13 @@ void CDoewole::Bullet_Activate_Attack(const _float& fTimeDelta)
 	}
 }
 
+void CDoewole::Boss_Dead(const _float& fTimeDelta)
+{
+
+
+
+}
+
 void CDoewole::Create_SwordBullet()
 {
 	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
@@ -697,7 +707,6 @@ void CDoewole::AreaAtaackPattern(const _float& fTimeDelta)
 void CDoewole::Bullet_ActivePattern(const _float& fTimeDelta)
 {
 
-
 }
 
 HRESULT CDoewole::Add_Component(void)
@@ -735,7 +744,6 @@ void CDoewole::State_Update(const _float& fTimeDelta)
 		m_iThornCnt = 0;
 		m_bCrossTron = false;
 		m_fThronX = 128.f;
-		m_bBulletGo = false;
 
 		m_iScratchCnt = 0;
 		m_bBullet_Active_Attack = false;
@@ -774,6 +782,9 @@ void CDoewole::State_Update(const _float& fTimeDelta)
 		break;
 	case CDoewole::BULLET_ACTIVATE_ATTACK:
 		Bullet_Activate_Attack(fTimeDelta);
+		break;
+	case CDoewole::BOSS_DEAD:
+		Boss_Dead(fTimeDelta);
 		break;
 	case CDoewole::STATE_END:
 		break;

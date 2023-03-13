@@ -53,6 +53,8 @@ _int CDoewoleBullet_StopGo::Update_GameObject(const _float& fTimeDelta)
 
 	Frame_Check(fTimeDelta);
 
+	Check_Boss_Dead();
+
 	m_fAccTime += fTimeDelta;
 
 	if (!m_bFirstStop)
@@ -174,4 +176,12 @@ void CDoewoleBullet_StopGo::Create_DeathEffect()
 		return;
 
 	pGameLogicLayer->Add_BulletObject(pGameObject);
+}
+
+void CDoewoleBullet_StopGo::Check_Boss_Dead()
+{
+	CDoewole* pDoewole = dynamic_cast<CDoewole*> (Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole"));
+
+	if (pDoewole->Get_State() == CDoewole::BOSS_DEAD)
+		m_bDead = true;
 }

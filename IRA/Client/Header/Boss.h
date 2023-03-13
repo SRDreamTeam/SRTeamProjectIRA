@@ -33,7 +33,8 @@ public:
 public:
 	_bool					m_bHit = false;
 	list<int>				m_Damage_List;
-	
+	CGameObject*			m_pArrow = nullptr;
+	_bool					m_bRender = true;
 
 protected:
 	CRcTex*			m_pBufferCom;
@@ -44,8 +45,8 @@ protected:
 protected:
 	_float			m_fFrame = 0.f;
 	_float			m_fMaxFrame = 0.f;
-	_int			m_iBossMaxHP = 0.f;
-	_int			m_iBossCurHP = 0.f;
+	_int			m_iBossMaxHP = 0;
+	_int			m_iBossCurHP = 0;
 
 	_float			m_fDamageTimeDelta = 0.f;
 	

@@ -33,6 +33,13 @@ HRESULT CDoewole_Shadow::Ready_GameObject(void)
 
 _int CDoewole_Shadow::Update_GameObject(const _float& fTimeDelta)
 {
+	m_bDead = m_pOwner->Get_Dead();
+
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
+
 	// Doewole의 위치에 맞게 조정
 	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pDoewoleTransformCom, -1);

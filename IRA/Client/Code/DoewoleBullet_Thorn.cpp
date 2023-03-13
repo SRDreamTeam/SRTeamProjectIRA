@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\DoewoleBullet_Thorn.h"
 #include "Export_Function.h"
+#include <Doewole.h>
 
 CDoewoleBullet_Thorn::CDoewoleBullet_Thorn(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -37,6 +38,8 @@ _int CDoewoleBullet_Thorn::Update_GameObject(const _float& fTimeDelta)
 	m_fAccTime += fTimeDelta;
 
 	Frame_Check(fTimeDelta);
+
+	Check_Boss_Dead();
 
 	CGameObject::Update_GameObject(fTimeDelta);
 
@@ -136,6 +139,13 @@ CDoewoleBullet_Thorn* CDoewoleBullet_Thorn::Create(LPDIRECT3DDEVICE9 pGraphicDev
 	return pInstance;
 }
 
+void CDoewoleBullet_Thorn::Check_Boss_Dead()
+{
+	CDoewole* pDoewole = dynamic_cast<CDoewole*> (Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole"));
+
+	if (pDoewole->Get_State() == CDoewole::BOSS_DEAD)
+		m_bDead = true;
+}
 
 void CDoewoleBullet_Thorn::Free(void)
 {
