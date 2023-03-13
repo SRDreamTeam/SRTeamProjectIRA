@@ -64,6 +64,10 @@ void CEffect_Player_Damage_Font::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 
 }
 
@@ -90,9 +94,12 @@ void CEffect_Player_Damage_Font::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	if (m_Is_Critical)
+	if (m_Is_Critical) {
+		m_pTransformCom->m_vScale = { 2.f,2.f,1.f };
 		m_pTextureCom->Set_Texture((_uint)m_fFrame);
+	}
 	else {
+		m_pTransformCom->m_vScale = { 1.3f,1.3f,1.3f };
 		m_pTextureCom_Sub->Set_Texture((_uint)m_fFrame);
 	}
 

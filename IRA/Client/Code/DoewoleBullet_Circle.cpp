@@ -2,7 +2,7 @@
 #include "..\Header\DoewoleBullet_Circle.h"
 #include "Export_Function.h"
 #include <Effect_CircleBullet_Death.h>
-#include "CollisionMgr.h"
+#include <Doewole.h>
 
 CDoewoleBullet_Circle::CDoewoleBullet_Circle(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -29,8 +29,6 @@ HRESULT CDoewoleBullet_Circle::Ready_GameObject(const _vec3& vPos)
 	m_pTransformCom->m_vScale = { 2.f , 2.f , 2.f };
 	m_pTransformCom->m_vInfo[INFO_POS] = vPos;
 
-	m_pColliderCom->Set_Radius(10.f);
-
 	CTransform* pTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pTransformCom, -1);
 
@@ -52,6 +50,8 @@ _int CDoewoleBullet_Circle::Update_GameObject(const _float& fTimeDelta)
 	m_fAccTime += fTimeDelta;
 
 	Frame_Check(fTimeDelta);
+
+	Check_Boss_Dead();
 
 	if (!m_bChangeDir)
 	{
@@ -120,6 +120,7 @@ HRESULT CDoewoleBullet_Circle::Add_Component(void)
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
 	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_pColliderCom->Set_Radius(3.f);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;
@@ -161,6 +162,14 @@ void CDoewoleBullet_Circle::Create_DeathEffect()
 		return;
 
 	pGameLogicLayer->Add_BulletObject(pGameObject);
+}
+
+void CDoewoleBullet_Circle::Check_Boss_Dead()
+{
+	CDoewole* pDoewole = dynamic_cast<CDoewole*> (Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole"));
+
+	if (pDoewole->Get_State() == CDoewole::BOSS_DEAD)
+		m_bDead = true;
 }
 
 void CDoewoleBullet_Circle::Free(void)

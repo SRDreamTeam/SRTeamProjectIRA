@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Header\DoewoleBullet_Thorn.h"
 #include "Export_Function.h"
+#include <Doewole.h>
 
 CDoewoleBullet_Thorn::CDoewoleBullet_Thorn(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -38,9 +39,12 @@ _int CDoewoleBullet_Thorn::Update_GameObject(const _float& fTimeDelta)
 
 	Frame_Check(fTimeDelta);
 
+	Check_Boss_Dead();
+
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_BULLET, this);
 
 	return OBJ_NOEVENT;
 }
@@ -81,6 +85,12 @@ HRESULT CDoewoleBullet_Thorn::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Thorn"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Bullet_Doewole_Thorn", pComponent });
+
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_pColliderCom->Set_Radius(3.f);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;
 }
@@ -129,6 +139,13 @@ CDoewoleBullet_Thorn* CDoewoleBullet_Thorn::Create(LPDIRECT3DDEVICE9 pGraphicDev
 	return pInstance;
 }
 
+void CDoewoleBullet_Thorn::Check_Boss_Dead()
+{
+	CDoewole* pDoewole = dynamic_cast<CDoewole*> (Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole"));
+
+	if (pDoewole->Get_State() == CDoewole::BOSS_DEAD)
+		m_bDead = true;
+}
 
 void CDoewoleBullet_Thorn::Free(void)
 {

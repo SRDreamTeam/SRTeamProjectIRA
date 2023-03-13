@@ -66,8 +66,14 @@ protected:
 	int             m_iState = ARROW_IDLE;
 	int             m_iPreState = ARROW_IDLE;
 
+
 protected:
 	virtual void Free(void) override;
+
+public:
+	bool  m_bHit = false;
+	list<int> m_Damage_List;
+	list<bool> m_Cri_List;
 
 };
 

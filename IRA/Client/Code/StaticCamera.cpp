@@ -34,8 +34,13 @@ HRESULT CStaticCamera::Ready_GameObject(const _vec3* pEye,
 	m_fFar = fFar;
 
 
-	m_fAngle = D3DXToRadian(320.f);
+	m_fAngle = D3DXToRadian(300.f);
 	m_fDistance = 15.f;
+
+	m_fDisZ = 3.f;
+	m_fDisY = 17.f;
+	m_AtY = 5.f;
+	m_AtZ = 15.f;
 
 	FAILED_CHECK_RETURN(__super::Ready_GameObject(), E_FAIL);
 
@@ -46,9 +51,13 @@ HRESULT CStaticCamera::Ready_GameObject(const _vec3* pEye,
 
 _int CStaticCamera::Update_GameObject(const _float& fTimeDelta)
 {
+
 	Key_Input(fTimeDelta);
 
+	
 	Target_Renewal();
+
+	
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
@@ -61,16 +70,35 @@ void CStaticCamera::LateUpdate_GameObject()
 void CStaticCamera::Key_Input(const _float& fTimeDelta)
 {
 	if (Get_DIKeyState(DIK_UP) & 0x80)
-		m_fDistance -= 10.f * fTimeDelta;
+		m_fDisY += 10.f * fTimeDelta;
 
 	if (Get_DIKeyState(DIK_DOWN) & 0x80)
-		m_fDistance += 10.f * fTimeDelta;
+		m_fDisY -= 10.f * fTimeDelta;
+
+	if (Get_DIKeyState(DIK_Q) & 0x80)
+		m_fDisZ += 10.f * fTimeDelta;
+
+	if (Get_DIKeyState(DIK_E) & 0x80)
+		m_fDisZ -= 10.f * fTimeDelta;
+
+	if (Get_DIKeyState(DIK_Z) & 0x80)
+		m_AtZ += 10.f * fTimeDelta;
+
+	if (Get_DIKeyState(DIK_X) & 0x80)
+		m_AtZ -= 10.f * fTimeDelta;
+
+	if (Get_DIKeyState(DIK_C) & 0x80)
+		m_AtY += 10.f * fTimeDelta;
+
+	if (Get_DIKeyState(DIK_V) & 0x80)
+		m_AtY -= 10.f * fTimeDelta;
 
 	if (Get_DIKeyState(DIK_LEFT) & 0x80)
 		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
 
 	if (Get_DIKeyState(DIK_RIGHT) & 0x80)
 		m_fAngle -= D3DXToRadian(180.f) * fTimeDelta;
+
 }
 
 void CStaticCamera::Target_Renewal(void)
@@ -84,8 +112,9 @@ void CStaticCamera::Target_Renewal(void)
 	m_vEye = vLook * -1.f;
 	D3DXVec3Normalize(&m_vEye, &m_vEye);
 
-	m_vEye.y += 2.f;
-	m_vEye *= m_fDistance;
+	m_vEye.y += m_fHeight;
+	m_vEye.z *= m_fDisZ;
+	m_vEye.y *= m_fDisY;
 
 	_vec3	vRight;
 	memcpy(vRight, &pPlayerTransform->m_matWorld.m[0][0], sizeof(_vec3));
@@ -98,8 +127,11 @@ void CStaticCamera::Target_Renewal(void)
 	D3DXVec3TransformNormal(&m_vEye, &m_vEye, &matRot);
 
 	m_vEye += pPlayerTransform->m_vInfo[INFO_POS];
+	m_vEye.z += m_AtZ;
+
 	m_vAt = pPlayerTransform->m_vInfo[INFO_POS];
-	//m_vEye.y += 20.f;
+	m_vAt.y += m_AtY;
+	
 }
 
 

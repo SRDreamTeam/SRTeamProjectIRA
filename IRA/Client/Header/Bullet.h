@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Base.h"
+#include "CollisionMgr.h"
 
 BEGIN(Engine)
 
@@ -31,6 +32,9 @@ protected:
 	virtual void Change_State(void)PURE;
 	virtual void Frame_Check(const _float& fTimeDelta)PURE;
 	virtual void Distance_Dead_Check(void)PURE;
+
+public:
+	_bool				m_bHit = false;
 
 protected:
 	CRcTex*			m_pBufferCom;

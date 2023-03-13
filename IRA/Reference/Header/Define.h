@@ -3,12 +3,17 @@
 #define		WINCX		1600
 #define		WINCY		900
 
+
+#define		PUBLIC_SCALE  1.5f
+
 #define		VTXCNTX		257
 #define		VTXCNTZ		257
 #define		VTXITV		1
 
 #define		MIN_STR			64
 #define		MAX_STR			256
+
+#define		DOEWOLE_MAXHP 400000
 
 #define		OBJ_NOEVENT	 0
 #define		OBJ_DEAD	 1 

@@ -9,26 +9,32 @@ protected:
 	virtual ~CDoewoleBullet_SwordShot();
 
 public:
-	virtual HRESULT Ready_GameObject(void) override;
+	virtual HRESULT Ready_GameObject(const _vec3& vPos , const _float& fAngle) ;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
 
 protected:
 	virtual HRESULT	Add_Component(void) override;
-	virtual void SetUp_OnTerrain(void) override;
-	virtual void Change_State(void) override;
+	virtual void SetUp_OnTerrain(void) override {};
+	virtual void Change_State(void) override {};
 	virtual void Frame_Check(const _float& fTimeDelta)override;
-	virtual void Distance_Dead_Check(void) override;
+	virtual void Distance_Dead_Check(void) {};
 
 public:
-	static CDoewoleBullet_SwordShot* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _int _Dir_Count);
+	static CDoewoleBullet_SwordShot* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos , const _float& fAngle);
 
 private:
-	void Set_FireInfo(_vec3 _Monster_Pos, _int _Dir_Count);
+	void	Create_DeathEffect();
+	void	Check_Boss_Dead();
 
 private:
-	_int	m_iDirCount;
+	_float		m_fMaxframe = 0.f;
+	_vec3		m_vDir;
+	_float		m_fAccTime = 0.f;
+	_float		m_fAngle = 0.f;
+	_float		m_fAccAngle = 0.f;
+
 private:
 	virtual void Free(void) override;
 };

@@ -4,7 +4,7 @@
 
 class CDoewole_LeftClaw : public CDoewole
 {
-	enum { STAND, STANDARD_ATTACK, OUTSTRECTH_ATTACK, UP, SMASH, SCRATCH, TEX_END };
+	enum { STAND, STANDARD_ATTACK, OUTSTRECTH_ATTACK, UP, SMASH, SCRATCH, CROSS_SCRATCH, DEAD, TEX_END };
 
 private:
 	explicit CDoewole_LeftClaw(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -14,6 +14,8 @@ private:
 public:
 	void		Set_Owner(CGameObject* pOwner) { m_pOwner = pOwner; }
 	void		Set_Wait(_bool	_b) { m_bWait = _b;  m_fAccTime = 0.f; }
+	void		Set_Smash(_bool _b) { m_bSmash = _b; }
+	void		Set_CrossScratch(_bool _b) { m_bCrossScratch = _b; }
 
 
 public:
@@ -35,6 +37,9 @@ private:
 	void			Scratch_Attack(const _float& fTimeDelta);
 	void			Area_Attack(const _float& fTimeDelta);
 	void			Upgrade_Smash_Attack(const _float& fTimeDelta);
+	void			Upgrade_Scratch_Attack(const _float& fTimeDelta);
+	void			Bullet_Activate_Attack(const _float& fTimeDelta);
+	void			Boss_Dead(const _float& fTimeDelta);
 
 public:
 	static CDoewole_LeftClaw* Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -61,6 +66,9 @@ private:
 	_bool							m_bLSmashWait = false;
 	_bool							m_bCircleEffect = false;
 	_bool							m_bSmashEffect = false;
+
+	_bool							m_bMakeThorn = false;
+	_bool							m_bCrossScratch = false;
 
 
 };

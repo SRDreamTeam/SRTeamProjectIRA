@@ -20,7 +20,7 @@ HRESULT CSylphBowPair::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Scale_Ratio({ 1.5f, 1.5f, 1.5f });
+	
 
 	m_pTransformCom->Rotation(ROT_Y, m_Bow_Angle);
 
@@ -51,6 +51,24 @@ _int CSylphBowPair::Update_GameObject(const _float& fTimeDelta)
 		}
 	}
 
+	if (m_bRender == true) {
+		if (m_bCharge == true) {
+			m_fFrame += 2.f * fTimeDelta * 1.f * 1.5f;
+			if (m_fFrame > 2.f) {
+				m_fFrame = 2.f;
+			}
+		}
+		else {
+			m_fFrame += 2.f * fTimeDelta * 4.f;
+			if (m_fFrame > 2.f) {
+				m_fFrame = 0.f;
+			}
+		}
+	}
+	else {
+		m_fFrame = 0.f;
+	}
+
 	Update_Bow_State();
 
 
@@ -67,6 +85,8 @@ _int CSylphBowPair::Update_GameObject(const _float& fTimeDelta)
 void CSylphBowPair::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	//Compute_ViewZ(&m_vPos);
 }
 
 void CSylphBowPair::Render_GameObject()
@@ -81,8 +101,7 @@ void CSylphBowPair::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	
-    m_pTextureCom->Set_Texture(0);
-
+	m_pTextureCom->Set_Texture((_int)m_fFrame);
 
 
 	m_pTransformCom->m_vInfo[INFO_POS];
@@ -124,11 +143,13 @@ void CSylphBowPair::Update_Bow_State()
 
 	D3DXMatrixIdentity(&m_MatWorld);
 
-	D3DXMatrixScaling(&matScale, -1.5f, 1.5f, 1.5f);
+	D3DXMatrixScaling(&matScale, -2.6f * PUBLIC_SCALE, 2.6f * PUBLIC_SCALE, 1.f);
 	D3DXMatrixRotationY(&matRot, 220);
-	D3DXMatrixTranslation(&matTrans_Pre, 3.f, 0.f, 0.f);
-	D3DXMatrixTranslation(&matTrans, m_Bow_Pos.x - 0.1f, m_Bow_Pos.y - 2.0f, m_Bow_Pos.z);
+	D3DXMatrixTranslation(&matTrans_Pre, 3.f * PUBLIC_SCALE, 0.f, 0.f);
+	D3DXMatrixTranslation(&matTrans, m_Bow_Pos.x - 0.2f * PUBLIC_SCALE, m_Bow_Pos.y - 2.6f * PUBLIC_SCALE , m_Bow_Pos.z);
 
+
+	m_vPos = { m_Bow_Pos.x , m_Bow_Pos.y - 2.0f, m_Bow_Pos.z };
 
 	Axis = { 1.f,0.f,0.f };
 

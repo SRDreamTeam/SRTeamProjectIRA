@@ -33,6 +33,7 @@ public:
 	static CGreenEvilSlime* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
+	void	Create_Dead_Effect(void);
 	virtual void Free(void) override;
 };
 

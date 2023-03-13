@@ -24,11 +24,12 @@ protected:
 
 public:
 	static CDoewoleBullet_Circle* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
-	_bool				m_bHit = false;
 
 private:
 	virtual void Free(void) override;
 	void	Create_DeathEffect();
+
+	void	Check_Boss_Dead();
 
 private:
 	_float				m_fMaxFrame = 0.f;

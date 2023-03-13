@@ -17,7 +17,9 @@ public:
 	void				Clear_CollisionGroup();
 
 private:
-	static void	Collision_Sphere(list<CGameObject*> _Dest, list<CGameObject*> _Src);
+	static void	Collision_Sphere_Player_Bullet(list<CGameObject*> _Dest, list<CGameObject*> _Src);
+	static void	Collision_Sphere_Boss_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src);
+	static void	Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src);
 	static bool Check_Sphere(CGameObject* pDest, CGameObject* pSrc);
 
 private:

@@ -38,6 +38,9 @@ HRESULT CDoewole::Ready_GameObject(void)
 
 _int CDoewole::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+
 	State_Update(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);
@@ -141,6 +144,26 @@ void CDoewole::Idle(const _float& fTimeDelta)
 			++m_iPattern;
 		}
 	}
+
+	else if (9 == m_iPattern)
+	{
+		if (m_fAccTime > 2.f)
+		{
+			m_fAccTime = 0.f;
+			m_eCurState = UPGRADE_SCRATCH_ATTACK;
+			++m_iPattern;
+		}
+	}
+
+	else if (10 == m_iPattern)
+	{
+		if (m_fAccTime > 2.f)
+		{
+			m_fAccTime = 0.f;
+			m_eCurState = BULLET_ACTIVATE_ATTACK;
+			++m_iPattern;
+		}
+	}
 }
 
 void CDoewole::Move(const _float& fTimeDelta)
@@ -185,7 +208,7 @@ void CDoewole::Standard_Attack(const _float& fTimeDelta)
 			m_fAccTime = 0.f;
 
 			// Standard Bullet 생성
-			Create_StandardBullet();
+			Create_SwordBullet();
 
 			// Standard_Attack 이펙트 생성
 			CGameObject* pEffect = CEffect_Doewole_StandardAttack::Create(m_pGraphicDev);
@@ -337,17 +360,134 @@ void CDoewole::Upgrade_Smash_Attack(const _float& fTimeDelta)
 	m_bDisappear = true;
 }
 
-void CDoewole::Create_StandardBullet()
+void CDoewole::Upgrade_Scratch_Attack(const _float& fTimeDelta)
 {
-	_vec3 vMonster_Pos = (m_pTransformCom->m_vInfo[INFO_POS]);
-	vMonster_Pos.y += 1.f;
+	m_fAccTime += fTimeDelta;
 
+	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	if (!m_bDisappear)
+	{
+		if (m_fAccTime > 2.f)
+		{
+			if (!m_bChasePlayer)
+			{
+				// 플레이어 한테 이동
+				CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
+				NULL_CHECK(pPlayerTransform);
+				m_pTransformCom->m_vInfo[INFO_POS] = { pPlayerTransform->m_vInfo[INFO_POS].x , 0.f ,pPlayerTransform->m_vInfo[INFO_POS].z + 15.f };
+				m_bChasePlayer = true;
+
+				if (m_iScratchCnt <= 1)
+				{
+					// AlertRect 이펙트 생성
+					_vec3 vScale;
+					if (!m_bRight) vScale = { -30.f , 30.f,30.f };
+					else vScale = { 30.f , 30.f,30.f };
+
+					CGameObject* pEffect = CEffect_AlertRect::Create(m_pGraphicDev, vScale);
+					NULL_CHECK(pEffect);
+					
+					if (!m_bRight)
+						pLayer->Add_GameObject(L"AlertRect_Right", pEffect);
+					else
+						pLayer->Add_GameObject(L"AlertRect_Left", pEffect);
+
+					m_bRight = !m_bRight;
+				}
+				else if (m_iScratchCnt == 2)
+				{
+					// AlertCircle 이펙트 생성
+					_vec3 vPos = { m_pTransformCom->m_vInfo[INFO_POS].x, 0.f , m_pTransformCom->m_vInfo[INFO_POS].z };
+					CGameObject* pEffect = CEffect_AlertCircle::Create(m_pGraphicDev, vPos, _vec3(20.f, 20.f, 20.f), 1.5f, FALSE);
+					NULL_CHECK(pEffect);
+					pLayer->Add_BulletObject(pEffect);
+				}
+				else
+				{
+					// AlertRect 이펙트 생성
+					_vec3 vScale1 = { -30.f , 30.f,30.f };
+					_vec3 vScale2 = { 30.f , 30.f,30.f };
+
+					CGameObject* pEffect = CEffect_AlertRect::Create(m_pGraphicDev, vScale1);
+					NULL_CHECK(pEffect);
+					pLayer->Add_BulletObject(pEffect);
+
+					pEffect = CEffect_AlertRect::Create(m_pGraphicDev, vScale2);
+					NULL_CHECK(pEffect);
+					pLayer->Add_BulletObject(pEffect);
+				}
+
+				m_iScratchCnt++;
+
+			}
+		}
+
+		if (m_fAccTime > 3.f)
+		{
+			m_fAccTime = 0.f;
+			m_bDisappear = true;
+			m_bChasePlayer = false;
+		}
+	}
+}
+
+void CDoewole::Bullet_Activate_Attack(const _float& fTimeDelta)
+{
+	m_fAccTime += fTimeDelta;
+	m_fAccTime2 += fTimeDelta;
+	
+	_vec3	vDestPos = { 128.f , 0.f, 128.f };
+	_vec3 vDir;
+
+	if (!m_bBullet_Active_Attack)
+	{
+		m_bDisappear = false;
+
+		if (m_fAccTime > 1.f)
+		{
+			// 맵 중앙으로 이동
+			vDir = vDestPos - m_pTransformCom->m_vInfo[INFO_POS];
+			D3DXVec3Normalize(&vDir, &vDir);
+			m_pTransformCom->m_vInfo[INFO_POS] += vDir * 30.f * fTimeDelta;
+
+			if (D3DXVec3Length(&(vDestPos - m_pTransformCom->m_vInfo[INFO_POS])) < 0.3f)
+			{
+				m_pTransformCom->m_vInfo[INFO_POS] = vDestPos;
+				m_bBullet_Active_Attack = true;
+				m_fAccTime = 0.f;
+			}
+		}
+	}
+	else
+	{
+		m_bDisappear = true;
+		Bullet_ActivePattern(fTimeDelta);
+	}
+}
+
+void CDoewole::Boss_Dead(const _float& fTimeDelta)
+{
+
+
+
+}
+
+void CDoewole::Create_SwordBullet()
+{
 	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 	CGameObject* pBulletObject = nullptr;
 
-	for (size_t i = 0; i < 8; i++)
+	for (size_t i = 0; i < 16; i++)
 	{
-		pBulletObject = CDoewoleBullet_SwordShot::Create(m_pGraphicDev, vMonster_Pos, (i + 1));
+		_float cosTheta = cos(D3DXToRadian(360.f / 16.f) * i);
+		_float sinTheta = sin(D3DXToRadian(360.f / 16.f) * i);
+
+		_float	fAngle = (360.f / 16.f) * i;
+
+		_vec3 vPos = { m_pTransformCom->m_vInfo[INFO_POS].x + cosTheta , 3.f ,  m_pTransformCom->m_vInfo[INFO_POS].z + sinTheta };
+
+		pBulletObject = CDoewoleBullet_SwordShot::Create(m_pGraphicDev, vPos , fAngle);
 		NULL_CHECK(pBulletObject);
 		pLayer->Add_BulletObject(  pBulletObject);
 	}
@@ -358,10 +498,10 @@ void CDoewole::Create_CircleBullet()
 	CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 	CGameObject* pBulletObject = nullptr;
 
-	for (size_t i = 0; i < 6; i++)
+	for (size_t i = 0; i < 8; i++)
 	{
-		_float cosTheta = cos(D3DXToRadian(360.f / 6.f) * i);
-		_float sinTheta = sin(D3DXToRadian(360.f / 6.f) * i);
+		_float cosTheta = cos(D3DXToRadian(360.f / 8.f) * i);
+		_float sinTheta = sin(D3DXToRadian(360.f / 8.f) * i);
 
 		_vec3 vPos = { m_pTransformCom->m_vInfo[INFO_POS].x + cosTheta , 3.f ,  m_pTransformCom->m_vInfo[INFO_POS].z + sinTheta };
 
@@ -564,6 +704,11 @@ void CDoewole::AreaAtaackPattern(const _float& fTimeDelta)
 	}
 }
 
+void CDoewole::Bullet_ActivePattern(const _float& fTimeDelta)
+{
+
+}
+
 HRESULT CDoewole::Add_Component(void)
 {
 	Engine::CComponent*		pComponent = nullptr;
@@ -577,8 +722,37 @@ HRESULT CDoewole::Add_Component(void)
 
 void CDoewole::State_Update(const _float& fTimeDelta)
 {
+	if (m_eCurState != m_ePreState)
+	{
+		m_fFrame = 0.f;
+		m_fAccTime = 0.f;
+
+		m_iStandardAttackCnt = 0;
+
+		m_bAttackToIdle = false;
+		m_bEffect = false;
+
+		m_fAccTime2 = 0.f;
+
+		m_bDisappear = false;
+		m_bChasePlayer = false;
+
+		m_bRight = false;
+		m_bAreaAttack = false;
+		m_bTest = false;
+		m_fThornZ = 0.f;
+		m_iThornCnt = 0;
+		m_bCrossTron = false;
+		m_fThronX = 128.f;
+
+		m_iScratchCnt = 0;
+		m_bBullet_Active_Attack = false;
+	}
+
+
 	switch (m_eCurState)
 	{
+
 	case CDoewole::IDLE:
 		Idle(fTimeDelta);
 		break;
@@ -603,11 +777,22 @@ void CDoewole::State_Update(const _float& fTimeDelta)
 	case CDoewole::UPGRADE_SMASH_ATTACK:
 		Upgrade_Smash_Attack(fTimeDelta);
 		break;
+	case CDoewole::UPGRADE_SCRATCH_ATTACK:
+		Upgrade_Scratch_Attack(fTimeDelta);
+		break;
+	case CDoewole::BULLET_ACTIVATE_ATTACK:
+		Bullet_Activate_Attack(fTimeDelta);
+		break;
+	case CDoewole::BOSS_DEAD:
+		Boss_Dead(fTimeDelta);
+		break;
 	case CDoewole::STATE_END:
 		break;
 	default:
 		break;
 	}
+
+	m_ePreState = m_eCurState;
 
 	if (m_iPattern > m_iMaxPattern)
 		m_iPattern = 0;

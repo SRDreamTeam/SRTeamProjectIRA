@@ -37,5 +37,8 @@ private:
 
 private:
 	virtual void Free(void) override;
+	void	Create_DeathEffect();
+
+	void	Check_Boss_Dead();
 };
 
