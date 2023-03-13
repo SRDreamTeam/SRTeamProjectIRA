@@ -4,7 +4,7 @@
 #define		WINCY		900
 
 
-#define		PUBLIC_SCALE  1.7f
+#define		PUBLIC_SCALE  1.5f
 
 #define		VTXCNTX		257
 #define		VTXCNTZ		257

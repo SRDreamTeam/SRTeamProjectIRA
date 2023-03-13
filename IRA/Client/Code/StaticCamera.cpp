@@ -37,10 +37,10 @@ HRESULT CStaticCamera::Ready_GameObject(const _vec3* pEye,
 	m_fAngle = D3DXToRadian(300.f);
 	m_fDistance = 15.f;
 
-	m_fDisZ = 6.f;
-	m_fDisY = 15.f;
-	m_AtY = 3.f;
-	m_AzZ = 7.f;
+	m_fDisZ = 3.f;
+	m_fDisY = 17.f;
+	m_AtY = 5.f;
+	m_AtZ = 15.f;
 
 	FAILED_CHECK_RETURN(__super::Ready_GameObject(), E_FAIL);
 
@@ -82,16 +82,16 @@ void CStaticCamera::Key_Input(const _float& fTimeDelta)
 		m_fDisZ -= 10.f * fTimeDelta;
 
 	if (Get_DIKeyState(DIK_Z) & 0x80)
-		m_AzZ += 10.f * fTimeDelta;
+		m_AtZ += 10.f * fTimeDelta;
 
 	if (Get_DIKeyState(DIK_X) & 0x80)
-		m_AzZ -= 10.f * fTimeDelta;
+		m_AtZ -= 10.f * fTimeDelta;
 
 	if (Get_DIKeyState(DIK_C) & 0x80)
-		m_AzZ += 10.f * fTimeDelta;
+		m_AtY += 10.f * fTimeDelta;
 
 	if (Get_DIKeyState(DIK_V) & 0x80)
-		m_AzZ -= 10.f * fTimeDelta;
+		m_AtY -= 10.f * fTimeDelta;
 
 	if (Get_DIKeyState(DIK_LEFT) & 0x80)
 		m_fAngle += D3DXToRadian(180.f) * fTimeDelta;
@@ -127,7 +127,7 @@ void CStaticCamera::Target_Renewal(void)
 	D3DXVec3TransformNormal(&m_vEye, &m_vEye, &matRot);
 
 	m_vEye += pPlayerTransform->m_vInfo[INFO_POS];
-	m_vEye.z += m_AzZ;
+	m_vEye.z += m_AtZ;
 
 	m_vAt = pPlayerTransform->m_vInfo[INFO_POS];
 	m_vAt.y += m_AtY;

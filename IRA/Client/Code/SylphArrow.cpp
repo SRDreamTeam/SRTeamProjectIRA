@@ -43,8 +43,7 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y - 2.f, m_Fire_Pos.z);
 
 	
-	m_Is_Cri = Final_Damage();
-	
+
 	
 	__super::Ready_GameObject();
 
@@ -215,6 +214,8 @@ bool CSylphArrow::Final_Damage(void)
 
 	m_fDamage = (m_fPower * 0.5f + m_fRandom_Value) * (1.f + 1.35f * Critical);
 
+	m_Damage_List.emplace_back((int)m_fDamage);
+
 	int temp = (int)m_fDamage;
 	int cnt = 0;
 
@@ -253,31 +254,34 @@ void CSylphArrow::Create_Hit_Effect(void)
 	if (pGameObject == nullptr)
 		return;
 
+
 	pGameLogicLayer->Add_BulletObject(pGameObject);
-
-
 }
 
 void CSylphArrow::Create_Damage_Font(void)
 {
 
-	
 	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
 
 	CGameObject* pGameObject;
 
+	int k = 0;
 
 	for (int i = 0; i < m_fAttack_Num; i++) {
 
 		int j = 0;
+		m_Is_Cri = Final_Damage();
 
 		for (auto iter : m_Font_List) {
 			_vec3 pos = m_pTransformCom->m_vInfo[INFO_POS];
 
-			if (m_Is_Cri == true)
+			if (m_Is_Cri == true) {
 				pos.x += 1.7f * j;
+				pos.y += 2.f * k;
+			}
 			else {
 				pos.x += 1.7f * 0.7 * j;
+				pos.y += 2.f * k;
 			}
 
 			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, m_Is_Cri);
@@ -290,6 +294,10 @@ void CSylphArrow::Create_Damage_Font(void)
 			j++;
 		}
 
+		m_Font_List.clear();
+		m_Font_List.resize(0);
+
+		k++;
 	}
 
 

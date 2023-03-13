@@ -110,10 +110,6 @@ void CMainApp::Free(void)
 	Engine::Release_Utility();
 	Engine::Release_System();
 
-	//ax + by + cz + d
-	//D3DXPLANE	Plane;
-	//D3DXPlaneFromPoints();
-
-	//D3DXIntersectTri( );
+	
 
 }

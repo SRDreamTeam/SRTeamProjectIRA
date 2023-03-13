@@ -22,16 +22,25 @@ CBullet::~CBullet()
 
 HRESULT CBullet::Ready_GameObject(void)
 {
+
 	return S_OK;
 }
 
 _int CBullet::Update_GameObject(const _float& fTimeDelta)
 {
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+
 	return 0;
 }
 
 void CBullet::LateUpdate_GameObject()
 {
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	__super::Compute_ViewZ(&vPos);
 }
 
 void CBullet::Render_GameObject()

@@ -44,11 +44,7 @@ _float CCalculator::Compute_HeightOnTerrain(_vec3 * pPos, const _vec3 * pTerrain
 			&pTerrainVtxPos[dwIndex]);
 	}
 
-	// ax + by + cz + d*1
-
-	//by = -ax - cz - d
-	//	y = (-ax - cz - d) / b
-
+	
 	
  	pPos->y = (-Plane.a * pPos->x - Plane.c * pPos->z - Plane.d) / Plane.b;
 
