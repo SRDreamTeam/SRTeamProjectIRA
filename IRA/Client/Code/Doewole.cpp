@@ -33,8 +33,6 @@ HRESULT CDoewole::Ready_GameObject(void)
 
 	m_pTransformCom->m_vInfo[INFO_POS] = { 100.f , 0.f , 100.f };
 
-	m_iBossMaxHP = 400000.f;
-	m_iBossCurHP = 400000.f;
 
 	return S_OK;
 }
