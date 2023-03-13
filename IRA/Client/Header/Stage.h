@@ -13,8 +13,7 @@
 #include "Apostle.h"
 #include "QuickSlot.h"
 #include "MiniMap.h"
-
-
+#include "Boss_Bar.h"
 
 #include "Terrain.h"
 

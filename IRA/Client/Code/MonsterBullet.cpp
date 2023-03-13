@@ -2,6 +2,9 @@
 #include "..\Header\MonsterBullet.h"
 #include "Export_Function.h"
 
+#include "Effect_Monster_Bullet_1_Dead.h"
+
+
 CMonsterBullet::CMonsterBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
 {
@@ -30,7 +33,10 @@ HRESULT CMonsterBullet::Ready_GameObject(void)
 _int CMonsterBullet::Update_GameObject(const _float& fTimeDelta)
 {	
 	if (m_bDead)
+	{
+		Create_Dead_Effect();
 		return OBJ_DEAD;
+	}
 
 	Frame_Check(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
@@ -82,7 +88,7 @@ HRESULT CMonsterBullet::Add_Component(void)
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Monster_Bullet_1"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -97,7 +103,7 @@ void CMonsterBullet::SetUp_OnTerrain(void)
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTex", ID_STATIC));
 	NULL_CHECK(pTerrainBufferCom);
-	m_pTransformCom->Set_Pos(vPos.x, 3.f, vPos.z);
+	m_pTransformCom->Set_Pos(vPos.x, 5.f, vPos.z);
 }
 
 void CMonsterBullet::Change_State(void)
@@ -148,9 +154,26 @@ CMonsterBullet* CMonsterBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Mon
 void CMonsterBullet::Set_FireInfo(_vec3 _Monster_Pos, _bool _Target_Check)
 {
 	m_pTransformCom->m_vInfo[INFO_POS] = _Monster_Pos;
-	m_vOriginPos = _Monster_Pos;
+	m_pTransformCom->m_vInfo[INFO_POS].y += 5;
+	m_vOriginPos = m_pTransformCom->m_vInfo[INFO_POS];
+	//m_vOriginPos.y += 10.f;
 	m_bCheck = _Target_Check;
-	m_pTransformCom->UpdatePos_OnWorld();
+	//m_pTransformCom->UpdatePos_OnWorld();
+}
+
+void CMonsterBullet::Create_Dead_Effect(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject;
+
+	pGameObject = CEffect_Monster_Bullet_1_Dead::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS]);
+
+	if (pGameObject == nullptr)
+		return;
+
+
+	pGameLogicLayer->Add_BulletObject(pGameObject);
 }
 
 void CMonsterBullet::Free(void)

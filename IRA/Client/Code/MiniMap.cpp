@@ -4,8 +4,8 @@
 
 #include "MiniMap_Back.h"
 #include "MiniMap_Gage.h"
-//#include "MiniMap_Frame.h"
-//#include "MiniMap_Key_Q.h"
+#include "MiniMap_Character.h"
+#include "MiniMap_Room.h"
 //#include "MiniMap_Pattern.h"
 //#include "MiniMap_Count.h"
 //#include "MiniMap_Pattern_Glow.h"
@@ -81,11 +81,26 @@ HRESULT CMiniMap::Create_StatusUi(void)
 
 	pBulletObject = CMiniMap_Back::Create(m_pGraphicDev, 1);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(  pBulletObject);
+	pLayer->Add_BulletObject(pBulletObject);
 
 	pBulletObject = CMiniMap_Gage::Create(m_pGraphicDev, 2);
 	NULL_CHECK_RETURN(pBulletObject, -1);
-	pLayer->Add_BulletObject(  pBulletObject);
+	pLayer->Add_BulletObject(pBulletObject);
+
+	for (int i = 0; i < 5; i++)
+	{
+		pBulletObject = CMiniMap_Room::Create(m_pGraphicDev, 4, i + 1);
+		NULL_CHECK_RETURN(pBulletObject, -1);
+		pLayer->Add_BulletObject(pBulletObject);
+	}
+
+	pBulletObject = CMiniMap_Character::Create(m_pGraphicDev, 3);
+	NULL_CHECK_RETURN(pBulletObject, -1);
+	pLayer->Add_BulletObject(pBulletObject);
+
+	//pBulletObject = CMiniMap_Character::Create(m_pGraphicDev, 4);
+	//NULL_CHECK_RETURN(pBulletObject, -1);
+	//pLayer->Add_BulletObject(OBJ_BULLET, pBulletObject);
 
 	//for (size_t i = 0; i < 3; i++)
 	//{

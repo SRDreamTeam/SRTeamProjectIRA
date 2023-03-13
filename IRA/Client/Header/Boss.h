@@ -26,6 +26,10 @@ public:
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() {}
 
+	_int Get_MaxHp() { return m_iBossMaxHP; }
+	_int Get_CurHp() { return m_iBossCurHP; }
+
+
 public:
 	_bool					m_bHit = false;
 	list<int>				m_Damage_List;

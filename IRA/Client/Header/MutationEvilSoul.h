@@ -37,12 +37,11 @@ public:
 	static CMutationEvilSoul* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	//CTexture* m_pTextureCom_135_1;	//사용 안함
-	//CTexture* m_pTextureCom_135_2;
 	MONSTER_HEAD	m_eHead;
 	_int			m_Count;
 
 private:
+	void	Create_Dead_Effect(void);
 	virtual void Free(void) override;
 };
 

@@ -59,11 +59,11 @@ void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, c
 	}
 	if (m_eName == SOUL_BULLET)
 	{
-		D3DXMatrixScaling(&matScale, 3.f, 3.f, 1.f);
+		D3DXMatrixScaling(&matScale, 2.f, 3.f, 1.f);
 	}
 	D3DXMatrixTranslation(&matTrans,
 		m_vInfo[INFO_POS].x,
-		m_vInfo[INFO_POS].y + 4.f,
+		m_vInfo[INFO_POS].y + 5.f,
 		m_vInfo[INFO_POS].z);
 
 	//준석 수정 (23.03.02) : 회전행렬 필요 없기에 회전 제외하고, 이동행렬만 적용함
@@ -127,7 +127,7 @@ void CTransform::Bullet_Move(const _vec3 _Dir, const _float& fSpeed, const _floa
 	{
 		D3DXMatrixTranslation(&matTrans,
 			m_vInfo[INFO_POS].x,
-			m_vInfo[INFO_POS].y + 3.f,
+			m_vInfo[INFO_POS].y,
 			m_vInfo[INFO_POS].z);
 
 		m_matWorld = matScale * matTrans;
@@ -174,7 +174,7 @@ void CTransform::Bullet_Move(const _vec3 _Dir, const _float& fSpeed, const _floa
 
 		D3DXMatrixTranslation(&matTrans,
 			m_vInfo[INFO_POS].x,
-			m_vInfo[INFO_POS].y + 3.f,
+			m_vInfo[INFO_POS].y + 5.f,
 			m_vInfo[INFO_POS].z);
 
 		m_matWorld = matScale * matRot * matTrans;
@@ -288,9 +288,9 @@ _vec3 CTransform::Patrol_Map(const _float& fSpeed, const _float& fTimeDelta)
 
 	if (vNull == m_vPatrolTarget)
 	{	
-		vTemp.x = (_float(rand() % 50));
+		vTemp.x = (_float(rand() % 200));
 		vTemp.y = m_vInfo[INFO_POS].y;
-		vTemp.z = (_float(rand() % 50));
+		vTemp.z = (_float(rand() % 200));
 
 		_vec3		vDir_Temp = vTemp - m_vInfo[INFO_POS];
 
@@ -531,7 +531,7 @@ void CTransform::Ui_QuickSlot_Print(_int _iUiNumber)
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
-void CTransform::Ui_MiniMap_Print(_int _iUiNumber)
+void CTransform::Ui_MiniMap_Print(_int _iUiNumber, _vec3* _pPlayerPos, _int _iRoomNumber)
 {
 	_matrix		matScale, matRot, matTrans, matView, matProj;
 	D3DXMatrixIdentity(&m_matWorld);
@@ -556,10 +556,48 @@ void CTransform::Ui_MiniMap_Print(_int _iUiNumber)
 		m_matWorld._42 = 10.7f;
 		break;
 	case 3:
-		m_matWorld._11 = 0.6f;
-		m_matWorld._22 = 0.6f;
-		m_matWorld._41 = 17.3f;
-		m_matWorld._42 = -9.63f;
+		m_matWorld._11 = 0.3f;
+		m_matWorld._22 = 0.3f;
+		m_matWorld._41 = 16.7f + _float(_pPlayerPos->x / VTXCNTX);		// 17.2 기준 (0.5 / 16.7 / 17.7)	// 반경 1로 잡고(1600 / 40 * 1)(900 / 22.5 * 1)
+		m_matWorld._42 = 7.7f + _float(_pPlayerPos->z / VTXCNTZ);		// 8.2 기준 (0.5 / 7.7 / 8.7)		(기준 값이 )
+		break;
+
+	case 4:
+		if (1 == _iRoomNumber)
+		{
+			m_matWorld._11 = 0.6f;
+			m_matWorld._22 = 0.6f;
+			m_matWorld._41 = 17.2f;
+			m_matWorld._42 = 8.1f;
+		}
+		else if (2 == _iRoomNumber)
+		{
+			m_matWorld._11 = 0.6f;
+			m_matWorld._22 = 0.6f;
+			m_matWorld._41 = 15.9f;
+			m_matWorld._42 = 8.1f;
+		}
+		else if (3 == _iRoomNumber)
+		{
+			m_matWorld._11 = 0.6f;
+			m_matWorld._22 = 0.6f;
+			m_matWorld._41 = 18.5f;
+			m_matWorld._42 = 8.1f;
+		}
+		else if (4 == _iRoomNumber)
+		{
+			m_matWorld._11 = 0.6f;
+			m_matWorld._22 = 0.6f;
+			m_matWorld._41 = 17.2f;
+			m_matWorld._42 = 9.4f;
+		}
+		else if (5 == _iRoomNumber)
+		{
+			m_matWorld._11 = 0.6f;
+			m_matWorld._22 = 0.6f;
+			m_matWorld._41 = 17.2f;
+			m_matWorld._42 = 6.8f;
+		}
 		break;
 
 	default:
@@ -569,6 +607,71 @@ void CTransform::Ui_MiniMap_Print(_int _iUiNumber)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+}
+
+void CTransform::Ui_BossBar_Print(_int _iUiNumber, _int _iHp)
+{
+	_matrix		matScale, matRot, matTrans, matView, matProj;
+	D3DXMatrixIdentity(&m_matWorld);
+	D3DXMatrixIdentity(&matView);
+	D3DXMatrixIdentity(&matProj);
+
+	D3DXMatrixLookAtLH(&matView, &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 0, 1), &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixOrthoLH(&matProj, 40.f, 22.5f, 0.f, 1.f);
+
+	switch (_iUiNumber)
+	{
+	case 1:
+		m_matWorld._11 = 6.f;
+		m_matWorld._22 = 0.22f;
+		m_matWorld._41 = 1.2f;
+		m_matWorld._42 = 9.1f;
+		break;
+	case 2:
+		m_matWorld._11 = 5.9f;
+		m_matWorld._22 = 0.14f;
+		m_matWorld._41 = 1.2f;
+		m_matWorld._42 = 9.1f;
+		break;
+	case 3:
+		m_matWorld._11 = 1.6f;
+		m_matWorld._22 = 1.6f;
+		m_matWorld._41 = -5.9f;
+		m_matWorld._42 = 9.4f;
+		break;
+	case 4:
+		//m_matWorld._11 = -5.9f;
+		//m_matWorld._22 = 0.14f;
+		//m_matWorld._41 = 1.2f;
+		//m_matWorld._42 = 9.1f;
+		break;
+
+	default:
+		break;
+	}
+
+	if (_iUiNumber == 4)
+	{	
+		_float fTempHp;
+		fTempHp = _iHp / 4000;
+		float HP_percentage = fTempHp * 0.01f; // 현재 HP의 비율 (0.0f ~ 1.0f)
+
+		float HP_bar_width = 5.9f; // HP바 전체 너비
+		float HP_bar_left_boundary = 1.2f; // HP바 중심
+		float HP_bar_current_width = HP_percentage * HP_bar_width; // 현재 HP에 맞는 HP바 너비
+
+		float HP_bar_left_offset = ((HP_bar_width - HP_bar_current_width)); // HP바의 왼쪽 경계를 이동
+
+		m_matWorld._11 = HP_bar_current_width; // HP바의 너비를 조절
+		m_matWorld._22 = 0.14f;
+		m_matWorld._41 = HP_bar_left_boundary - HP_bar_left_offset;
+		m_matWorld._42 = 9.1f;
+	}
+
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+
 }
 
 void CTransform::ColorBlend_Hit(_int iFrame)
@@ -614,7 +717,7 @@ void CTransform::Reverse_Scale_x(void)
 	D3DXMatrixScaling(&matScale, -5.f, 5.f, 1.f);
 	D3DXMatrixTranslation(&matTrans,
 		m_vInfo[INFO_POS].x,
-		m_vInfo[INFO_POS].y + 4.f,
+		m_vInfo[INFO_POS].y + 4,
 		m_vInfo[INFO_POS].z);
 
 	m_matWorld = matScale * matTrans;

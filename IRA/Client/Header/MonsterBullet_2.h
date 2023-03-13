@@ -26,6 +26,8 @@ public:
 
 private:
 	void Set_FireInfo(_vec3 _Monster_Pos, _int _Dir_Count);
+	void Create_Dead_Effect(void);
+
 
 private:
 	_int	m_iDirCount;

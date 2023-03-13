@@ -41,7 +41,7 @@ HRESULT CDoewole_Body::Ready_GameObject(void)
 }
 
 _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
-{
+{	
 	if (g_bSphereMake)
 	{
 		if (!m_bSphereMake)
@@ -62,15 +62,6 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 
 	GetDamage_Update(fTimeDelta);
 
-	if (GetAsyncKeyState('1'))
-	{
-		m_bHit = true;
-		m_Damage_List.push_back(1);
-		m_Damage_List.push_back(2);
-		m_Damage_List.push_back(3);
-	}
-
-
 	Frame_Manage(fTimeDelta);
 
 	State_Update(fTimeDelta);
@@ -78,7 +69,7 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 	CBoss::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
-	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_BOSS, this);
 
 	return 0;
 }
@@ -603,7 +594,7 @@ void CDoewole_Body::GetDamage_Update(const _float& fTimeDelta)
 
 	if (!m_Damage_List.empty())
 	{
-		if (m_fDamageTimeDelta > 0.1f)
+		if (m_fDamageTimeDelta > 0.05f)
 		{
 			m_iBossCurHP -= m_Damage_List.front();
 			m_Damage_List.pop_front();
