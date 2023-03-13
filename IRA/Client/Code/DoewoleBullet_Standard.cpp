@@ -49,7 +49,7 @@ HRESULT CDoewoleBullet_Standard::Ready_GameObject(void)
 
 _int CDoewoleBullet_Standard::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bDead)
+	if (m_bDead || m_bHit)
 	{
 		Create_DeathEffect();
 		return OBJ_DEAD;
@@ -64,6 +64,7 @@ _int CDoewoleBullet_Standard::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_BULLET, this);
 
 	return OBJ_NOEVENT;
 }
@@ -101,6 +102,12 @@ HRESULT CDoewoleBullet_Standard::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Standard"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Bullet_Doewole_Standard", pComponent });
+
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_pColliderCom->Set_Radius(10.f);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;
 }

@@ -32,6 +32,9 @@ private:
 	HRESULT			Add_Component(void);
 	void			State_Update(const _float& fTimeDelta);
 
+	void            Frame_Manage(const _float& fTimeDelta);
+	void			GetDamage_Update(const _float& fTimeDelta);
+
 private:
 	void			Idle(const _float& fTimeDelta);
 	void			Move(const _float& fTimeDelta);
@@ -40,6 +43,9 @@ private:
 	void			Scratch_Attack(const _float& fTimeDelta);
 	void			Area_Attack(const _float& fTimeDelta);
 	void			Upgrade_Smash_Attack(const _float& fTimeDelta);
+	void			Upgrade_Scratch_Attack(const _float& fTimeDelta);
+	void			Bullet_Activate_Attack(const _float& fTimeDelta);
+
 
 private:
 	CGameObject*					m_pOwner = nullptr;
@@ -57,5 +63,6 @@ private:
 	_bool							m_bReturn = false;
 	int								m_iSmashCnt = 0;
 
+	
 };
 
