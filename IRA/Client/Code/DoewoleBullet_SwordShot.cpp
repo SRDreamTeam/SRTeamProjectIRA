@@ -1,14 +1,15 @@
 #include "stdafx.h"
 #include "..\Header\DoewoleBullet_SwordShot.h"
 #include "Export_Function.h"
+#include <Effect_SwordShot_Death.h>
 
 CDoewoleBullet_SwordShot::CDoewoleBullet_SwordShot(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CBullet(pGraphicDev), m_iDirCount(0)
+	: CBullet(pGraphicDev)
 {
 }
 
 CDoewoleBullet_SwordShot::CDoewoleBullet_SwordShot(const CDoewoleBullet_SwordShot& rhs)
-	: CBullet(rhs), m_iDirCount(0)
+	: CBullet(rhs)
 {
 }
 
@@ -17,39 +18,63 @@ CDoewoleBullet_SwordShot::~CDoewoleBullet_SwordShot()
 }
 
 
-HRESULT CDoewoleBullet_SwordShot::Ready_GameObject(void)
+HRESULT CDoewoleBullet_SwordShot::Ready_GameObject(const _vec3& vPos , const _float& fAngle)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fSpeed = 30.f;
+	m_fSpeed = 40.f;
+
+	m_fMaxframe = 7.f;
+
+	m_pTransformCom->m_vScale = { -3.f , 3.f , 3.f };
+
+	m_fAngle = fAngle;
+
+	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(90.f));
+	m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(-m_fAngle));
+
+	m_pTransformCom->m_vInfo[INFO_POS] = vPos;
+	
+	CTransform* pTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK_RETURN(pTransformCom, -1);
+
+	m_vDir = { vPos.x - pTransformCom->m_vInfo[INFO_POS].x , 0.f , vPos.z - pTransformCom->m_vInfo[INFO_POS].z };
+
+	D3DXVec3Normalize(&m_vDir, &m_vDir);
 
 	return S_OK;
 }
 
 _int CDoewoleBullet_SwordShot::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bDead)
-		return OBJ_DEAD;
-
-	Frame_Check(fTimeDelta);
-	__super::Update_GameObject(fTimeDelta);
-
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
-	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
-	_vec3	vPlayerPos;
-	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-
-	_vec3	vDir = vPlayerPos - m_pTransformCom->m_vInfo[INFO_POS];
-	if ((((vDir.x > -1.0f) && (vDir.x < 1.0f)) && ((vDir.z > -1.0f) && (vDir.z < 1.0f))))
+	if (m_bDead || m_bHit)
 	{
-		m_bDead = true;
+		Create_DeathEffect();
+		return OBJ_DEAD;
 	}
 
-	m_pTransformCom->Bullet_Move(vDir, m_fSpeed, fTimeDelta, m_iDirCount);
-	SetUp_OnTerrain();
-	Distance_Dead_Check();
+	m_fAccTime += fTimeDelta;
+
+	m_fAccAngle += 0.02f;
+	m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(m_fAccAngle));
+
+	_float RotAngle = 0.02f;
+
+	D3DXMATRIX rotation_matrix;
+	D3DXMatrixRotationAxis(&rotation_matrix, &_vec3(0.f , 0.1f, 0.f), RotAngle);
+
+	D3DXVec3TransformCoord(&m_vDir, &m_vDir, &rotation_matrix);
+
+
+
+	Frame_Check(fTimeDelta);
+	
+	m_pTransformCom->m_vInfo[INFO_POS] += m_vDir * m_fSpeed * fTimeDelta;
+ 
+	CGameObject::Update_GameObject(fTimeDelta);
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_BULLET, this);
 
 	return OBJ_NOEVENT;
 }
@@ -82,75 +107,60 @@ HRESULT CDoewoleBullet_SwordShot::Add_Component(void)
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Bullet_Doewole_SwordShot"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Bullet_Doewole_SwordShot", pComponent });
 
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_pColliderCom->Set_Radius(10.f);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
+
 	return S_OK;
-}
-
-void CDoewoleBullet_SwordShot::SetUp_OnTerrain(void)
-{
-	_vec3		vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"Proto_TerrainTex", ID_STATIC));
-	NULL_CHECK(pTerrainBufferCom);
-	m_pTransformCom->Set_Pos(vPos.x, 3.f, vPos.z);
-}
-
-void CDoewoleBullet_SwordShot::Change_State(void)
-{
 }
 
 void CDoewoleBullet_SwordShot::Frame_Check(const _float& fTimeDelta)
 {
-	if (m_eState == BULLET_IDLE)
-	{
-		m_fFrame += 7.f * fTimeDelta;
+	m_fFrame += 7.f * fTimeDelta;
 
-		if (7.f < m_fFrame)
-		{
-			m_fFrame = 0.f;
-			m_bCheck = false;
-		}
+	if (7.f < m_fFrame)
+	{
+		m_fFrame = 0.f;
 	}
-}
 
-void CDoewoleBullet_SwordShot::Distance_Dead_Check(void)
-{
-	_vec3		vPosCheck;
-
-	vPosCheck = m_vOriginPos - m_pTransformCom->m_vInfo[INFO_POS];
-
-	if (((40 <= vPosCheck.x) || (-40 >= vPosCheck.x)) || ((40 <= vPosCheck.z) || (-40 >= vPosCheck.z)) || (-40 >= ((-vPosCheck.x) + (-vPosCheck.z))))
-	{
+	if (m_fAccTime > 5.f)
 		m_bDead = true;
-	}
 }
 
-CDoewoleBullet_SwordShot* CDoewoleBullet_SwordShot::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _Monster_Pos, _int _Dir_Count)
+
+CDoewoleBullet_SwordShot* CDoewoleBullet_SwordShot::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos , const _float& fAngle)
 {
 	CDoewoleBullet_SwordShot* pInstance = new CDoewoleBullet_SwordShot(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(vPos , fAngle)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
 	}
 
-	pInstance->Set_FireInfo(_Monster_Pos, _Dir_Count);
-
 	return pInstance;
 }
 
-void CDoewoleBullet_SwordShot::Set_FireInfo(_vec3 _Monster_Pos, _int _Dir_Count)
+void CDoewoleBullet_SwordShot::Create_DeathEffect()
 {
-	m_pTransformCom->m_vInfo[INFO_POS] = _Monster_Pos;
-	m_vOriginPos = _Monster_Pos;
-	m_iDirCount = _Dir_Count;
-	m_pTransformCom->UpdatePos_OnWorld();
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject;
+
+	pGameObject = CEffect_SwordShot_Death::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS]);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(pGameObject);
 }
 
 void CDoewoleBullet_SwordShot::Free(void)

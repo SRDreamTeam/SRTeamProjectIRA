@@ -26,6 +26,10 @@ public:
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() {}
 
+public:
+	_bool					m_bHit = false;
+	list<int>				m_DamageList;
+
 protected:
 	CRcTex*			m_pBufferCom;
 	CTransform*		m_pTransformCom;
@@ -34,8 +38,11 @@ protected:
 
 protected:
 	_float			m_fFrame = 0.f;
-	_float			m_fBossHP = 0.f;
 	_float			m_fMaxFrame = 0.f;
+	_int			m_iBossMaxHP = 0.f;
+	_int			m_iBossCurHP = 0.f;
+
+	_float			m_fDamageTimeDelta = 0.f;
 	
 protected:
 	virtual void Free(void) override;

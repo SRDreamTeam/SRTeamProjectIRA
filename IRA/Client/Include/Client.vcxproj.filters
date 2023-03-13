@@ -307,11 +307,17 @@
     <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\03. Damage_Font">
       <UniqueIdentifier>{b46888c1-a758-40cf-9433-79c1d06c7810}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death">
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Death">
+      <UniqueIdentifier>{f346661d-4a6e-4423-b361-58163a32f18d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Death\StandardBullet_Death">
+      <UniqueIdentifier>{359f3898-2b70-4a82-8f07-56dbee77f984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Death\CircleBullet_Death">
       <UniqueIdentifier>{6057cd16-cf2e-47ae-b05d-bfaa9df18e5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death">
-      <UniqueIdentifier>{359f3898-2b70-4a82-8f07-56dbee77f984}</UniqueIdentifier>
+    <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Death\SwordShot_Death">
+      <UniqueIdentifier>{b6630557-7635-422e-a24e-8497cf4ddca9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -571,10 +577,13 @@
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect_CircleBullet_Death.h">
-      <Filter>02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death</Filter>
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Death\CircleBullet_Death</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect_StandardBullet_Death.h">
-      <Filter>02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death</Filter>
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Death\StandardBullet_Death</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_SwordShot_Death.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Death\SwordShot_Death</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -825,10 +834,13 @@
       <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\StopGo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_CircleBullet_Death.cpp">
-      <Filter>02. GameObject\Stage\05. Effect\Doewole\CircleBullet_Death</Filter>
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Death\CircleBullet_Death</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_StandardBullet_Death.cpp">
-      <Filter>02. GameObject\Stage\05. Effect\Doewole\StandardBullet_Death</Filter>
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Death\StandardBullet_Death</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_SwordShot_Death.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Death\SwordShot_Death</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

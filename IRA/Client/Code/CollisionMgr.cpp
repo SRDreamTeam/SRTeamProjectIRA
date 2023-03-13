@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Collider.h"
-#include "DoewoleBullet_Standard.h"
-#include "DoewoleBullet_Circle.h"
+#include "Bullet.h"
 #include "Player.h"
 
 IMPLEMENT_SINGLETON(CCollisionMgr)
@@ -32,10 +31,10 @@ void CCollisionMgr::Collision_Sphere(list<CGameObject*> _Dest, list<CGameObject*
 		{
 			if (Check_Sphere(Dest, Src))
 			{
-				if (dynamic_cast<CPlayer*>(Dest) && dynamic_cast<CDoewoleBullet_Circle*>(Src))
+				if (dynamic_cast<CPlayer*>(Dest) && dynamic_cast<CBullet*>(Src))
 				{
 					dynamic_cast<CPlayer*>(Dest)->m_bHit = true;
-					dynamic_cast<CDoewoleBullet_Circle*>(Src)->m_bHit = true;
+					dynamic_cast<CBullet*>(Src)->m_bHit = true;
 				}
 
 			}
