@@ -33,5 +33,6 @@ private:
 
 private:
 	virtual void Free(void) override;
+	void		Check_Boss_Dead();
 };
 

@@ -2,6 +2,7 @@
 #include "..\Header\DoewoleBullet_Standard.h"
 #include "Export_Function.h"
 #include <Effect_StandardBullet_Death.h>
+#include <Doewole.h>
 
 CDoewoleBullet_Standard::CDoewoleBullet_Standard(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -56,6 +57,8 @@ _int CDoewoleBullet_Standard::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	Frame_Check(fTimeDelta);
+
+	Check_Boss_Dead();
 
 	m_fAccTime += fTimeDelta;
 
@@ -149,6 +152,15 @@ void CDoewoleBullet_Standard::Create_DeathEffect()
 
 	pGameLogicLayer->Add_BulletObject(pGameObject);
 }
+
+void CDoewoleBullet_Standard::Check_Boss_Dead()
+{
+	CDoewole* pDoewole = dynamic_cast<CDoewole*> (Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole"));
+
+	if (pDoewole->Get_State() == CDoewole::BOSS_DEAD)
+		m_bDead = true;
+}
+
 
 
 void CDoewoleBullet_Standard::Free(void)

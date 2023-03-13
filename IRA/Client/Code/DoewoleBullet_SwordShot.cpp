@@ -2,6 +2,7 @@
 #include "..\Header\DoewoleBullet_SwordShot.h"
 #include "Export_Function.h"
 #include <Effect_SwordShot_Death.h>
+#include <Doewole.h>
 
 CDoewoleBullet_SwordShot::CDoewoleBullet_SwordShot(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -65,7 +66,7 @@ _int CDoewoleBullet_SwordShot::Update_GameObject(const _float& fTimeDelta)
 
 	D3DXVec3TransformCoord(&m_vDir, &m_vDir, &rotation_matrix);
 
-
+	Check_Boss_Dead();
 
 	Frame_Check(fTimeDelta);
 	
@@ -162,6 +163,15 @@ void CDoewoleBullet_SwordShot::Create_DeathEffect()
 
 	pGameLogicLayer->Add_BulletObject(pGameObject);
 }
+
+void CDoewoleBullet_SwordShot::Check_Boss_Dead()
+{
+	CDoewole* pDoewole = dynamic_cast<CDoewole*> (Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole"));
+
+	if (pDoewole->Get_State() == CDoewole::BOSS_DEAD)
+		m_bDead = true;
+}
+
 
 void CDoewoleBullet_SwordShot::Free(void)
 {

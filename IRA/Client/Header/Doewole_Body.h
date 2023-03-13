@@ -4,7 +4,7 @@
 
 class CDoewole_Body : public CDoewole
 {
-	enum {STAND, STAND_FACEON ,POWERSLAM ,POWERSLAM_AFTER, POWERSLAM_FACEOFF, SCRATCH, DIPPING ,TEX_END};
+	enum {STAND, STAND_FACEON ,POWERSLAM ,POWERSLAM_AFTER, POWERSLAM_FACEOFF, SCRATCH, DIPPING , DEAD, TEX_END};
 
 
 private:
@@ -45,6 +45,7 @@ private:
 	void			Upgrade_Smash_Attack(const _float& fTimeDelta);
 	void			Upgrade_Scratch_Attack(const _float& fTimeDelta);
 	void			Bullet_Activate_Attack(const _float& fTimeDelta);
+	void			Boss_Dead(const _float& fTimeDelta);
 
 
 private:

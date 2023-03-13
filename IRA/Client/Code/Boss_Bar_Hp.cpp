@@ -29,13 +29,17 @@ HRESULT CBoss_Bar_Hp::Ready_GameObject(void)
 _int CBoss_Bar_Hp::Update_GameObject(const _float& fTimeDelta)
 {	
 	CDoewole_Body* pMonster = dynamic_cast<CDoewole_Body*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole_Body"));
-	m_iMaxHp = pMonster->Get_MaxHp();
-	m_iCurHp = pMonster->Get_CurHp();
+	m_iMaxHp = DOEWOLE_MAXHP;
 
-	if (m_iMaxHp)
+	if (nullptr != pMonster)
 	{
-		m_iCurHp;
+		m_iCurHp = pMonster->Get_CurHp();
+
 	}
+	//if (m_iMaxHp)
+	//{
+	//	m_iCurHp;
+	//}
 
 	__super::Update_GameObject(fTimeDelta);
 	Engine::Add_RenderGroup(RENDER_UI, this);

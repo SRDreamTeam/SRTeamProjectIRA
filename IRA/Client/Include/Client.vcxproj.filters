@@ -447,9 +447,6 @@
     <ClInclude Include="..\Header\Doewole_LeftClaw.h">
       <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_LeftClaw</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Effect.h">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Effect_Doewole_Vanish.h">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Vanish</Filter>
     </ClInclude>
@@ -603,18 +600,6 @@
     <ClInclude Include="..\Header\DynamicObject.h">
       <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\DoewoleBullet_SwordShot2.h">
-      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\DoewoleBullet_Thorn.h">
-      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Effect_AlertRect.h">
-      <Filter>02. GameObject\Stage\05. Effect\AlertRect</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
-      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\SpriteObj.h">
       <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\00. SpriteObj</Filter>
     </ClInclude>
@@ -720,6 +705,21 @@
     <ClInclude Include="..\Header\MiniMap_Room.h">
       <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap\04. MiniMap_Room</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_SwordShot2.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DoewoleBullet_Thorn.h">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_AlertRect.h">
+      <Filter>02. GameObject\Stage\05. Effect\AlertRect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect.h">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Effect_Doewole_Hurt.h">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -778,9 +778,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Doewole_RightClaw.cpp">
       <Filter>02. GameObject\Stage\04. Boss\Doewole%28도울%29\Doewole_RightClaw</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Effect.cpp">
-      <Filter>02. GameObject\Stage\05. Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect_Doewole_Vanish.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Vanish</Filter>
@@ -938,18 +935,6 @@
     <ClCompile Include="..\Code\DynamicObject.cpp">
       <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\DoewoleBullet_SwordShot2.cpp">
-      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\DoewoleBullet_Thorn.cpp">
-      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Effect_AlertRect.cpp">
-      <Filter>02. GameObject\Stage\05. Effect\AlertRect</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
-      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\SpriteObj.cpp">
       <Filter>02. GameObject\Stage\10. LandScape\01. DynamicObject\00. SpriteObj</Filter>
     </ClCompile>
@@ -1054,6 +1039,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\MiniMap_Room.cpp">
       <Filter>02. GameObject\Stage\09. FrontUi\03. MiniMap\04. MiniMap_Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_SwordShot2.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\SwordShot2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DoewoleBullet_Thorn.cpp">
+      <Filter>02. GameObject\Stage\04. Bullet\03. DoewoleBullet\Thorn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_AlertRect.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\AlertRect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect.cpp">
+      <Filter>02. GameObject\Stage\05. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Doewole_Hurt.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Doewole\Doewole_Hurt</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

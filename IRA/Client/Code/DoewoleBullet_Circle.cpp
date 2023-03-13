@@ -2,6 +2,7 @@
 #include "..\Header\DoewoleBullet_Circle.h"
 #include "Export_Function.h"
 #include <Effect_CircleBullet_Death.h>
+#include <Doewole.h>
 
 CDoewoleBullet_Circle::CDoewoleBullet_Circle(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -49,6 +50,8 @@ _int CDoewoleBullet_Circle::Update_GameObject(const _float& fTimeDelta)
 	m_fAccTime += fTimeDelta;
 
 	Frame_Check(fTimeDelta);
+
+	Check_Boss_Dead();
 
 	if (!m_bChangeDir)
 	{
@@ -159,6 +162,14 @@ void CDoewoleBullet_Circle::Create_DeathEffect()
 		return;
 
 	pGameLogicLayer->Add_BulletObject(pGameObject);
+}
+
+void CDoewoleBullet_Circle::Check_Boss_Dead()
+{
+	CDoewole* pDoewole = dynamic_cast<CDoewole*> (Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole"));
+
+	if (pDoewole->Get_State() == CDoewole::BOSS_DEAD)
+		m_bDead = true;
 }
 
 void CDoewoleBullet_Circle::Free(void)

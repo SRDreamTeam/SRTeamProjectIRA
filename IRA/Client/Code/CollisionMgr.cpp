@@ -66,6 +66,12 @@ void CCollisionMgr::Collision_Sphere_Boss_Arrow(list<CGameObject*> _Dest, list<C
 	{
 		for (auto& Src : _Src)
 		{
+			if (dynamic_cast<CDoewole*>(Dest))
+			{
+				if (!dynamic_cast<CBoss*>(Dest)->m_bRender || dynamic_cast<CDoewole*>(Dest)->Get_State() == CDoewole::BOSS_DEAD)
+					continue;
+			}
+
 			if (Check_Sphere(Dest, Src))
 			{	
 				if (dynamic_cast<CBoss*>(Dest) && dynamic_cast<CArrow*>(Src))

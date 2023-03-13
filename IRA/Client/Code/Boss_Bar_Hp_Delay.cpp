@@ -30,9 +30,12 @@ HRESULT CBoss_Bar_Hp_Delay::Ready_GameObject(void)
 _int CBoss_Bar_Hp_Delay::Update_GameObject(const _float& fTimeDelta)
 {	
 	Frame_Check(fTimeDelta);
+	CDoewole_Body* pMonster = dynamic_cast<CDoewole_Body*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole_Body")); 
+	if (nullptr != pMonster)
+	{
+		m_iCurHp = pMonster->Get_CurHp();
 
-	CDoewole_Body* pMonster = dynamic_cast<CDoewole_Body*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole_Body"));
-	m_iReceiveHp = pMonster->Get_CurHp();
+	}
 
 	if (0 == (_uint)m_fDelay && (false == m_bCount))
 		m_bCount = true;
