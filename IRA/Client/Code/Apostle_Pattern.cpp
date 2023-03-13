@@ -82,7 +82,12 @@ void CApostle_Pattern::Change_State(void)
 
 void CApostle_Pattern::Frame_Check(const _float& fTimeDelta)
 {
+	m_fFrame += 4.f * fTimeDelta;
 
+	if (4.f < m_fFrame)
+	{
+		m_fFrame = 0.f;
+	}
 }
 
 void CApostle_Pattern::Reset_Proj_Matrix(void)

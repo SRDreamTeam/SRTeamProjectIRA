@@ -13,6 +13,8 @@
 #define		MIN_STR			64
 #define		MAX_STR			256
 
+#define		DOEWOLE_MAXHP 400000
+
 #define		OBJ_NOEVENT	 0
 #define		OBJ_DEAD	 1 
 

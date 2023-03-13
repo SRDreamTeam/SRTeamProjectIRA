@@ -59,6 +59,15 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"¹ÙÅÁ", 15, 20, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"±Ã¼­", 15, 20, FW_THIN), E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Title", L"Yoon¢ç ¹Î±¹", 18 , 24, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Title_2", L"Yoon¢ç ¹Î±¹", 15, 20, FW_BOLD), E_FAIL);
+
+
+
+	// Ãâ·Â : Engine::Render_Font(L"Font_Default", m_pLoading->Get_String(), &_vec2(20.f, 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+
+
 	FAILED_CHECK_RETURN(Engine::Ready_DInput(g_hInst, g_hWnd), E_FAIL);
 
 

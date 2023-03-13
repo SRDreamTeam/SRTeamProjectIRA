@@ -36,6 +36,7 @@ public:
 
 private:
 	void Set_FireInfo(_vec3 _Monster_Pos, _bool _Target_Check);
+	void Create_Dead_Effect(void);
 
 private:
 	virtual void Free(void) override;

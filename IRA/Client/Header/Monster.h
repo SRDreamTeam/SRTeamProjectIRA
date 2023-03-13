@@ -25,6 +25,8 @@ public:
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
 
+	//_float	Get_Hp(void) { return m_fHp; }
+
 protected:
 	// 준석 수정 (23.03.02)
 	virtual HRESULT	Add_Component(void)PURE;				
@@ -44,9 +46,14 @@ protected:
 	_float			m_fSpeed;
 	_float			m_fFrame;
 	_bool			m_bCheck;
+	_int			m_iMonsterHp;
+	_int			m_HitCount;
 
 	MONSTER_STATE	m_eState;
 	MONSTER_NAME	m_eName;
+
+public:
+	_bool					m_bHit = false;
 
 protected:
 	virtual void Free(void) override;

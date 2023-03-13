@@ -7,6 +7,11 @@
 #include "DoewoleBullet_Circle.h"
 #include "DoewoleBullet_Standard.h"
 #include "DoewoleBullet_Circle.h"
+
+#include "Monster.h"
+#include "MutationEvilSoul.h"
+
+
 #include "Bullet.h"
 
 
@@ -63,13 +68,22 @@ void CCollisionMgr::Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, lis
 		for (auto& Src : _Src)
 		{
 			if (Check_Sphere(Dest, Src))
-			{
-				dynamic_cast<CArrow*>(Src)->m_bHit = true;
+			{	
+				if (dynamic_cast<CBoss*>(Dest) && dynamic_cast<CArrow*>(Src))
+				{
+					dynamic_cast<CArrow*>(Src)->m_bHit = true;
 
-				dynamic_cast<CBoss*>(Dest)->m_bHit = true;
-				dynamic_cast<CBoss*>(Dest)->m_Damage_List = dynamic_cast<CArrow*>(Src)->m_Damage_List;
+					dynamic_cast<CBoss*>(Dest)->m_bHit = true;
+					dynamic_cast<CBoss*>(Dest)->m_Damage_List = dynamic_cast<CArrow*>(Src)->m_Damage_List;
+				}
+				if (dynamic_cast<CMonster*>(Dest) && dynamic_cast<CArrow*>(Src))
+				{
+					dynamic_cast<CArrow*>(Src)->m_bHit = true;
+					dynamic_cast<CMonster*>(Dest)->m_bHit = true;
+				}
 			}
 		}
+
 	}
 
 }

@@ -37,7 +37,7 @@ HRESULT CDoewole_LeftClaw::Ready_GameObject(void)
 }
 
 _int CDoewole_LeftClaw::Update_GameObject(const _float& fTimeDelta)
-{
+{	
 	State_Update(fTimeDelta);
 
 	CBoss::Update_GameObject(fTimeDelta);

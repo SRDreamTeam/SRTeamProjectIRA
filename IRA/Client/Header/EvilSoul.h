@@ -43,6 +43,7 @@ private:
 	MONSTER_HEAD	m_eHead;
 
 private:
+	void	Create_Dead_Effect(void);
 	virtual void Free(void) override;
 };
 
