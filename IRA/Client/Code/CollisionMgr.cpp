@@ -24,13 +24,13 @@ CCollisionMgr::~CCollisionMgr()
 
 void CCollisionMgr::Collision_Update()
 {
-	Collision_Sphere(m_CollisionGroup[OBJ_PLAYER], m_CollisionGroup[OBJ_BULLET]);
+	Collision_Sphere_Player_Bullet(m_CollisionGroup[OBJ_PLAYER], m_CollisionGroup[OBJ_BULLET]);
 	Collision_Sphere_Monster_Arrow(m_CollisionGroup[OBJ_MONSTER], m_CollisionGroup[OBJ_ARROW]);
 
 	Clear_CollisionGroup();
 }
 
-void CCollisionMgr::Collision_Sphere(list<CGameObject*> _Dest, list<CGameObject*> _Src)
+void CCollisionMgr::Collision_Sphere_Player_Bullet(list<CGameObject*> _Dest, list<CGameObject*> _Src)
 {
 
 	for (auto& Dest : _Dest)
