@@ -707,6 +707,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			}
 		}
 	}
+
 	else if (CKeyMgr::Get_Instance()->Key_Pressing(KEY_S)) {
 	    m_Is_Fire_Arrow = false;
 		m_Fire_Frame = m_Fire_Init;

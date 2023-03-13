@@ -24,7 +24,6 @@ protected:
 
 public:
 	static CDoewoleBullet_Circle* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
-	_bool				m_bHit = false;
 
 private:
 	virtual void Free(void) override;

@@ -9,7 +9,7 @@ protected:
 	virtual ~CDoewoleBullet_SwordShot2();
 
 public:
-	virtual HRESULT Ready_GameObject(const _vec3& vPos);
+	virtual HRESULT Ready_GameObject(const _vec3& vPos , const _float& fAngle);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject() override;
 	virtual void Render_GameObject() override;
@@ -22,12 +22,15 @@ protected:
 	virtual void Distance_Dead_Check(void) {};
 
 public:
-	static CDoewoleBullet_SwordShot2* Create(LPDIRECT3DDEVICE9 pGraphicDev , const _vec3& vPos);
+	static CDoewoleBullet_SwordShot2* Create(LPDIRECT3DDEVICE9 pGraphicDev , const _vec3& vPos , const _float& fAngle);
 
 private:
 	_float		m_fMaxframe = 0.f;
 	_vec3		m_vDir;
 	_float		m_fAccTime = 0.f;
+
+private:
+	void	Create_DeathEffect();
 
 private:
 	virtual void Free(void) override;

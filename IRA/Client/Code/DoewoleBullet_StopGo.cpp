@@ -2,6 +2,7 @@
 #include "..\Header\DoewoleBullet_StopGo.h"
 #include "Export_Function.h"
 #include <Doewole.h>
+#include <Effect_StandardBullet_Death.h>
 
 CDoewoleBullet_StopGo::CDoewoleBullet_StopGo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev)
@@ -44,8 +45,11 @@ HRESULT CDoewoleBullet_StopGo::Ready_GameObject(const _vec3& vPos , ClAWDIR _e)
 
 _int CDoewoleBullet_StopGo::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bDead)
+	if (m_bDead || m_bHit)
+	{
+		Create_DeathEffect();
 		return OBJ_DEAD;
+	}
 
 	Frame_Check(fTimeDelta);
 
@@ -83,6 +87,7 @@ _int CDoewoleBullet_StopGo::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_BULLET, this);
 
 	return OBJ_NOEVENT;
 }
@@ -121,6 +126,12 @@ HRESULT CDoewoleBullet_StopGo::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Bullet_Doewole_Standard", pComponent });
 
+	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
+	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
+	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_pColliderCom->Set_Radius(10.f);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
+
 	return S_OK;
 }
 
@@ -149,4 +160,18 @@ CDoewoleBullet_StopGo* CDoewoleBullet_StopGo::Create(LPDIRECT3DDEVICE9 pGraphicD
 void CDoewoleBullet_StopGo::Free(void)
 {
 	__super::Free();
+}
+
+void CDoewoleBullet_StopGo::Create_DeathEffect()
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject;
+
+	pGameObject = CEffect_StandardBullet_Death::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS]);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(pGameObject);
 }

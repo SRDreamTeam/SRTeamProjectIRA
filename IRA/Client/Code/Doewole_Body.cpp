@@ -31,7 +31,7 @@ HRESULT CDoewole_Body::Ready_GameObject(void)
 	m_pTransformCom->m_vScale = { 18.f , 18.f  , 1.f };
 
 	m_pColliderCom->Set_Radius(5.f);
-	m_pColliderCom->Set_Offset(_vec3(0.f, -5.f, 0.f));
+	m_pColliderCom->Set_Offset(_vec3(0.f, -7.f, 0.f));
 
 	return S_OK;
 }
@@ -49,7 +49,25 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 			m_bSphereMake = true;
 		}
 	}
-	
+
+	if (m_bHit == true) 
+	{
+		m_bHit = false;
+		m_HitBlend = true;
+	}
+
+	GetDamage_Update(fTimeDelta);
+
+	if (GetAsyncKeyState('1'))
+	{
+		m_bHit = true;
+		m_DamageList.push_back(1);
+		m_DamageList.push_back(2);
+		m_DamageList.push_back(3);
+	}
+
+
+	Frame_Manage(fTimeDelta);
 
 	State_Update(fTimeDelta);
 
@@ -79,6 +97,14 @@ void CDoewole_Body::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+	if (m_HitBlendRender) {
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(AlphaValue, R, G, B));
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_TFACTOR);
+
+	}
+
 	if (m_eCurState == CDoewole::IDLE)
 		m_pTextureCom[STAND]->Set_Texture((_uint)m_fFrame);
 
@@ -95,7 +121,7 @@ void CDoewole_Body::Render_GameObject()
 			m_pTextureCom[POWERSLAM_FACEOFF]->Set_Texture((_uint)m_fFrame);
 	}
 
-	else if (m_eCurState == CDoewole::SCRATCH_ATTACK)
+	else if (m_eCurState == CDoewole::SCRATCH_ATTACK || m_eCurState == CDoewole::UPGRADE_SCRATCH_ATTACK)
 	{
 		m_pTextureCom[SCRATCH]->Set_Texture((_uint)m_fFrame);
 	}
@@ -113,7 +139,22 @@ void CDoewole_Body::Render_GameObject()
 		m_pTextureCom[DIPPING]->Set_Texture((_uint)m_fFrame);
 	}
 
+	else if (m_eCurState == CDoewole::BULLET_ACTIVATE_ATTACK)
+	{
+		m_pTextureCom[STAND_FACEON]->Set_Texture((_uint)m_fFrame);
+	}
+
+
+
 	m_pBufferCom->Render_Buffer();
+
+	if (m_HitBlendRender) {
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+
+	}
+
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
@@ -210,6 +251,12 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 	case CDoewole::UPGRADE_SMASH_ATTACK:
 		Upgrade_Smash_Attack(fTimeDelta);
 		break;
+	case CDoewole::UPGRADE_SCRATCH_ATTACK:
+		Upgrade_Scratch_Attack(fTimeDelta);
+		break;
+	case CDoewole::BULLET_ACTIVATE_ATTACK:
+		Bullet_Activate_Attack(fTimeDelta);
+		break;
 	case CDoewole::STATE_END:
 		break;
 	default:
@@ -217,6 +264,29 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 	}
 
 	m_ePreState = m_eCurState;
+}
+
+void CDoewole_Body::Frame_Manage(const _float& fTimeDelta)
+{
+	if (m_HitBlend) {
+
+		m_HitBlendFrame += m_HitMaxFrame * fTimeDelta * 6.f;
+		if (m_HitBlendFrame > m_HitMaxFrame) {
+			m_HitBlendFrame = 0.f;
+			m_HitBlendCnt++;
+			if (m_HitBlendRender)
+				m_HitBlendRender = false;
+			else {
+				m_HitBlendRender = true;
+			}
+		}
+	}
+
+	if (m_HitBlendCnt > m_HitBlendMaxCnt) {
+		m_HitBlend = false;
+		m_HitBlendRender = false;
+		m_HitBlendCnt = 0;
+	}
 }
 
 void CDoewole_Body::Idle(const _float& fTimeDelta)
@@ -452,6 +522,87 @@ void CDoewole_Body::Upgrade_Smash_Attack(const _float& fTimeDelta)
 	if (m_iSmashCnt == 2)
 	{
 		m_fFrame = 10.f;
+	}
+}
+
+void CDoewole_Body::Upgrade_Scratch_Attack(const _float& fTimeDelta)
+{
+	m_bRender = dynamic_cast<CDoewole*>(m_pOwner)->Get_Disappear();
+
+	m_fMaxFrame = 5.f;
+
+	if (m_bRender)
+	{
+		m_fFrame += m_fMaxFrame * fTimeDelta * 2.f;
+	}
+
+	if (m_fMaxFrame < m_fFrame)
+	{
+		m_fFrame = m_fMaxFrame;
+		m_fAccTime += fTimeDelta;
+
+		if (m_fAccTime > 0.7f)
+		{
+			dynamic_cast<CDoewole*>(m_pOwner)->Set_Disappear(false);
+			CDoewole_RightClaw* pRightClaw = dynamic_cast<CDoewole_RightClaw*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole_RightClaw"));
+			NULL_CHECK(pRightClaw);
+
+			CDoewole_LeftClaw* pLeftClaw = dynamic_cast<CDoewole_LeftClaw*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole_LeftClaw"));
+			NULL_CHECK(pLeftClaw);
+
+			if (m_iScratchCnt <= 0)
+			{
+				pRightClaw->Set_Wait(true);
+				pLeftClaw->Set_Wait(false);
+			}
+			else if (m_iScratchCnt == 1)
+			{
+				pRightClaw->Set_Smash(true);
+				pLeftClaw->Set_Smash(true);
+			}
+			else if (m_iScratchCnt == 2)
+			{
+				pRightClaw->Set_CrossScratch(true);
+				pLeftClaw->Set_CrossScratch(true);
+			}
+
+			m_fAccTime = 0.f;
+			m_fFrame = 0.f;
+
+			++m_iScratchCnt;
+
+			if (m_iScratchCnt == 4)
+				dynamic_cast<CDoewole*>(m_pOwner)->Set_State(CDoewole::IDLE);
+		}
+	}
+
+	// ================Doewole의 위치에 맞게 조정============
+	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK(pDoewoleTransformCom);
+
+	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 15.f,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].z + 0.1f };
+}
+
+void CDoewole_Body::Bullet_Activate_Attack(const _float& fTimeDelta)
+{
+	m_bRender = dynamic_cast<CDoewole*>(m_pOwner)->Get_Disappear();
+}
+
+void CDoewole_Body::GetDamage_Update(const _float& fTimeDelta)
+{
+	m_fDamageTimeDelta += fTimeDelta;
+
+	if (!m_DamageList.empty())
+	{
+		if (m_fDamageTimeDelta > 0.1f)
+		{
+			m_iBossCurHP -= m_DamageList.front();
+			m_DamageList.pop_front();
+
+			m_fDamageTimeDelta = 0.f;
+		}
 	}
 }
 
