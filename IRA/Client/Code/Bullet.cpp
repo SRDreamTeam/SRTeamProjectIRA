@@ -22,13 +22,13 @@ CBullet::~CBullet()
 
 HRESULT CBullet::Ready_GameObject(void)
 {
-
+	
 	return S_OK;
 }
 
 _int CBullet::Update_GameObject(const _float& fTimeDelta)
 {
-
+	
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;

@@ -175,12 +175,13 @@ private:
 	
 public:
 	bool            m_bHit = false;
+	bool            m_bImmuned = false;
 	float           m_Critical_Rate = 38.f;
 
 private:
 	// UI 정보
 	PLAYER_INFO     m_tInfo;
-	bool            m_bImmuned = false;
+
 	
 	// Hit 관련
 	bool            m_HitBlend = false;
