@@ -50,6 +50,11 @@ _int CDoewole_RightClaw::Update_GameObject(const _float& fTimeDelta)
 void CDoewole_RightClaw::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	/*_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);*/
 }
 
 void CDoewole_RightClaw::Render_GameObject()

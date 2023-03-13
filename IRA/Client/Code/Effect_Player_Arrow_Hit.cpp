@@ -22,9 +22,9 @@ HRESULT CEffect_Player_Arrow_Hit::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	if (m_Arrow_Type == ARROW_TYPE_SYLPH)
-		m_pTransformCom->m_vScale = { 1.9f * 2.f , 1.4f * 2.f, 1.f };
+		m_pTransformCom->m_vScale = { 1.9f * 2.f * PUBLIC_SCALE , 1.4f * 2.f * PUBLIC_SCALE, 1.f };
 	else if (m_Arrow_Type == ARROW_TYPE_CHARGE_SYLPH)
-		m_pTransformCom->m_vScale = { 1.9f * 5.f , 1.4f * 5.f, 1.f };
+		m_pTransformCom->m_vScale = { 1.9f * 5.f * PUBLIC_SCALE , 1.4f * 5.f * PUBLIC_SCALE, 1.f };
 
 	m_fMaxFrame = 11.f;
 
@@ -56,6 +56,11 @@ void CEffect_Player_Arrow_Hit::LateUpdate_GameObject()
 		m_bDead = true;
 		m_fFrame = m_fMaxFrame;
 	}
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CEffect_Player_Arrow_Hit::Render_GameObject()

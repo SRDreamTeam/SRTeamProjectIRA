@@ -340,6 +340,12 @@
     <Filter Include="02. GameObject\Stage\05. Effect\Doewole\Death\SwordShot_Death">
       <UniqueIdentifier>{b6630557-7635-422e-a24e-8497cf4ddca9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\Stage\05. Effect\Player_Effect\04. Foot_Step">
+      <UniqueIdentifier>{2680390a-06da-47b0-97de-59898eeeac17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\Stage\00. Player\03. Shadow">
+      <UniqueIdentifier>{9b35ddb3-ff4e-46b9-a61c-ce310575b735}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -627,6 +633,12 @@
     <ClInclude Include="..\Header\Effect_SwordShot_Death.h">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\Death\SwordShot_Death</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Effect_Player_Foot.h">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\04. Foot_Step</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Player_Shadow.h">
+      <Filter>02. GameObject\Stage\00. Player\03. Shadow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -904,6 +916,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Effect_SwordShot_Death.cpp">
       <Filter>02. GameObject\Stage\05. Effect\Doewole\Death\SwordShot_Death</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Effect_Player_Foot.cpp">
+      <Filter>02. GameObject\Stage\05. Effect\Player_Effect\04. Foot_Step</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player_Shadow.cpp">
+      <Filter>02. GameObject\Stage\00. Player\03. Shadow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

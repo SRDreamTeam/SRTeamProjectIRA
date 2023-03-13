@@ -39,7 +39,9 @@ protected:
 	LPDIRECT3DDEVICE9								m_pGraphicDev;
 	_bool											m_bDead = false;
 	_bool											m_bSphereMake = false;
-	_float											m_fViewZ = 0.f;
+
+	_float				m_fViewZ = 0.f;
+	SPEC_OBJ_TYPE       m_SObj_Type = SOBJ_END;
 };
 
 END

@@ -29,6 +29,11 @@ private:
 private:
 	_float			m_fDistance = 10.f;
 	_float			m_fAngle = 0.f;
+	_float          m_fHeight = 3.f;
+	_float          m_fDisZ = 6.f;
+	_float          m_fDisY = 6.f;
+	_float          m_AtY = 3.f;
+    _float          m_AtZ = 7.f;
 
 public:
 	static CStaticCamera*		Create(LPDIRECT3DDEVICE9 pGraphicDev,

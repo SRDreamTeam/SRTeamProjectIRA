@@ -64,7 +64,7 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+	
 
 	return S_OK;
 }
@@ -110,10 +110,6 @@ void CMainApp::Free(void)
 	Engine::Release_Utility();
 	Engine::Release_System();
 
-	//ax + by + cz + d
-	//D3DXPLANE	Plane;
-	//D3DXPlaneFromPoints();
-
-	//D3DXIntersectTri( );
+	
 
 }

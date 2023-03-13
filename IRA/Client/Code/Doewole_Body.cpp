@@ -4,11 +4,13 @@
 #include "Doewole_RightClaw.h"
 #include "Doewole_LeftClaw.h"
 #include "CollisionSphere.h"
+#include "CollisionMgr.h"
 #include <KeyMgr.h>
 
 CDoewole_Body::CDoewole_Body(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CDoewole(pGraphicDev)
 {
+
 }
 
 CDoewole_Body::CDoewole_Body(const CDoewole_Body & rhs)
@@ -59,9 +61,9 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 	if (GetAsyncKeyState('1'))
 	{
 		m_bHit = true;
-		m_DamageList.push_back(1);
-		m_DamageList.push_back(2);
-		m_DamageList.push_back(3);
+		m_Damage_List.push_back(1);
+		m_Damage_List.push_back(2);
+		m_Damage_List.push_back(3);
 	}
 
 
@@ -72,6 +74,7 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 	CBoss::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, this);
 
 	return 0;
 }
@@ -79,6 +82,11 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 void CDoewole_Body::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	/*_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);*/
 }
 
 void CDoewole_Body::Render_GameObject()
@@ -193,6 +201,7 @@ HRESULT CDoewole_Body::Add_Component(void)
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
 	m_pColliderCom->Set_TransformCom(m_pTransformCom);
+	m_pColliderCom->Set_Radius(8.f);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Collider", pComponent });
 
 	return S_OK;
@@ -585,12 +594,12 @@ void CDoewole_Body::GetDamage_Update(const _float& fTimeDelta)
 {
 	m_fDamageTimeDelta += fTimeDelta;
 
-	if (!m_DamageList.empty())
+	if (!m_Damage_List.empty())
 	{
 		if (m_fDamageTimeDelta > 0.1f)
 		{
-			m_iBossCurHP -= m_DamageList.front();
-			m_DamageList.pop_front();
+			m_iBossCurHP -= m_Damage_List.front();
+			m_Damage_List.pop_front();
 
 			m_fDamageTimeDelta = 0.f;
 		}

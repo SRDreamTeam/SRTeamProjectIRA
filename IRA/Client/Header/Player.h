@@ -82,6 +82,9 @@ private:
 
 	void            Effect_Charge_Arrow(void);
 
+	void            Effect_Foot_Step_Smoke(void);
+	void            Effect_Foot_Step_Water(void);
+
 	void            Frame_Manage(const _float& fTimeDelta);
 
 	void            Hp_Down(void)
@@ -113,14 +116,15 @@ private:
 	CCalculator*	m_pCalculatorCom;
 
 private:	
-	_float			m_fSpeed = 20.f;
-	_float			m_fDashSpeed = 1.8f;
+	_float			m_fSpeed = 25.f * PUBLIC_SCALE;
+	_float			m_fDashSpeed = 1.2f * PUBLIC_SCALE;
 
 	_float			m_fStandFrame = 0.f;
 	_float			m_fRunFrame = 0.f;
 	_float			m_fAttackFrame = 0.f;
 	_float			m_fDashFrame = 0.f;
 	_float			m_fDeathFrame = 0.f;
+
 
 	_int            m_iState = STAND;
 	_int            m_iPreState = STAND;
@@ -139,6 +143,7 @@ private:
 	_float          m_Dash_Time = 0.f;
 	bool            m_Is_Dash = false;
 	bool            m_Is_Jump = false;
+	bool            m_Is_Run = false;
 	float           jump = 0.f;
 	float           jumpDir = 1.f;
 
@@ -149,6 +154,8 @@ private:
 
 	bool            m_Is_Effect_Charge_Arrow = false;
 	int             m_Charge_Effect_Cnt = 0;
+	bool            m_Is_Charge_Arrow = false;
+	_float			m_fChargeFrame = 0.f;
 
 
 	CSphereTex*		m_pSphereBufferCom;
@@ -159,10 +166,16 @@ private:
 	CGameObject*    m_Bow_List[BOW_END] = {};
 	bool            m_Bow_Active[BOW_END] = {};
 	bool            m_Bow_Render[BOW_END] = {};
+
+
+	// Foot
+	_float          m_FootFrame = 0.f;
+	bool            m_FootRev = false;
+
 	
 public:
 	bool            m_bHit = false;
-	float           m_Critical_Rate = 50.f;
+	float           m_Critical_Rate = 38.f;
 
 private:
 	// UI Á¤º¸
@@ -182,6 +195,7 @@ private:
 	DWORD           G = 255;
 	DWORD           B = 255;
 
+	
 
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

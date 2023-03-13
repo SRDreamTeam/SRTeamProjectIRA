@@ -1,8 +1,14 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Collider.h"
-#include "Bullet.h"
 #include "Player.h"
+#include "SylphArrow.h"
+#include "Doewole_Body.h"
+#include "DoewoleBullet_Circle.h"
+#include "DoewoleBullet_Standard.h"
+#include "DoewoleBullet_Circle.h"
+#include "Bullet.h"
+
 
 IMPLEMENT_SINGLETON(CCollisionMgr)
 
@@ -19,12 +25,14 @@ CCollisionMgr::~CCollisionMgr()
 void CCollisionMgr::Collision_Update()
 {
 	Collision_Sphere(m_CollisionGroup[OBJ_PLAYER], m_CollisionGroup[OBJ_BULLET]);
+	Collision_Sphere_Monster_Arrow(m_CollisionGroup[OBJ_MONSTER], m_CollisionGroup[OBJ_ARROW]);
 
 	Clear_CollisionGroup();
 }
 
 void CCollisionMgr::Collision_Sphere(list<CGameObject*> _Dest, list<CGameObject*> _Src)
 {
+
 	for (auto& Dest : _Dest)
 	{
 		for (auto& Src : _Src)
@@ -36,10 +44,29 @@ void CCollisionMgr::Collision_Sphere(list<CGameObject*> _Dest, list<CGameObject*
 					dynamic_cast<CPlayer*>(Dest)->m_bHit = true;
 					dynamic_cast<CBullet*>(Src)->m_bHit = true;
 				}
+			}
 
+		}
+	}
+}
+
+
+void CCollisionMgr::Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src)
+{
+	for (auto& Dest : _Dest)
+	{
+		for (auto& Src : _Src)
+		{
+			if (Check_Sphere(Dest, Src))
+			{
+				dynamic_cast<CArrow*>(Src)->m_bHit = true;
+
+				dynamic_cast<CBoss*>(Dest)->m_bHit = true;
+				dynamic_cast<CBoss*>(Dest)->m_Damage_List = dynamic_cast<CArrow*>(Src)->m_Damage_List;
 			}
 		}
 	}
+
 }
 
 bool CCollisionMgr::Check_Sphere(CGameObject* pDest, CGameObject* pSrc)

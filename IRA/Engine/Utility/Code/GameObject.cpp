@@ -50,6 +50,8 @@ void CGameObject::Compute_ViewZ(const _vec3* pPos)
 	_vec3		vCamPos;
 	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
 
+	vCamPos.x = pPos->x;
+
 	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
 }
 

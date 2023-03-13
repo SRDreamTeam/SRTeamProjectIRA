@@ -24,7 +24,7 @@ HRESULT CGhostChild::Ready_GameObject(void)
 	
 	__super::Ready_GameObject();
 
-	m_pTransformCom->Set_Scale_Ratio({ 5.f, 5.f, 1.f });
+	m_pTransformCom->Set_Scale_Ratio({ 5.f * PUBLIC_SCALE, 5.f * PUBLIC_SCALE, 1.f });
 
 
 	CTransform* pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
@@ -40,7 +40,7 @@ HRESULT CGhostChild::Ready_GameObject(void)
 
 	if (pPlayerTransform != nullptr) {
 		pPlayerTransform->Get_Info(INFO_POS, &vPos);
-		m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
+		m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z + 0.01f);
 	}
 
 
@@ -68,13 +68,17 @@ _int CGhostChild::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	
-
 	return 0;
 }
 
 void CGhostChild::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CGhostChild::Render_GameObject()
@@ -86,16 +90,23 @@ void CGhostChild::Render_GameObject()
 	DWORD AlphaValue;
 	AlphaValue = D3DCOLOR_ARGB(m_iAlpha, 255, 255, 255);
 
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+	
+	/*m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, false);*/
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_ARGB(m_iAlpha, 0, 0, 255));
+
 	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_CONSTANT, AlphaValue);
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CONSTANT);
-	m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
-	m_pGraphicDev->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+
+
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -126,8 +137,12 @@ void CGhostChild::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 
-	AlphaValue = D3DCOLOR_ARGB(255, 255, 255, 255);
-	m_pGraphicDev->SetTextureStageState(0, D3DTSS_CONSTANT, AlphaValue);
+	/*m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, true);*/
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTOP_SELECTARG1);
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTOP_SELECTARG1);
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+	m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 

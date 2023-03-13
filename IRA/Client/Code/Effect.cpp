@@ -26,12 +26,20 @@ _int CEffect::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+
 	return 0;
 }
 
 void CEffect::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 }
 
 void CEffect::Render_GameObject()

@@ -69,5 +69,9 @@ protected:
 protected:
 	virtual void Free(void) override;
 
+public:
+	bool  m_bHit = false;
+	list<int> m_Damage_List;
+
 };
 
