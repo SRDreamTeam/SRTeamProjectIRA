@@ -2,6 +2,10 @@
 #include "..\Header\MonsterBullet_2.h"
 #include "Export_Function.h"
 
+#include "Effect_Monster_Bullet_1_Dead.h"
+#include "Effect_Monster_Bullet_2_Dead.h"
+
+
 CMonsterBullet_2::CMonsterBullet_2(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBullet(pGraphicDev), m_iDirCount(0)
 {
@@ -31,7 +35,10 @@ HRESULT CMonsterBullet_2::Ready_GameObject(void)
 _int CMonsterBullet_2::Update_GameObject(const _float& fTimeDelta)
 {
 	if (m_bDead)
+	{
+		Create_Dead_Effect();
 		return OBJ_DEAD;
+	}
 
 	Frame_Check(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
@@ -84,7 +91,7 @@ HRESULT CMonsterBullet_2::Add_Component(void)
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Monster_Bullet_2"));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -153,6 +160,27 @@ void CMonsterBullet_2::Set_FireInfo(_vec3 _Monster_Pos, _int _Dir_Count)
 	m_vOriginPos = _Monster_Pos;
 	m_iDirCount = _Dir_Count;
 	m_pTransformCom->UpdatePos_OnWorld();
+}
+
+void CMonsterBullet_2::Create_Dead_Effect(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+	CGameObject* pGameObject = nullptr;
+	CGameObject* pGameObject_2 = nullptr;
+
+	_vec3 vTemp_Pos = m_pTransformCom->m_vInfo[INFO_POS];
+	vTemp_Pos.y += 5;
+
+	pGameObject = CEffect_Monster_Bullet_1_Dead::Create(m_pGraphicDev, vTemp_Pos);
+	if (pGameObject == nullptr)
+		return;
+
+	pGameObject_2 = CEffect_Monster_Bullet_2_Dead::Create(m_pGraphicDev, vTemp_Pos);
+	if (pGameObject_2 == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject);
+	pGameLogicLayer->Add_BulletObject(OBJ_EFFECT, pGameObject_2);
 }
 
 void CMonsterBullet_2::Free(void)

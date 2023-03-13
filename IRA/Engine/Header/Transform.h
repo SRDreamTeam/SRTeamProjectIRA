@@ -74,7 +74,8 @@ public:
 	void					Ui_Status_Print(_int _iHpNumber, _int _iUiNumber);
 	void					Ui_Apostle_Print(_int _iApNumber, _int _iUiNumber);
 	void					Ui_QuickSlot_Print(_int _iUiNumber);
-	void					Ui_MiniMap_Print(_int _iUiNumber);
+	void					Ui_MiniMap_Print(_int _iUiNumber, _vec3* _pPlayerPos = nullptr, _int _iRoomNumber = 0);
+	void					Ui_BossBar_Print(_int _iUiNumber, _float _fHp = 0);
 
 	void					ColorBlend_Hit(_int iFrame);
 

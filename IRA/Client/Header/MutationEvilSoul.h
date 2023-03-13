@@ -43,6 +43,7 @@ private:
 	_int			m_Count;
 
 private:
+	void	Create_Dead_Effect(void);
 	virtual void Free(void) override;
 };
 

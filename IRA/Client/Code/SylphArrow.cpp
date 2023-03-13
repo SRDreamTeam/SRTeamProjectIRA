@@ -23,7 +23,7 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 
-	m_pTransformCom->Set_Scale_Ratio({ 1.f, 1.f, 1.f });
+	m_pTransformCom->Set_Scale_Ratio({ 1.5f, 1.f, 1.f });
 
 	m_pTransformCom->Rotation(ROT_Y, m_Arrow_Angle);
 

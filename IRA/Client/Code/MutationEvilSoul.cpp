@@ -3,6 +3,9 @@
 #include "Export_Function.h"
 #include "MonsterBullet_2.h"
 
+#include "Effect_Monster_Dead_1.h"
+
+
 CMutationEvilSoul::CMutationEvilSoul(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_eHead(HEAD_FRONT), m_Count(0)
 {
@@ -30,12 +33,16 @@ HRESULT CMutationEvilSoul::Ready_GameObject(void)
 }
 
 _int CMutationEvilSoul::Update_GameObject(const _float& fTimeDelta)
-{
+{	
+	if (m_bDead)
+	{
+		Create_Dead_Effect();
+		return OBJ_DEAD;
+	}
+
 	Frame_Check(fTimeDelta);
-	//SetUp_OnTerrain();
 	__super::Update_GameObject(fTimeDelta);
 	
-
 	CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Proto_Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
 
@@ -47,11 +54,20 @@ _int CMutationEvilSoul::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
-	return 0;
+	return OBJ_NOEVENT;
 }
 
 void CMutationEvilSoul::LateUpdate_GameObject()
-{
+{	
+	if (GetAsyncKeyState('8') & 0x8000)
+	{
+		m_bDead = true;
+	}
+	if (GetAsyncKeyState('9'))
+	{
+
+	}
+
 	__super::LateUpdate_GameObject();
 }
 
@@ -89,7 +105,7 @@ HRESULT CMutationEvilSoul::Add_Component(void)
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_ProtoComponent(L"Proto_Transform"));
 	NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	//45 IDLE, ATTACK -> ALL
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_EvilSoul_45_All"));
@@ -213,6 +229,21 @@ CMutationEvilSoul* CMutationEvilSoul::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return pInstance;
+}
+
+void CMutationEvilSoul::Create_Dead_Effect(void)
+{
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject = nullptr;
+
+	pGameObject = CEffect_Monster_Dead_1::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS]);
+
+	if (pGameObject == nullptr)
+		return;
+
+	pGameLogicLayer->Add_BulletObject(OBJ_NONE, pGameObject);
+
 }
 
 void CMutationEvilSoul::Free(void)

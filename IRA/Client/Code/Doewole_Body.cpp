@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\Doewole_Body.h"
 #include "Export_Function.h"
+#include "Doewole_RightClaw.h"
+#include "Doewole_LeftClaw.h"
 
 CDoewole_Body::CDoewole_Body(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CDoewole(pGraphicDev)
@@ -22,7 +24,7 @@ HRESULT CDoewole_Body::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 12.f , 12.f * 1.4f  , 1.f };
+	m_pTransformCom->m_vScale = { 18.f , 18.f  , 1.f };
 
 	//m_pTransformCom->Rotation(ROT_X, D3DXToRadian(45.f));
 
@@ -52,7 +54,6 @@ void CDoewole_Body::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	/*m_fAlpha -= 0.01f;
 
@@ -75,10 +76,22 @@ void CDoewole_Body::Render_GameObject()
 			m_pTextureCom[POWERSLAM_FACEOFF]->Set_Texture((_uint)m_fFrame);
 	}
 
+	else if (m_eCurState == CDoewole::SCRATCH_ATTACK)
+	{
+		m_pTextureCom[SCRATCH]->Set_Texture((_uint)m_fFrame);
+	}
+
+	else if (m_eCurState == CDoewole::AREA_ATTACK)
+	{
+		if(m_bPowerSlamAfter)
+			m_pTextureCom[POWERSLAM_AFTER]->Set_Texture((_uint)m_fFrame);
+		if(m_bPowerSlamFaceOff)
+			m_pTextureCom[POWERSLAM_FACEOFF]->Set_Texture((_uint)m_fFrame);
+	}
+
+
 	m_pBufferCom->Render_Buffer();
 	//m_pSphereBufferCom->Render_Buffer();
-
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
@@ -114,6 +127,9 @@ HRESULT CDoewole_Body::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body_PowerSlamFaceOff", pComponent });
 
+	pComponent = m_pTextureCom[SCRATCH] = dynamic_cast<CTexture*>(Engine::Clone_ProtoComponent(L"Proto_Texture_Doewole_Body_Scratch"));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Proto_Texture_Doewole_Body_Scratch", pComponent });
 
 	pComponent = m_pColliderCom = dynamic_cast<CCollider*>(Engine::Clone_ProtoComponent(L"Proto_Collider"));
 	NULL_CHECK_RETURN(m_pColliderCom, E_FAIL);
@@ -149,6 +165,12 @@ void CDoewole_Body::State_Update(const _float& fTimeDelta)
 		break;
 	case CDoewole::SMASH_ATTACK:
 		Smash_Attack(fTimeDelta);
+		break;
+	case CDoewole::SCRATCH_ATTACK:
+		Scratch_Attack(fTimeDelta);
+		break;
+	case CDoewole::AREA_ATTACK:
+		Area_Attack(fTimeDelta);
 		break;
 	case CDoewole::STATE_END:
 		break;
@@ -245,6 +267,7 @@ void CDoewole_Body::Smash_Attack(const _float& fTimeDelta)
 			m_fFrame = 0.f;
 			m_bPowerSlamFaceOff = false;
 			m_bPowerSlam = false;
+			m_bPowerSlamAfter = false;
 		}
 	}
 
@@ -253,10 +276,105 @@ void CDoewole_Body::Smash_Attack(const _float& fTimeDelta)
 	NULL_CHECK(pDoewoleTransformCom);
 
 	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
-											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 13.f,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 12.f,
 											pDoewoleTransformCom->m_vInfo[INFO_POS].z + 0.1f };
 
 	// =====================================================
+}
+
+void CDoewole_Body::Scratch_Attack(const _float& fTimeDelta)
+{
+	m_bRender = dynamic_cast<CDoewole*>(m_pOwner)->Get_Disappear();
+
+	m_fMaxFrame = 5.f;
+
+	if (m_bRender)
+	{
+		m_fFrame += m_fMaxFrame * fTimeDelta * 2.f;
+	}
+	
+	if (m_fMaxFrame < m_fFrame)
+	{
+		m_fFrame = m_fMaxFrame;
+		m_fAccTime += fTimeDelta;
+
+		if (m_fAccTime > 0.7f)
+		{
+			dynamic_cast<CDoewole*>(m_pOwner)->Set_Disappear(false);
+			CDoewole_RightClaw* pRightClaw = dynamic_cast<CDoewole_RightClaw*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole_RightClaw"));
+			NULL_CHECK(pRightClaw);
+
+			CDoewole_LeftClaw* pLeftClaw = dynamic_cast<CDoewole_LeftClaw*>(Engine::Get_GameObject(L"Layer_GameLogic", L"Doewole_LeftClaw"));
+			NULL_CHECK(pLeftClaw);
+
+			pRightClaw->Set_Wait(true);
+			pLeftClaw->Set_Wait(false);
+
+			m_fAccTime = 0.f;
+			m_fFrame = 0.f;
+
+			++m_iScratchCnt;
+
+			if (m_iScratchCnt == 2)
+				dynamic_cast<CDoewole*>(m_pOwner)->Set_State(CDoewole::IDLE);
+		}
+	}
+
+	// ================Doewole의 위치에 맞게 조정============
+	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK(pDoewoleTransformCom);
+
+	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 15.f,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].z + 0.1f };
+}
+
+void CDoewole_Body::Area_Attack(const _float& fTimeDelta)
+{
+	m_bRender = dynamic_cast<CDoewole*>(m_pOwner)->Get_Disappear();
+
+	if (m_bRender)
+	{
+		m_fFrame += m_fMaxFrame * fTimeDelta * 0.5f;
+	}
+
+	if (!m_bArea)
+	{
+		m_bPowerSlamAfter = true;
+		m_bArea = true;
+	}
+
+	if (m_bPowerSlamAfter)
+	{
+		m_fMaxFrame = 8.f;
+
+		if (m_fFrame > m_fMaxFrame)
+		{
+			m_fFrame = 0.f;
+			m_bPowerSlamFaceOff = true;
+			m_bPowerSlamAfter = false;
+		}
+	}
+
+	if (m_bPowerSlamFaceOff)
+	{
+		m_fMaxFrame = 7.f;
+
+		if (m_fFrame > m_fMaxFrame)
+		{
+			m_fFrame = m_fMaxFrame;
+			m_bPowerSlamFaceOff = false;
+			m_bPowerSlamAfter = false;
+			//dynamic_cast<CDoewole*>(m_pOwner)->Set_State(IDLE);
+		}
+	}
+
+	CTransform* pDoewoleTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Doewole", L"Proto_Transform", ID_DYNAMIC));
+	NULL_CHECK(pDoewoleTransformCom);
+
+	m_pTransformCom->m_vInfo[INFO_POS] = { pDoewoleTransformCom->m_vInfo[INFO_POS].x,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].y + 15.f,
+											pDoewoleTransformCom->m_vInfo[INFO_POS].z + 0.1f };
 }
 
 CDoewole_Body * CDoewole_Body::Create(LPDIRECT3DDEVICE9 pGraphicDev)

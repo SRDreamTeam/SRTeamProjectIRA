@@ -2,7 +2,7 @@
 
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
-	: m_pGraphicDev(pGraphicDev)
+	: m_pGraphicDev(pGraphicDev), m_pStop(&m_bStop)
 {
 	if (m_pGraphicDev)
 		m_pGraphicDev->AddRef();

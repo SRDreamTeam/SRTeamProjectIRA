@@ -34,6 +34,9 @@ protected:
 	unordered_map<const _tchar*, CComponent*>		m_uMapComponent[ID_END];
 	LPDIRECT3DDEVICE9								m_pGraphicDev;
 	_bool											m_bDead = false;
+
+	_bool* m_pStop;
+	_bool  m_bStop;
 };
 
 END
