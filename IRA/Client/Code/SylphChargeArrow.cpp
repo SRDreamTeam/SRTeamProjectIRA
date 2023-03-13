@@ -40,7 +40,10 @@ HRESULT CSylphChargeArrow::Ready_GameObject(void)
 
 	m_pTransformCom->Set_Pos(m_Fire_Pos.x, m_Fire_Pos.y - 2.f, m_Fire_Pos.z);
 
-	
+	for (int i = 0; i < m_fAttack_Num; i++) {
+
+		m_Cri_List.emplace_back(Final_Damage());
+	}
 	
 	__super::Ready_GameObject();
 
@@ -229,7 +232,61 @@ bool CSylphChargeArrow::Final_Damage(void)
 
 	m_Damage_List.emplace_back((int)m_fDamage);
 
-	int temp = (int)m_fDamage;
+	
+	return Critical;
+}
+
+void CSylphChargeArrow::Create_Damage_Font(void)
+{
+	
+	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
+
+	CGameObject* pGameObject;
+
+	int k = 0;
+
+	for (int i = 0; i < m_fAttack_Num; i++) {
+
+		int j = 0;
+
+
+		Create_Font_List(m_Damage_List.front());
+
+		for (auto iter : m_Font_List) {
+			_vec3 pos = m_pTransformCom->m_vInfo[INFO_POS];
+
+			if (m_Cri_List.front() == true) {
+				pos.x += 1.7f * j;
+				pos.y += 2.f * k;
+			}
+			else {
+				pos.x += 1.7f * 0.7 * j;
+				pos.y += 2.f * k;
+			}
+
+			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, m_Cri_List.front());
+
+			if (pGameObject == nullptr)
+				return;
+
+			pGameLogicLayer->Add_BulletObject(pGameObject);
+
+			j++;
+		}
+
+		m_Cri_List.pop_front();
+		m_Damage_List.pop_front();
+		m_Font_List.clear();
+		m_Font_List.resize(0);
+
+		k++;
+	}
+
+}
+
+void CSylphChargeArrow::Create_Font_List(int damage)
+{
+	int temp = (int)damage;
 	int cnt = 0;
 
 	while (temp > 0) {
@@ -249,53 +306,6 @@ bool CSylphChargeArrow::Final_Damage(void)
 		m_Font_List.emplace_front(temp % 10);
 		temp /= 10;
 
-	}
-
-
-	return Critical;
-
-}
-
-void CSylphChargeArrow::Create_Damage_Font(void)
-{
-	
-	CLayer* pGameLogicLayer = Engine::Get_Layer(L"Layer_GameLogic");
-
-	CGameObject* pGameObject;
-
-	int k = 0;
-
-	for (int i = 0; i < m_fAttack_Num; i++) {
-
-		int j = 0;
-		m_Is_Cri = Final_Damage();
-
-		for (auto iter : m_Font_List) {
-			_vec3 pos = m_pTransformCom->m_vInfo[INFO_POS];
-
-			if (m_Is_Cri == true) {
-				pos.x += 1.7f * j;
-				pos.y += 2.f * k;
-			}
-			else {
-				pos.x += 1.7f * 0.7 * j;
-				pos.y += 2.f * k;
-			}
-
-			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, m_Is_Cri);
-
-			if (pGameObject == nullptr)
-				return;
-
-			pGameLogicLayer->Add_BulletObject(pGameObject);
-
-			j++;
-		}
-
-		m_Font_List.clear();
-		m_Font_List.resize(0);
-
-		k++;
 	}
 }
 

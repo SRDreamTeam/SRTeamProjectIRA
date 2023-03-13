@@ -44,6 +44,11 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 
 	
 
+	for (int i = 0; i < m_fAttack_Num; i++) {
+
+		m_Cri_List.emplace_back(Final_Damage());
+	}
+
 	
 	__super::Ready_GameObject();
 
@@ -52,8 +57,10 @@ HRESULT CSylphArrow::Ready_GameObject(void)
 
 _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 {
+
 	if (m_bDead)
 		return OBJ_DEAD;
+
 
 	if (m_bHit) {
 		Create_Hit_Effect();
@@ -61,6 +68,7 @@ _int CSylphArrow::Update_GameObject(const _float& fTimeDelta)
 		return OBJ_DEAD;
 	}
 
+	
 	m_AccTime += m_AccMaxTime * fTimeDelta * 0.5f;
 
 	if (m_AccTime > m_AccMaxTime) {
@@ -216,28 +224,7 @@ bool CSylphArrow::Final_Damage(void)
 
 	m_Damage_List.emplace_back((int)m_fDamage);
 
-	int temp = (int)m_fDamage;
-	int cnt = 0;
-
-	while (temp > 0) {
-		temp /= 10;
-		cnt++;
-	}
-
-	temp = (int)m_fDamage;
-
-	for (int i = 0; i < cnt; i++) {
-
-		if (i == cnt - 1) {
-			m_Font_List.emplace_front(temp);
-			break;
-		}
-
-		m_Font_List.emplace_front(temp % 10);
-		temp /= 10;
-
-	}
-
+	
 
 	return Critical;
 
@@ -270,12 +257,14 @@ void CSylphArrow::Create_Damage_Font(void)
 	for (int i = 0; i < m_fAttack_Num; i++) {
 
 		int j = 0;
-		m_Is_Cri = Final_Damage();
+		
+
+		Create_Font_List(m_Damage_List.front());
 
 		for (auto iter : m_Font_List) {
 			_vec3 pos = m_pTransformCom->m_vInfo[INFO_POS];
 
-			if (m_Is_Cri == true) {
+			if (m_Cri_List.front() == true) {
 				pos.x += 1.7f * j;
 				pos.y += 2.f * k;
 			}
@@ -284,7 +273,7 @@ void CSylphArrow::Create_Damage_Font(void)
 				pos.y += 2.f * k;
 			}
 
-			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, m_Is_Cri);
+			pGameObject = CEffect_Player_Damage_Font::Create(m_pGraphicDev, pos, (int)iter, m_Cri_List.front());
 
 			if (pGameObject == nullptr)
 				return;
@@ -294,6 +283,8 @@ void CSylphArrow::Create_Damage_Font(void)
 			j++;
 		}
 
+		m_Cri_List.pop_front();
+		m_Damage_List.pop_front();
 		m_Font_List.clear();
 		m_Font_List.resize(0);
 
@@ -301,6 +292,31 @@ void CSylphArrow::Create_Damage_Font(void)
 	}
 
 
+}
+
+void CSylphArrow::Create_Font_List(int damage)
+{
+	int temp = (int)damage;
+	int cnt = 0;
+
+	while (temp > 0) {
+		temp /= 10;
+		cnt++;
+	}
+
+	temp = (int)m_fDamage;
+
+	for (int i = 0; i < cnt; i++) {
+
+		if (i == cnt - 1) {
+			m_Font_List.emplace_front(temp);
+			break;
+		}
+
+		m_Font_List.emplace_front(temp % 10);
+		temp /= 10;
+
+	}
 }
 
 void CSylphArrow::Free(void)
