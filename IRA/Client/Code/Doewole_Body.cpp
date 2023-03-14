@@ -58,7 +58,8 @@ _int CDoewole_Body::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (!m_bSphereMake)
 		{
-			CGameObject* pCollisionSphere = CCollisionSphere::Create(m_pGraphicDev, this);
+			CGameObject* pCollisionSphere = CCollisionSphere::Create(m_pGraphicDev, this ,COLLIDER_DYNAMIC);
+			NULL_CHECK(pCollisionSphere);
 			CLayer* pLayer = Engine::Get_Layer(L"Layer_GameLogic");
 			pLayer->Add_BulletObject(  pCollisionSphere);
 			m_bSphereMake = true;

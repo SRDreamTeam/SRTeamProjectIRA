@@ -72,8 +72,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Spr_DestructibleObject_Infectionthorn04_", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Object/BossDowole/spr_thorn_04/Spr_DestructibleObject_Infectionthorn04_%d.png", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Spr_DestructibleObject_Infectionthorn05_", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Object/BossDowole/spr_thorn_05/Spr_DestructibleObject_Infectionthorn05_%d.png", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Spr_DestructibleObject_Infectionthorn06_", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Object/BossDowole/spr_thorn_06/Spr_DestructibleObject_Infectionthorn06_%d.png", 3)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Spr_InfectionThorns_Effect_", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Object/BossDowole/spr_Thorns_DstnEffect/Spr_InfectionThorns_Effect_%d.png", 8)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Spr_InfectionThorns_HitEffect_", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Object/BossDowole/spr_Thorns_HitEffect/Spr_InfectionThorns_HitEffect_%d.png", 6)), E_FAIL);
+#pragma endregion
+
 #pragma region Monster_Texture
 	Set_String(L"Monster Texture Loading.....");
 	//// 슬라임_일반 충돌형_1
@@ -123,10 +123,10 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_StandardBullet_Death", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/Standard/Spr_Bullet_Doewole_Death_%d.png", 14)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_SwordShot_Death", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/SwordShot/Spr_Bullet_SwordShot_Death_%d.png", 12)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Bullet_Doewole_SwordShot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/SwordShot/Spr_Bullet_Doewole_SwordShot_%d.png", 8)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Circle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/CircleBullet/Spr_Bullet_Doewole_CircleBullet_Black_%d.png", 5)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Standard", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/Standard/Spr_Bullet_Doewole_Standard_%d.png", 8)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Thorn", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/Thorn/Spr_InfectionDoor_Thorns01_%d.png", 8)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Bullet_Doewole_SwordShot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/SwordShot/Spr_Bullet_Doewole_SwordShot_%d.png", 8)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Circle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/CircleBullet/Spr_Bullet_Doewole_CircleBullet_Black_%d.png", 5)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Standard", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/Standard/Spr_Bullet_Doewole_Standard_%d.png", 8)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Bullet_Doewole_Thorn", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Boss/Bullet/DoewoleBullet/Thorn/Spr_InfectionDoor_Thorns01_%d.png", 8)), E_FAIL);
 
 	
 
@@ -235,6 +235,13 @@ _uint CLoading::Loading_ForStage(void)
 
 #pragma endregion
 
+#pragma region Object_Texture
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Thorn_Destruction", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Object/spr_Thorns_DstnEffect/Spr_InfectionThorns_Effect_%d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Effect_Thorn_Hit", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Object/spr_Thorns_HitEffect/Spr_InfectionThorns_HitEffect_%d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Spr_HistoricSites_DecoObject_", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Object/Jar/Spr_HistoricSites_DecoObject_%d.png", 9)), E_FAIL);
+
+#pragma endregion
+
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Shadow", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Shadow/spr_ShadowV2.png")), E_FAIL);
 	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_Terrain", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Grass_%d.tga", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Texture_SkyBox", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4)), E_FAIL);
@@ -244,7 +251,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_SphereTex", CSphereTex::Create(m_pGraphicDev)), E_FAIL);
-	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_TerrainTex_Add_Vert", CTerrainTex::Create(m_pGraphicDev, VTXCNTX * 0.5f, VTXCNTZ, VTXITV)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_TerrainTex_Add_Horz", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ * 0.5f, VTXITV)), E_FAIL);
 
 	Set_String(L"ETC Loading.....");
 	FAILED_CHECK_RETURN(Engine::Ready_ProtoComponent(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);

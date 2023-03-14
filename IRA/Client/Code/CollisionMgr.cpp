@@ -7,6 +7,7 @@
 #include "DoewoleBullet_Circle.h"
 #include "DoewoleBullet_Standard.h"
 #include "DoewoleBullet_Circle.h"
+#include "DestructibleObj.h"
 
 #include "Monster.h"
 #include "MutationEvilSoul.h"
@@ -32,6 +33,8 @@ void CCollisionMgr::Collision_Update()
 	Collision_Sphere_Player_Bullet(m_CollisionGroup[OBJ_PLAYER], m_CollisionGroup[OBJ_BULLET]);
 	Collision_Sphere_Boss_Arrow(m_CollisionGroup[OBJ_BOSS], m_CollisionGroup[OBJ_ARROW]);
 	Collision_Sphere_Monster_Arrow(m_CollisionGroup[OBJ_MONSTER], m_CollisionGroup[OBJ_ARROW]);
+	//Collision_Sphere(m_CollisionGroup[OBJ_PLAYER], m_CollisionGroup[OBJ_BULLET]);
+	//Collision_Sphere(m_CollisionGroup[OBJ_ARROW], m_CollisionGroup[OBJ_LANDSCAPE]);
 
 	Clear_CollisionGroup();
 }
@@ -58,6 +61,14 @@ void CCollisionMgr::Collision_Sphere_Player_Bullet(list<CGameObject*> _Dest, lis
 		}
 	}
 }
+
+//dynamic_cast<CPlayer*>(Dest)->m_bHit = true;
+//dynamic_cast<CDoewoleBullet_Circle*>(Src)->m_bHit = true;
+//				}
+//				else if (dynamic_cast<CArrow*>(Dest) && dynamic_cast<CLandscape*>(Src))
+//				{
+//					dynamic_cast<CDestructibleObj*>(Src)->Set_IsHit(true);
+//				}
 
 
 void CCollisionMgr::Collision_Sphere_Boss_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src)
@@ -88,6 +99,7 @@ void CCollisionMgr::Collision_Sphere_Boss_Arrow(list<CGameObject*> _Dest, list<C
 	}
 
 }
+
 
 
 void CCollisionMgr::Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src)

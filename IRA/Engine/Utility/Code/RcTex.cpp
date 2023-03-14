@@ -1,3 +1,4 @@
+
 #include "..\..\Header\RcTex.h"
 
 CRcTex::CRcTex(void)

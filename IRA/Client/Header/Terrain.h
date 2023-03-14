@@ -33,7 +33,7 @@ public:
 	void	Set_DrawOption(_byte option) { m_byDrawOption = option; }
 
 private:
-	CTerrainTex*	m_pBufferCom;
+	CTerrainTex*	m_pBufferCom[4];
 	CTransform*		m_pTransformCom;
 	CTexture*		m_pTextureCom;
 
