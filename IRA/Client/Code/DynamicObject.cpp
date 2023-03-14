@@ -89,6 +89,11 @@ DYNAMIC_OBJECT_ID CDynamicObject::CompareID(wstring strObjKey)
 	return DYNAMIC_OBJ_END;
 }
 
+_int CDynamicObject::Get_MaxFrameCnt(void)
+{
+	return m_pTextureCom[m_eID]->Get_MaxFrameCnt();
+}
+
 void CDynamicObject::Free(void)
 {
 	__super::Free();

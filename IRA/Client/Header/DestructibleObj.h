@@ -30,6 +30,7 @@ public:
 	_bool	Get_IsHit(void) { return m_bHit; }
 	void	Set_IsColliderSet(_bool bSet) { m_bSetCollider = bSet; }
 	_bool	Set_IsColliderSet(void) { return m_bSetCollider; }
+	_int	Get_HitCnt(void) { return m_iHitCnt; }
 	void	Create_Hit_Effect(void);
 
 private:

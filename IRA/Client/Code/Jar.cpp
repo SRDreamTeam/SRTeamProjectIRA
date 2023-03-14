@@ -21,6 +21,27 @@ HRESULT CJar::Ready_GameObject(void)
 {
 	__super::Ready_GameObject();
 
+	//dynamic_cast<CJar*>(pGameObject)->Set_ObjKey(L"Spr_HistoricSites_DecoObject_0", sizeof(L"Spr_HistoricSites_DecoObject_0") / sizeof(_tchar));
+	//dynamic_cast<CJar*>(pGameObject)->Set_DynamicObj_ID(dynamic_cast<CJar*>(pGameObject)->CompareID(L"Spr_HistoricSites_DecoObject_"));
+
+	//pTransformCom->Set_Scale(5.f, 5.f, 0.f);
+	//pTransformCom->Set_Angle(D3DXToRadian(15.f), 0.f, 0.f);
+	//pTransformCom->Set_Pos(tStaticObjData.vPos.x, tStaticObjData.vPos.y, tStaticObjData.vPos.z);
+
+	//dynamic_cast<CJar*>(pGameObject)->Set_DrawID(tStaticObjData.byDrawID);
+	//dynamic_cast<CJar*>(pGameObject)->Set_DrawOption(tStaticObjData.byDrawOption);
+	//dynamic_cast<CJar*>(pGameObject)->Set_ColliderPos(&tStaticObjData.vColliderPos);
+	//dynamic_cast<v*>(pGameObject)->Set_ColliderRadius(tStaticObjData.fColliderRadius);
+
+	Set_ObjKey(L"Spr_HistoricSites_DecoObject_0", sizeof(L"Spr_HistoricSites_DecoObject_0") / sizeof(_tchar));
+	Set_DynamicObj_ID(CompareID(L"Spr_HistoricSites_DecoObject_"));
+
+	m_pTransformCom->Set_Scale(5.f, 5.f, 0.f);
+	m_pTransformCom->Set_Angle(D3DXToRadian(15.f), 0.f, 0.f);
+	m_pTransformCom->Set_Pos(100.f, 0.2f, 100.f);
+	Set_DrawID(0);
+	Set_DrawOption(0);
+
 	return S_OK;
 }
 

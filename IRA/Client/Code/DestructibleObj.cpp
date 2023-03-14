@@ -5,6 +5,7 @@
 #include "Effect_Thorn_Destruction.h"
 #include "KeyMgr.h"
 #include "CollisionSphere.h"
+#include "CollisionMgr.h"
 
 CDestructibleObj::CDestructibleObj(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CDynamicObject(pGraphicDev)
@@ -82,6 +83,7 @@ _int CDestructibleObj::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_LANDSCAPE, this);
 
 	return 0;
 }
@@ -193,17 +195,17 @@ void CDestructibleObj::Create_Hit_Effect()
 
 		if (1 == m_iHitCnt)
 		{
-			_vec3 vTemp = { 0.f, 0.5f, 0.f };
+			_vec3 vTemp = { 0.f, 0.3f, 0.f };
 			vLocal = vTemp;
 		}
 		else if( 2 == m_iHitCnt)
 		{
-			_vec3 vTemp = { 0.f, 0.0f, 0.f };
+			_vec3 vTemp = { 0.f, -0.2f, 0.f };
 			vLocal = vTemp;
 		}
 		else
 		{
-			_vec3 vTemp = { 0.f, -0.5f, 0.f };
+			_vec3 vTemp = { 0.f, -0.7f, 0.f };
 			vLocal = vTemp;
 		}
 

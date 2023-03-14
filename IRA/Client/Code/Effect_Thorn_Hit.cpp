@@ -21,7 +21,7 @@ HRESULT CEffect_Thorn_Hit::Ready_GameObject(const _vec3& vPos)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 5.f , 5.f, 5.f };
+	m_pTransformCom->m_vScale = { 10.f , 10.f, 10.f };
 	m_pTransformCom->m_vInfo[INFO_POS] = vPos;
 
 	m_fMaxFrame = 5.f;
@@ -38,26 +38,7 @@ _int CEffect_Thorn_Hit::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-	m_fFrame += m_fMaxFrame * fTimeDelta;
-
-	m_pTransformCom->Set_Scale(5.f, 5.f, 0.f);
-
-	//switch (_uint(m_fFrame))
-	//{
-	//case 0:
-	//	m_pTransformCom->Set_Scale(3.2f, 2.8f, 0.f);
-	//case 1:
-	//	m_pTransformCom->Set_Scale(6.4f, 6.8f, 0.f);
-	//case 2:
-	//	m_pTransformCom->Set_Scale(9.6f, 9.8f, 0.f);
-	//case 3:
-	//	m_pTransformCom->Set_Scale(11.5f, 11.3f, 0.f);
-	//case 4:
-	//	m_pTransformCom->Set_Scale(12.f, 11.8f, 0.f);
-	//case 5:
-	//	m_pTransformCom->Set_Scale(12.4f, 12.3f, 0.f);
-	//}
-	//return 0;
+	m_fFrame += m_fMaxFrame * fTimeDelta * 2;
 }
 
 void CEffect_Thorn_Hit::LateUpdate_GameObject()
