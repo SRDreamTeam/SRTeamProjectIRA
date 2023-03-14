@@ -20,7 +20,9 @@ private:
 	static void	Collision_Sphere_Player_Bullet(list<CGameObject*> _Dest, list<CGameObject*> _Src);
 	static void	Collision_Sphere_Boss_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src);
 	static void	Collision_Sphere_Monster_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src);
+	static void	Collision_Sphere_Landscape_Arrow(list<CGameObject*> _Dest, list<CGameObject*> _Src);
 	static bool Check_Sphere(CGameObject* pDest, CGameObject* pSrc);
+	static bool Check_Sphere_Static(CGameObject* pDest, CGameObject* pSrc);
 
 private:
 	list<CGameObject*>			m_CollisionGroup[OBJ_END];

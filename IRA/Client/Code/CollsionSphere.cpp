@@ -23,22 +23,35 @@ CCollisionSphere::~CCollisionSphere()
 {
 }
 
-HRESULT CCollisionSphere::Ready_GameObject(CGameObject* pOwner)
+HRESULT CCollisionSphere::Ready_GameObject(CGameObject* pOwner , COLLIDER_TYPE _e)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pOwner = pOwner;
 
-	_float fRadius = dynamic_cast<CCollider*>(m_pOwner->Get_Component(L"Proto_Collider", ID_DYNAMIC))->Get_Radius();
+	m_eCollideType = _e;
 
-	m_pTransformCom->m_vScale = { fRadius , fRadius  , fRadius };
+	_float fRadius = 0.f;
+	
+	if(m_eCollideType == COLLIDER_DYNAMIC)
+		fRadius = dynamic_cast<CCollider*>(m_pOwner->Get_Component(L"Proto_Collider", ID_DYNAMIC))->Get_Radius();
+	else if (m_eCollideType == COLLIDER_STATIC)
+	{
+		fRadius = dynamic_cast<CCollider*>(m_pOwner->Get_Component(L"Proto_Collider", ID_STATIC))->Get_Radius();
+		m_pTransformCom->m_vInfo[INFO_POS] = dynamic_cast<CCollider*>(m_pOwner->Get_Component(L"Proto_Collider", ID_STATIC))->Get_SpherePos();
+	}
+
+	m_pTransformCom->m_vScale = { fRadius , fRadius, fRadius };
 
 	return S_OK;
 }
 
 _int CCollisionSphere::Update_GameObject(const _float& fTimeDelta)
 {
-	m_pTransformCom->m_vInfo[INFO_POS] = dynamic_cast<CCollider*>(m_pOwner->Get_Component(L"Proto_Collider", ID_DYNAMIC))->Get_SpherePos();
+	if (m_eCollideType == COLLIDER_DYNAMIC)
+		m_pTransformCom->m_vInfo[INFO_POS] = dynamic_cast<CCollider*>(m_pOwner->Get_Component(L"Proto_Collider", ID_DYNAMIC))->Get_SpherePos();
+	
+		
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -82,11 +95,11 @@ HRESULT CCollisionSphere::Add_Component(void)
 	return S_OK;
 }
 
-CCollisionSphere* CCollisionSphere::Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pOwner)
+CCollisionSphere* CCollisionSphere::Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pOwner , COLLIDER_TYPE _e)
 {
 	CCollisionSphere* pInstance = new CCollisionSphere(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(pOwner)))
+	if (FAILED(pInstance->Ready_GameObject(pOwner , _e)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

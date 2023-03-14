@@ -8,7 +8,7 @@ class CRcTex;
 class CTransform;
 class CTexture;
 class CCalculator;
-//class CCollider;
+class CCollider;
 
 END
 
@@ -28,10 +28,14 @@ public:
 public:
 	void	Set_IsHit(_bool bHit) { m_bHit = bHit; }
 	_bool	Get_IsHit(void) { return m_bHit; }
+	void	Set_IsColliderSet(_bool bSet) { m_bSetCollider = bSet; }
+	_bool	Set_IsColliderSet(void) { return m_bSetCollider; }
+	_int	Get_HitCnt(void) { return m_iHitCnt; }
+	void	Create_Hit_Effect(void);
 
 private:
 	virtual HRESULT	Add_Component(void)override;
-	virtual void SetUp_OnTerrain(void)override;
+	virtual void SetUp_OnTerrain(void) {}
 	//virtual void Change_State(void)PURE;					
 	//virtual void Frame_Check(const _float& fTimeDelta)PURE;
 
@@ -39,6 +43,8 @@ private:
 	_int	m_iHitCnt = 0;
 	_bool	m_bHit = false;
 	_float	m_fFrame = 0.f;
+	CCollider*		m_pColliderCom;
+	_bool			m_bSetCollider = true;
 
 public:
 	static CDestructibleObj* Create(LPDIRECT3DDEVICE9 pGraphicDev);

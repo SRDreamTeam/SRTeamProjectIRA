@@ -25,8 +25,6 @@ HRESULT CDynamicObject::Ready_GameObject(void)
 
 _int CDynamicObject::Update_GameObject(const _float& fTimeDelta)
 {	
-	//SetUp_OnTerrain();
-
 	__super::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
@@ -85,12 +83,15 @@ DYNAMIC_OBJECT_ID CDynamicObject::CompareID(wstring strObjKey)
 		return THORN5;
 	else if (strObjKey == L"Spr_DestructibleObject_Infectionthorn06_")
 		return THORN6;
-	else if (strObjKey == L"Spr_InfectionThorns_Effect_")
-		return THORN_DEST_EFFECT;
-	else if (strObjKey == L"Spr_InfectionThorns_HitEffect_")
-		return THORN_HIT_EFFECT;
+	else if (strObjKey == L"Spr_HistoricSites_DecoObject_")
+		return JAR;
 
 	return DYNAMIC_OBJ_END;
+}
+
+_int CDynamicObject::Get_MaxFrameCnt(void)
+{
+	return m_pTextureCom[m_eID]->Get_MaxFrameCnt();
 }
 
 void CDynamicObject::Free(void)
@@ -143,10 +144,5 @@ HRESULT CDynamicObject::Add_Component(void)
 	m_uMapComponent[ID_STATIC].insert({ L"Spr_Deco_BushFlower02_", pComponent });
 
 	
-
 	return S_OK;
-}
-
-void CDynamicObject::SetUp_OnTerrain(void)
-{
 }

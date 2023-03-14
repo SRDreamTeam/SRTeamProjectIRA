@@ -61,20 +61,20 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 
 
 		Load_Object_Info(L"../../Data/Object/BossDowoleMapObjStatic1.dat");	// 개구리밥
-		Load_Object_Info(L"../../Data/Object/BossDowoleObjStatic203120717.dat");	// 나무
+		Load_Object_Info(L"../../Data/Object/BossDowoleObjStatic2.dat");	// 나무
 		Load_Dynamic_Object_Info(L"../../Data/Object/BossDowoleObjDynamic1.dat");	// 풀
 		Load_Dynamic_Object_Info(L"../../Data/Object/BossDowoleObjDynamic2.dat");	// 가시
 	}
 
 	if (!g_bSphereMake)
 	{
-		if (CKeyMgr::Get_Instance()->Key_Down(KEY_C))
+		if (CKeyMgr::Get_Instance()->Key_Down(KEY_9))
 			g_bSphereMake = true;
 	}
 
 	if (g_bSphereMake)
 	{
-		if (CKeyMgr::Get_Instance()->Key_Down(KEY_V))
+		if (CKeyMgr::Get_Instance()->Key_Down(KEY_0))
 		{
 			if (!g_bSphereRender)
 				g_bSphereRender = true;
@@ -171,49 +171,32 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Ghost", pGameObject), E_FAIL);
 
-	//CGameObject* pDoewole = CDoewole::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pDoewole, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole", pDoewole, OBJ_NONE), E_FAIL);
+
 	CGameObject* pDoewole = CDoewole::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pDoewole, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole", pDoewole), E_FAIL);
 
-	//pGameObject = CDoewole_Body::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject, OBJ_MONSTER), E_FAIL);
 	pGameObject = CDoewole_Body::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_Body*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Body", pGameObject), E_FAIL);
 
-	//pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//dynamic_cast<CDoewole_LeftClaw*>(pGameObject)->Set_Owner(pDoewole);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_LeftClaw", pGameObject, OBJ_MONSTER), E_FAIL);
+	CCollisionMgr::GetInstance()->Add_CollisionObject(OBJ_MONSTER, pGameObject);
+
 	pGameObject = CDoewole_LeftClaw::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_LeftClaw*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_LeftClaw", pGameObject), E_FAIL);
 
-	//pGameObject = CDoewole_RightClaw::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//dynamic_cast<CDoewole_RightClaw*>(pGameObject)->Set_Owner(pDoewole);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_RightClaw", pGameObject, OBJ_MONSTER), E_FAIL);
 	pGameObject = CDoewole_RightClaw::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_RightClaw*>(pGameObject)->Set_Owner(pDoewole);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_RightClaw", pGameObject), E_FAIL);
 
-	//pGameObject = CDoewole_Shadow::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//dynamic_cast<CDoewole_Shadow*>(pGameObject)->Set_Owner(pDoewole);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Shadow", pGameObject, OBJ_NONE), E_FAIL);
-
 	pGameObject = CDoewole_Shadow::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	dynamic_cast<CDoewole_Shadow*>(pGameObject)->Set_Owner(pDoewole);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Shadow", pGameObject ), E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Doewole_Shadow", pGameObject), E_FAIL);
 	 
 	pGameObject = CGreenEvilSlime::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -234,6 +217,11 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CMutationEvilSoul::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster_5", pGameObject), E_FAIL);
+
+	//pGameObject = CJar::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Spr_HistoricSites_DecoObject_0", pGameObject), E_FAIL);
+
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 

@@ -55,15 +55,6 @@ void CLandscape::LateUpdate_GameObject()
 
 void CLandscape::Render_GameObject()
 {
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrixPointer());
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	//if (-1 != m_byDrawID)
-	//	m_pTextureCom->Set_Texture(m_byDrawID);
-
-	//m_pBufferCom->Render_Buffer();
-
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CLandscape::Set_ObjKey(_tchar* pKey, _ulong strLength)

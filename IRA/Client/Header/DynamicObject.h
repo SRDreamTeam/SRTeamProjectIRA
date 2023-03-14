@@ -29,10 +29,11 @@ public:
 	static DYNAMIC_OBJECT_ID	CompareID(wstring strObjKey);
 	DYNAMIC_OBJECT_ID	Get_DynamicObj_ID(void) { return m_eID; }
 	void				Set_DynamicObj_ID(DYNAMIC_OBJECT_ID id) { m_eID = id; }
-
+	_int				Get_MaxFrameCnt(void); 
+	 
 protected:
 	virtual HRESULT	Add_Component(void)override;
-	virtual void SetUp_OnTerrain(void)override;
+	virtual void SetUp_OnTerrain(void) {}
 	//virtual void Change_State(void)PURE;					
 	//virtual void Frame_Check(const _float& fTimeDelta)PURE;
 
